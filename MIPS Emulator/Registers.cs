@@ -16,7 +16,34 @@
 		}
 
 		public static string registerToName(int regNumber) {
-			return regNumber.ToString();
+
+			if (regNumber == 0) {
+				return "$zero";
+			} else if (regNumber == 1) {
+				return "$at";
+			} else if (regNumber <= 3) {
+				return "$v" + (regNumber - 2);
+			} else if (regNumber <= 7) {
+				return "$a" + (regNumber - 4);
+			} else if (regNumber <= 15) {
+				return "$t" + (regNumber - 8);
+			} else if (regNumber <= 23) {
+				return "$s" + (regNumber - 16);
+			} else if (regNumber <= 25) {
+				return "$t" + (regNumber - 16);
+			} else if (regNumber <= 27) {
+				return "$k" + (regNumber - 26);
+			} else if (regNumber == 28) {
+				return "$gp";
+			} else if (regNumber == 29) {
+				return "$sp";
+			} else if (regNumber == 30) {
+				return "$fp";
+			} else if (regNumber == 31) {
+				return "$ra";
+			}
+			
+			return "$" + regNumber;
 		}
 	}
 }
