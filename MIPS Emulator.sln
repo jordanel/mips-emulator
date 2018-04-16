@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIPS Emulator", "MIPS Emulator\MIPS Emulator.csproj", "{6FCD0B2B-0CA6-45E6-8B3B-39C77DCF85D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIPS Emulator.Test", "MIPS Emulator.Test\MIPS Emulator.Test.csproj", "{9C2E972A-C959-4F8C-8B6F-453B48B020A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{6FCD0B2B-0CA6-45E6-8B3B-39C77DCF85D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FCD0B2B-0CA6-45E6-8B3B-39C77DCF85D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FCD0B2B-0CA6-45E6-8B3B-39C77DCF85D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2E972A-C959-4F8C-8B6F-453B48B020A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2E972A-C959-4F8C-8B6F-453B48B020A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2E972A-C959-4F8C-8B6F-453B48B020A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2E972A-C959-4F8C-8B6F-453B48B020A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
