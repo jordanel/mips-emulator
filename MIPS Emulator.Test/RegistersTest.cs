@@ -7,26 +7,28 @@ namespace MIPS_Emulator.Test {
 		private Registers r;
 
 		[SetUp]
-		public void setUp() {
+		public void SetUp() {
 			r = new Registers();
 		}
 		
 		[Test]
-		public void test() {
-			r.setRegister(0, 50);
-			Assert.AreEqual(0, r.getRegister(0));
+		public void SetZeroRegister_RemainsZero() {
+			//r.SetRegister(0, 50);
+			//Assert.AreEqual(0, r.GetRegister(0));
+			r[0] = 5;
+			Assert.AreEqual(0, r[0]);
 		}
 
 		[Test]
-		public void test2() {
-			r.setRegister(1, 3);
-			Assert.AreEqual(3, r.getRegister(1));
+		public void TestSettingNonZeroRegister() {
+			r.SetRegister(1, 3);
+			Assert.AreEqual(3, r.GetRegister(1));
 		}
 
 		[Test]
-		public void testPrint() {
+		public void TestPrint() {
 			for (int i = 0; i < 32; i++) {
-				Console.WriteLine(Registers.registerToName(i));
+				Console.WriteLine(Registers.RegisterToName(i));
 			}
 		}
 
