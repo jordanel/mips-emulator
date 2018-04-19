@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstructionFactoryTest.cs" />
     <Compile Include="MemoryUnitTest.cs" />
     <Compile Include="RegistersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

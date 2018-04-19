@@ -43,10 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Instruction.cs" />
+    <Compile Include="InstructionFactory.cs" />
+    <Compile Include="ITypeInstruction.cs" />
+    <Compile Include="JTypeInstruction.cs" />
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
+    <Compile Include="RTypeInstruction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
