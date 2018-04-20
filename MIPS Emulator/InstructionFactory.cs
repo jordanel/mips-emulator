@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using MIPS_Emulator.Instructions;
 using MIPS_Emulator.Instructions.IType;
+using MIPS_Emulator.Instructions.JType;
 using MIPS_Emulator.Instructions.RType;
 
 namespace MIPS_Emulator {
@@ -105,9 +105,9 @@ namespace MIPS_Emulator {
 					case BNE:
 						return new BneInstruction(immediate, rs, rt);
 					case J:
-						break;
+						return new JInstruction(immediate);
 					case JAL:
-						break;
+						return new JalInstruction(immediate);
 				}
 			}
 
