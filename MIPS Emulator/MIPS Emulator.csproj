@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstructionFactory.cs" />
+    <Compile Include="InstructionMemory.cs" />
     <Compile Include="Instructions\Instruction.cs" />
     <Compile Include="Instructions\IType\AddiInstruction.cs" />
     <Compile Include="Instructions\IType\AddiuInstruction.cs" />
