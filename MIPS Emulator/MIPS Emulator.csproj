@@ -42,44 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\python\generating c#\AndInstruction.cs">
-      <Link>Instructions\RType\AndInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\JrInstruction.cs">
-      <Link>Instructions\RType\JrInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\NorInstruction.cs">
-      <Link>Instructions\RType\NorInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SllInstruction.cs">
-      <Link>Instructions\RType\SllInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SllvInstruction.cs">
-      <Link>Instructions\RType\SllvInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SltInstruction.cs">
-      <Link>Instructions\RType\SltInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SltuInstruction.cs">
-      <Link>Instructions\RType\SltuInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SrlInstruction.cs">
-      <Link>Instructions\RType\SrlInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\SubInstruction.cs">
-      <Link>Instructions\RType\SubInstruction.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\python\generating c#\XorInstruction.cs">
-      <Link>Instructions\RType\XorInstruction.cs</Link>
-    </Compile>
     <Compile Include="InstructionFactory.cs" />
     <Compile Include="Instructions\Instruction.cs" />
     <Compile Include="Instructions\IType\ITypeInstruction.cs" />
+    <Compile Include="Instructions\IType\LwInstruction.cs" />
     <Compile Include="Instructions\JType\JTypeInstruction.cs" />
     <Compile Include="Instructions\RType\AddInstruction.cs" />
+    <Compile Include="Instructions\RType\AndInstruction.cs" />
+    <Compile Include="Instructions\RType\JrInstruction.cs" />
+    <Compile Include="Instructions\RType\NorInstruction.cs" />
     <Compile Include="Instructions\RType\OrInstruction.cs" />
     <Compile Include="Instructions\RType\RTypeInstruction.cs" />
+    <Compile Include="Instructions\RType\SllInstruction.cs" />
+    <Compile Include="Instructions\RType\SllvInstruction.cs" />
+    <Compile Include="Instructions\RType\SltInstruction.cs" />
+    <Compile Include="Instructions\RType\SltuInstruction.cs" />
     <Compile Include="Instructions\RType\SraInstruction.cs" />
+    <Compile Include="Instructions\RType\SrlInstruction.cs" />
+    <Compile Include="Instructions\RType\SubInstruction.cs" />
+    <Compile Include="Instructions\RType\XorInstruction.cs" />
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

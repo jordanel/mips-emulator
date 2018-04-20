@@ -1,10 +1,10 @@
-
+﻿
 using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class XorInstruction : RTypeInstruction {
 
-		public AddInstruction(uint d, uint s, uint t) : base(InstructionFactory.XOR, d, s, t) {
+		public XorInstruction(uint d, uint s, uint t) : base(InstructionFactory.XOR, d, s, t) {
 			
 		}
 

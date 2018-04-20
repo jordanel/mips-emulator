@@ -1,10 +1,9 @@
-
-using System;
+﻿using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class AndInstruction : RTypeInstruction {
 
-		public AddInstruction(uint d, uint s, uint t) : base(InstructionFactory.AND, d, s, t) {
+		public AndInstruction(uint d, uint s, uint t) : base(InstructionFactory.AND, d, s, t) {
 			
 		}
 

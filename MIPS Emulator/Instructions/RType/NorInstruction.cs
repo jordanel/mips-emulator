@@ -1,10 +1,10 @@
-
+﻿
 using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class NorInstruction : RTypeInstruction {
 
-		public AddInstruction(uint d, uint s, uint t) : base(InstructionFactory.NOR, d, s, t) {
+		public NorInstruction(uint d, uint s, uint t) : base(InstructionFactory.NOR, d, s, t) {
 			
 		}
 

@@ -1,10 +1,10 @@
-
+﻿
 using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class SrlInstruction : RTypeInstruction {
 
-		public AddInstruction(uint d, uint s, uint t) : base(InstructionFactory.SRL, d, s, t) {
+		public SrlInstruction(uint d, uint s, uint t) : base(InstructionFactory.SRL, d, s, t) {
 			
 		}
 

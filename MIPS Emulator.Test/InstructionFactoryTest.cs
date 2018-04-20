@@ -1,5 +1,6 @@
 ﻿using System;
 using MIPS_Emulator.Instructions;
+using MIPS_Emulator.Instructions.IType;
 using NUnit.Framework;
 
 namespace MIPS_Emulator.Test {
@@ -15,7 +16,9 @@ namespace MIPS_Emulator.Test {
 			i.execute(ref pc, ref m, ref r);
 			Console.WriteLine(pc);
 			Console.WriteLine(i);
-		}
+			i = new LwInstruction(123, 4, 5);
+			Console.WriteLine(i);
+			}
 		
 	}
 }

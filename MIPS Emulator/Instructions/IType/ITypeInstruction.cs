@@ -1,11 +1,11 @@
 ﻿namespace MIPS_Emulator.Instructions.IType {
 	public abstract class ITypeInstruction : Instruction {
 		private uint immediate;
-		private int s, t;
+		private uint s, t;
 
 		protected abstract string name { get; }	
 		
-		protected ITypeInstruction(uint immediate, int s, int t) {
+		protected ITypeInstruction(uint immediate, uint s, uint t) {
 			this.immediate = immediate;
 			this.s = s;
 			this.t = t;
