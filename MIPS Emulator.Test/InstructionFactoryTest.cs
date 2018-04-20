@@ -1,5 +1,5 @@
 ﻿using System;
-using MIPS_Emulator.Insturctions;
+using MIPS_Emulator.Instructions;
 using NUnit.Framework;
 
 namespace MIPS_Emulator.Test {

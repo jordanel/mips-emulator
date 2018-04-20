@@ -1,4 +1,4 @@
-﻿namespace MIPS_Emulator.Insturctions.RType {
+﻿namespace MIPS_Emulator.Instructions.RType {
 	public abstract class RTypeInstruction : Instruction {
 
 		private uint func;
@@ -19,4 +19,5 @@
 
 		public abstract void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg);
 	}
+
 }

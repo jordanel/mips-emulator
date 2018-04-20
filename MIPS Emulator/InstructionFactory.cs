@@ -1,5 +1,5 @@
-﻿using MIPS_Emulator.Insturctions;
-using MIPS_Emulator.Insturctions.RType;
+﻿using MIPS_Emulator.Instructions;
+using MIPS_Emulator.Instructions.RType;
 
 namespace MIPS_Emulator {
 	public class InstructionFactory {
@@ -9,7 +9,7 @@ namespace MIPS_Emulator {
 		public const uint LW = 0b100011;
 		public const uint SW = 0b101011;
 		public const uint ADDI = 0b001000;
-		public const uint ADDIU = 1001;
+		public const uint ADDIU = 0b001001;
 		public const uint SLTI = 0b001010;
 		public const uint SLTIU = 0b001011;
 		public const uint ORI = 0b001101;
@@ -51,19 +51,64 @@ namespace MIPS_Emulator {
 			uint address = instruction & TWENTY_SIX_MASK;
 
 			if (op == 0) {
-				
-			}
-			else {
+				switch (func) {
+					case ADD:
+						return new AddInstruction(rd, rs, rt);
+					case SUB:
+						return new SubInstruction(rd, rs, rt);
+					case AND:
+						return new AndInstruction(rd, rs, rt);
+					case OR:
+						return new OrInstruction(rd, rs, rt);
+					case XOR:
+						return new XorInstruction(rd, rs, rt);
+					case NOR:
+						return new NorInstruction(rd, rs, rt);
+					case SLT:
+						return new SltInstruction(rd, rs, rt);
+					case SLTU:
+						return new SltuInstruction(rd, rs, rt);
+					case SLL:
+						return new SllInstruction(rd, rs, rt);
+					case SLLV:
+						return new SllvInstruction(rd, rs, rt);
+					case SRL:
+						return new SrlInstruction(rd, rs, rt);
+					case SRA:
+						return new SraInstruction(rd, rs, rt);
+					case JR:
+						return new JrInstruction(rd, rs, rt);
+				}
+			} else {
 				switch (op) {
 					case LW:
 						break;
-					default:
+					case SW:
+						break;
+					case ADDI:
+						break;
+					case ADDIU:
+						break;
+					case SLTI:
+						break;
+					case SLTIU:
+						break;
+					case ORI:
+						break;
+					case LUI:
+						break;
+					case BEQ:
+						break;
+					case BNE:
+						break;
+					case J:
+						break;
+					case JAL:
 						break;
 				}
 			}
 
-			return new AddInstruction(rd, rs, rt);
-
+			return new AddInstruction(0, 0, 0);
 
 		}
 		
