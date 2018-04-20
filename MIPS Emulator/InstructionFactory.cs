@@ -1,4 +1,7 @@
-﻿using MIPS_Emulator.Instructions;
+﻿using System;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using MIPS_Emulator.Instructions;
+using MIPS_Emulator.Instructions.IType;
 using MIPS_Emulator.Instructions.RType;
 
 namespace MIPS_Emulator {
@@ -82,25 +85,25 @@ namespace MIPS_Emulator {
 			} else {
 				switch (op) {
 					case LW:
-						break;
+						return new LwInstruction(immediate, rs, rt);
 					case SW:
-						break;
+						return new SwInstruction(immediate, rs, rt);
 					case ADDI:
-						break;
+						return new AddiInstruction(immediate, rs, rt);
 					case ADDIU:
-						break;
+						return new AddiuInstruction(immediate, rs, rt);
 					case SLTI:
-						break;
+						return new SltiInstruction(immediate, rs, rt);
 					case SLTIU:
-						break;
+						return new SltiuInstruction(immediate, rs, rt);
 					case ORI:
-						break;
+						return new OriInstruction(immediate, rs, rt);
 					case LUI:
-						break;
+						return new LuiInstruction(immediate, rs, rt);
 					case BEQ:
-						break;
+						return new BeqInstruction(immediate, rs, rt);
 					case BNE:
-						break;
+						return new BneInstruction(immediate, rs, rt);
 					case J:
 						break;
 					case JAL:
@@ -108,9 +111,15 @@ namespace MIPS_Emulator {
 				}
 			}
 
-			return new AddInstruction(0, 0, 0);
+			throw new UnknownInstructionException(instruction);
 
 		}
-		
+
+		public class UnknownInstructionException : NotImplementedException {
+			public UnknownInstructionException(uint instruction) 
+				: base ($"Unknown instruction: {instruction}") {
+				
+			}
+		}
 	}
 }

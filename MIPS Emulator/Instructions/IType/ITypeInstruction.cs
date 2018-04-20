@@ -1,7 +1,7 @@
 ﻿namespace MIPS_Emulator.Instructions.IType {
 	public abstract class ITypeInstruction : Instruction {
-		private uint immediate;
-		private uint s, t;
+		protected uint immediate;
+		protected uint s, t;
 
 		protected abstract string name { get; }	
 		
@@ -12,7 +12,7 @@
 		}
 		
 		public override string ToString() {
-			return $"{name} {Registers.RegisterToName(t)} {immediate}({Registers.RegisterToName(t)})";
+			return $"{name} {Registers.RegisterToName(t)} {immediate}({Registers.RegisterToName(s)})";
 		}
 
 		public abstract void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg);
