@@ -3,14 +3,13 @@ using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class OrInstruction : RTypeInstruction {
+		protected override string Name => "OR";
 
-		public OrInstruction(uint d, uint s, uint t) : base(InstructionFactory.OR, d, s, t) {
+		public OrInstruction(uint d, uint s, uint t) : base(d, s, t) {
 			
 		}
 
-		protected override string name => "OR";
-
-		public override void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg) {
+		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
 			Console.Error.Write("NOT IMPLEMENTED!");
 		}

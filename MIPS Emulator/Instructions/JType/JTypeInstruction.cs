@@ -1,17 +1,16 @@
 ﻿namespace MIPS_Emulator.Instructions.JType {
 	public abstract class JTypeInstruction : Instruction {
-		protected uint immediate;
-		
-		protected abstract string name { get; }
+		protected abstract string Name { get; }
+		protected readonly uint Immediate;
 		
 		protected JTypeInstruction(uint immediate) {
-			this.immediate = immediate;
+			this.Immediate = immediate;
 		}
 		
 		public override string ToString() {
-			return $"{name} {immediate}";
+			return $"{Name} {Immediate}";
 		}
 
-		public abstract void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg);
+		public abstract void execute(ref uint pc, MemoryUnit mem, Registers reg);
 	}
 }

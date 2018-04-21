@@ -8,7 +8,7 @@ namespace MIPS_Emulator.Test {
 		[Test]
 		public void TestInitInstructionMemory() {
 
-			uint[] insturctions = new uint[] {
+			uint[] instructions = new uint[] {
 				0x201d003c, 0x3c08ffff, 0x3508ffff, 0x2009ffff, 0x1509001b, 0x00084600, 0x3508f000, 0x00084203, 0x00084102,
 				0x340a0003, 0x01495022, 0x01484004, 0x010a582a, 0x010a582b, 0x20080005, 0x2d0b000a, 0x2d0b0004, 0x2008fffb,
 				0x2d0b0005, 0x3c0b1010, 0x356b1010, 0x3c0c0101, 0x218c1010, 0x016c6824, 0x016c6825, 0x016c6826, 0x016c6827,
@@ -17,15 +17,15 @@ namespace MIPS_Emulator.Test {
 				0x2042ffff, 0x8fbf0004, 0x23bd0008, 0x03e00008
 			};
 
-			target = new InstructionMemory(insturctions);
+			target = new InstructionMemory(instructions);
 
 			uint pc = 0;
 			var dataMemory = new MemoryUnit(1);
 			var registers = new Registers();
 
-			while (pc < insturctions.Length * 4) {
+			while (pc < instructions.Length * 4) {
 				Console.WriteLine(target[pc]);
-				target[pc].execute(ref pc, ref dataMemory, ref registers);
+				target[pc].execute(ref pc, dataMemory, registers);
 			}
 
 			Assert.IsTrue(true);

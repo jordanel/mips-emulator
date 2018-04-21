@@ -1,34 +1,29 @@
 ﻿using System;
 using MIPS_Emulator.Instructions;
+using MIPS_Emulator.Instructions.RType;
 using NUnit.Framework;
 
 namespace MIPS_Emulator.Test {
 	public class InstructionFactoryTest {
-		private InstructionFactory target;
 		
 		[Test]
 		public void Test() {
-			Instruction i = InstructionFactory.createInstruction(0x0);
-			uint pc = 5;
-			MemoryUnit m = new MemoryUnit(5);
-			Registers r = new Registers();
-			i.execute(ref pc, ref m, ref r);
-			Console.WriteLine(pc);
-			Console.WriteLine(i);
-
+			Instruction i = InstructionFactory.CreateInstruction(0x00000000);
+			
+			Assert.AreEqual(typeof(SllInstruction), i.GetType());
+			Assert.AreEqual("SLL $zero $zero $zero", i.ToString());
 		}
 
 		[Test]
 		public void UnknownInstruction_ThrowsException() {
 			Assert.Throws<InstructionFactory.UnknownInstructionException>(
-				() => InstructionFactory.createInstruction(0xFFFFFFFF)
+				() => InstructionFactory.CreateInstruction(0xFFFFFFFF)
 			);
-			
 		}
 
 		[Test]
 		public void ValidInstruction_DoesNotThrow() {
-			Assert.DoesNotThrow(() => InstructionFactory.createInstruction(0x0));
+			Assert.DoesNotThrow(() => InstructionFactory.CreateInstruction(0x0));
 		}
 	}
 }

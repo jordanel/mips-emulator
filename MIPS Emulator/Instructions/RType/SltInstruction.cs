@@ -3,14 +3,13 @@ using System;
 
 namespace MIPS_Emulator.Instructions.RType {
 	public class SltInstruction : RTypeInstruction {
+		protected override string Name => "SLT";
 
-		public SltInstruction(uint d, uint s, uint t) : base(InstructionFactory.SLT, d, s, t) {
+		public SltInstruction(uint d, uint s, uint t) : base(d, s, t) {
 			
 		}
 
-		protected override string name => "SLT";
-
-		public override void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg) {
+		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
 			Console.Error.Write("NOT IMPLEMENTED!");
 		}

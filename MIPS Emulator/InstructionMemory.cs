@@ -30,7 +30,7 @@ namespace MIPS_Emulator {
 			iMem = new Instruction[instructions.Length];
 
 			for (var i = 0; i < instructions.Length; i++) {
-				iMem[i] = InstructionFactory.createInstruction(instructions[i]);
+				iMem[i] = InstructionFactory.CreateInstruction(instructions[i]);
 			}
 			
 		}

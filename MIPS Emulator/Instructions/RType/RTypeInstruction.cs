@@ -1,13 +1,9 @@
 ﻿namespace MIPS_Emulator.Instructions.RType {
 	public abstract class RTypeInstruction : Instruction {
-
-		protected uint func;
+		protected abstract string Name { get; }
 		protected readonly uint d, s, t, shamt;
 
-		protected abstract string name { get; }
-
-		protected RTypeInstruction(uint func, uint d, uint s, uint t) {
-			this.func = func;
+		protected RTypeInstruction(uint d, uint s, uint t) {
 			this.d = d;
 			this.s = s;
 			this.t = t;
@@ -15,8 +11,7 @@
 		}
 		
 		//TODO: Add shamt to shift instructions
-		protected RTypeInstruction(uint func, uint d, uint s, uint t, uint shamt) {
-			this.func = func;
+		protected RTypeInstruction(uint d, uint s, uint t, uint shamt) {
 			this.d = d;
 			this.s = s;
 			this.t = t;
@@ -24,10 +19,9 @@
 		}
 
 		public override string ToString() {
-			return $"{name} {Registers.RegisterToName(d)} {Registers.RegisterToName(s)} {Registers.RegisterToName(t)}";
+			return $"{Name} {Registers.RegisterToName(d)} {Registers.RegisterToName(s)} {Registers.RegisterToName(t)}";
 		}
 
-		public abstract void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg);
+		public abstract void execute(ref uint pc, MemoryUnit mem, Registers reg);
 	}
-
 }

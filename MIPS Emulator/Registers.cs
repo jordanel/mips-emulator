@@ -1,21 +1,21 @@
 ﻿namespace MIPS_Emulator {
 	public class Registers {
-		private readonly uint[] registers;
+		private readonly int[] registers;
 
-		public uint this[int regNumber] {
+		public int this[uint regNumber] {
 			get { return (regNumber == 0) ? 0 : registers[regNumber]; }
 			set { registers[regNumber] = value; }
 		}
 
 		public Registers() {
-			registers = new uint[32];
+			registers = new int[32];
 		}
 
-		public uint GetRegister(int regNumber) {
+		public int GetRegister(uint regNumber) {
 			return (regNumber == 0) ? 0 : registers[regNumber];
 		}
 
-		public void SetRegister(int regNumber, uint value) {
+		public void SetRegister(uint regNumber, int value) {
 			registers[regNumber] = value;
 		}
 

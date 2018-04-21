@@ -2,13 +2,13 @@
 
 namespace MIPS_Emulator.Instructions.JType {
 	public class JInstruction : JTypeInstruction {
+		protected override string Name => "J";
+		
 		public JInstruction(uint immediate) : base(immediate) {
 			
 		}
-
-		protected override string name => "J";
 		
-		public override void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg) {
+		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
 			Console.Error.Write("NOT IMPLEMENTED!");
 		}

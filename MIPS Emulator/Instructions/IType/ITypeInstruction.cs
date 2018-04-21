@@ -1,21 +1,19 @@
 ﻿namespace MIPS_Emulator.Instructions.IType {
 	public abstract class ITypeInstruction : Instruction {
-		protected uint immediate;
-		protected uint s, t;
-
-		protected abstract string name { get; }	
+		protected abstract string Name { get; }
+		protected readonly int Immediate;
+		protected readonly uint S, T;
 		
-		protected ITypeInstruction(uint immediate, uint s, uint t) {
-			this.immediate = immediate;
-			this.s = s;
-			this.t = t;
+		protected ITypeInstruction(uint t, uint s, int immediate) {
+			this.Immediate = immediate;
+			this.S = s;
+			this.T = t;
 		}
 		
 		public override string ToString() {
-			return $"{name} {Registers.RegisterToName(t)} {immediate}({Registers.RegisterToName(s)})";
+			return $"{Name} {Registers.RegisterToName(T)} {Immediate}({Registers.RegisterToName(S)})";
 		}
 
-		public abstract void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg);
-
+		public abstract void execute(ref uint pc, MemoryUnit mem, Registers reg);
 	}
 }

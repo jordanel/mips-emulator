@@ -3,15 +3,13 @@ using System;
 
 namespace MIPS_Emulator.Instructions.IType {
 	public class SltiInstruction : ITypeInstruction{
-		public SltiInstruction(uint immediate, uint s, uint t) : base(immediate, s, t) {
+		protected override string Name => "SLTI";
+		
+		public SltiInstruction(int immediate, uint s, uint t) : base(t, s, immediate) {
 			
 		}
-
-		protected override string name => "SLTI";
 		
-
-		
-		public override void execute(ref uint pc, ref MemoryUnit mem, ref Registers reg) {
+		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
 			Console.Error.Write("NOT IMPLEMENTED!");
 		}
