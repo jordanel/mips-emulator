@@ -48,5 +48,9 @@
 			
 			return "$" + regNumber;
 		}
+
+		public static string RegisterToName(uint regNumber) {
+			return RegisterToName((int)regNumber);
+		}
 	}
 }

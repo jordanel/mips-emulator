@@ -42,15 +42,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Instruction.cs" />
     <Compile Include="InstructionFactory.cs" />
-    <Compile Include="ITypeInstruction.cs" />
-    <Compile Include="JTypeInstruction.cs" />
+    <Compile Include="InstructionMemory.cs" />
+    <Compile Include="Instructions\Instruction.cs" />
+    <Compile Include="Instructions\IType\AddiInstruction.cs" />
+    <Compile Include="Instructions\IType\AddiuInstruction.cs" />
+    <Compile Include="Instructions\IType\BeqInstruction.cs" />
+    <Compile Include="Instructions\IType\BneInstruction.cs" />
+    <Compile Include="Instructions\IType\ITypeInstruction.cs" />
+    <Compile Include="Instructions\IType\LuiInstruction.cs" />
+    <Compile Include="Instructions\IType\LwInstruction.cs" />
+    <Compile Include="Instructions\IType\OriInstruction.cs" />
+    <Compile Include="Instructions\IType\SltiInstruction.cs" />
+    <Compile Include="Instructions\IType\SltiuInstruction.cs" />
+    <Compile Include="Instructions\IType\SwInstruction.cs" />
+    <Compile Include="Instructions\JType\JalInstruction.cs" />
+    <Compile Include="Instructions\JType\JInstruction.cs" />
+    <Compile Include="Instructions\JType\JTypeInstruction.cs" />
+    <Compile Include="Instructions\RType\AddInstruction.cs" />
+    <Compile Include="Instructions\RType\AndInstruction.cs" />
+    <Compile Include="Instructions\RType\JrInstruction.cs" />
+    <Compile Include="Instructions\RType\NorInstruction.cs" />
+    <Compile Include="Instructions\RType\OrInstruction.cs" />
+    <Compile Include="Instructions\RType\RTypeInstruction.cs" />
+    <Compile Include="Instructions\RType\SllInstruction.cs" />
+    <Compile Include="Instructions\RType\SllvInstruction.cs" />
+    <Compile Include="Instructions\RType\SltInstruction.cs" />
+    <Compile Include="Instructions\RType\SltuInstruction.cs" />
+    <Compile Include="Instructions\RType\SraInstruction.cs" />
+    <Compile Include="Instructions\RType\SrlInstruction.cs" />
+    <Compile Include="Instructions\RType\SubInstruction.cs" />
+    <Compile Include="Instructions\RType\XorInstruction.cs" />
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
-    <Compile Include="RTypeInstruction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
