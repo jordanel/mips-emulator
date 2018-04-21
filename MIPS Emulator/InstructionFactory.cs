@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MIPS_Emulator.Instructions;
 using MIPS_Emulator.Instructions.IType;
 using MIPS_Emulator.Instructions.JType;
@@ -7,7 +7,6 @@ using MIPS_Emulator.Instructions.RType;
 namespace MIPS_Emulator {
 	public class InstructionFactory {
 
-		
 		// op codes
 		public const uint LW = 0b100011;
 		public const uint SW = 0b101011;
@@ -36,6 +35,38 @@ namespace MIPS_Emulator {
 		public const uint SRL = 0b000010;
 		public const uint SRA = 0b000011;
 		public const uint JR = 0b001000;
+		
+		private enum Opcode {
+			R = 0b000000,
+			LW = 0b100011,
+			SW = 0b101011,
+			ADDI = 0b001000,
+			ADDIU = 0b001001,
+			SLTI = 0b001010,
+			SLTIU = 0b001011,
+			ORI = 0b001101,
+			LUI = 0b001111,
+			BEQ = 0b000100,
+			BNE = 0b000101,
+			J = 0b000010,
+			JAL = 0b000011
+		}
+
+		private enum Func {
+			ADD = 0b100000,
+			SUB = 0b100010,
+			AND = 0b100100,
+			OR = 0b100101,
+			XOR = 0b100110,
+			NOR = 0b100111,
+			SLT = 0b101010,
+			SLTU = 0b101011,
+			SLL = 0b000000,
+			SLLV = 0b000100,
+			SRL = 0b000010,
+			SRA = 0b000011,
+			JR = 0b001000
+		}
 		
 		private const uint SIX_MASK = 0b111111;
 		private const uint FIVE_MASK = 0b11111;
