@@ -4,13 +4,13 @@ namespace MIPS_Emulator.Instructions.JType {
 	public class JalInstruction : JTypeInstruction {
 		protected override string Name => "JAL";
 		
-		public JalInstruction(uint immediate) : base(immediate) {
+		public JalInstruction(uint target) : base(target) {
 			
 		}
 		
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
-			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+			reg[31] = pc + 4;
+			pc = (pc & 0xF0000000) | (Target << 2);
 		}
 	}
 }

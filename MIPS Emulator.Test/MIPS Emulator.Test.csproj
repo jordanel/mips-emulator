@@ -54,6 +54,8 @@
     <Compile Include="Instructions\IType\SltiInstructionTest.cs" />
     <Compile Include="Instructions\IType\SltiuInstructionTest.cs" />
     <Compile Include="Instructions\IType\SwInstructionTest.cs" />
+    <Compile Include="Instructions\JType\JalInstructionTest.cs" />
+    <Compile Include="Instructions\JType\JInstructionTest.cs" />
     <Compile Include="MemoryUnitTest.cs" />
     <Compile Include="RegistersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
