@@ -11,7 +11,7 @@ namespace MIPS_Emulator.Instructions.IType {
 		
 		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+			Console.Error.WriteLine("NOT IMPLEMENTED!");
 		}
 	}
 }
