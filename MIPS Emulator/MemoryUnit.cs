@@ -2,9 +2,9 @@
 	public class MemoryUnit {
 		private readonly uint[] dataMem;
 
-		public uint this[int i] {
-			get => dataMem[i];
-			set => dataMem[i] = value;
+		public uint this[uint i] {
+			get => dataMem[i >> 2];
+			set => dataMem[i >> 2] = value;
 		}
 		
 		public MemoryUnit(uint size) {

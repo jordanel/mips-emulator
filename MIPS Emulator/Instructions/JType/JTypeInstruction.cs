@@ -11,6 +11,6 @@
 			return $"{Name} {Immediate}";
 		}
 
-		public abstract void execute(ref uint pc, MemoryUnit mem, Registers reg);
+		public abstract void Execute(ref uint pc, MemoryUnit mem, Registers reg);
 	}
 }

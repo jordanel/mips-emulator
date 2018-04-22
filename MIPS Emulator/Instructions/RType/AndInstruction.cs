@@ -8,7 +8,7 @@ namespace MIPS_Emulator.Instructions.RType {
 			
 		}
 
-		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
 			pc += 4;
 			Console.Error.Write("NOT IMPLEMENTED!");
 		}

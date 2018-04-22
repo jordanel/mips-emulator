@@ -5,13 +5,13 @@ namespace MIPS_Emulator.Instructions.IType {
 	public class OriInstruction : ITypeInstruction{
 		protected override string Name => "ORI";
 		
-		public OriInstruction(int immediate, uint s, uint t) : base(t, s, immediate) {
+		public OriInstruction(uint t, uint s, uint immediate) : base(t, s, immediate) {
 			
 		}
 		
-		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			reg[T] = reg[S] | Immediate;
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
 		}
 	}
 }

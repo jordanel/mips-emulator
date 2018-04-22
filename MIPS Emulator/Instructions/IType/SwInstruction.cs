@@ -5,13 +5,17 @@ namespace MIPS_Emulator.Instructions.IType {
 	public class SwInstruction : ITypeInstruction{
 		protected override string Name => "SW";
 		
-		public SwInstruction(int immediate, uint s, uint t) : base(t, s, immediate) {
+		public SwInstruction(uint t, uint s, uint offset) : base(t, s, offset) {
 			
 		}
 		
-		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			mem[reg[S] + Immediate] = reg[T];
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+		}
+		
+		public override string ToString() {
+			return $"{Name} {Registers.RegisterToName(T)}, 0x{Immediate:X4}({Registers.RegisterToName(S)})";
 		}
 	}
 }

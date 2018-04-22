@@ -25,7 +25,7 @@ namespace MIPS_Emulator.Test {
 
 			while (pc < instructions.Length * 4) {
 				Console.WriteLine(target[pc]);
-				target[pc].execute(ref pc, dataMemory, registers);
+				target[pc].Execute(ref pc, dataMemory, registers);
 			}
 
 			Assert.IsTrue(true);

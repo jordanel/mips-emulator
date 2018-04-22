@@ -1,12 +1,13 @@
-﻿using MIPS_Emulator.Instructions.IType;
+﻿using System;
+using MIPS_Emulator.Instructions.IType;
 using NUnit.Framework;
 
 namespace MIPS_Emulator.Test.Instructions.IType {
-	public class AddiuInstructionTest {
+	public class AddiInstructionTest {
 		private uint pc;
 		private Registers reg;
 		private MemoryUnit mem;
-		private AddiuInstruction target;
+		private AddiInstruction target;
 
 		[SetUp]
 		public void SetUp() {
@@ -18,7 +19,7 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 		[Test]
 		public void Execute_AddPositiveNumbers() {
 			reg[1] = 0x00000002;
-			target = new AddiuInstruction(1, 1, 0x0001);
+			target = new AddiInstruction(1, 1, 0x0001);
 			
 			target.Execute(ref pc, mem, reg);
 			
@@ -29,7 +30,7 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 		[Test]
 		public void Execute_NegativeImmediate() {
 			reg[1] = 0x00000003;
-			target = new AddiuInstruction(2, 1, 0xFFFF);
+			target = new AddiInstruction(2, 1, 0xFFFF);
 			
 			target.Execute(ref pc, mem, reg);
 			
@@ -40,7 +41,7 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 		[Test]
 		public void Execute_Overflow() {
 			reg[1] = 0xFFFFFFFF;
-			target = new AddiuInstruction(1, 1, 0x0001);
+			target = new AddiInstruction(1, 1, 0x0001);
 			
 			target.Execute(ref pc, mem, reg);
 			
@@ -50,9 +51,9 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 
 		[Test]
 		public void ToString_Formatted() {
-			target = new AddiuInstruction(1, 2, 0xFFFF);
+			target = new AddiInstruction(1, 2, 0xFFFF);
 			
-			Assert.AreEqual("ADDIU $at, $v0, 0xFFFF", target.ToString());
+			Assert.AreEqual("ADDI $at, $v0, 0xFFFF", target.ToString());
 		}
 	}
 }

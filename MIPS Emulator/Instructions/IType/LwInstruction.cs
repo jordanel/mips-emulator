@@ -4,13 +4,17 @@ namespace MIPS_Emulator.Instructions.IType {
 	public class LwInstruction : ITypeInstruction{
 		protected override string Name => "LW";
 		
-		public LwInstruction(int immediate, uint s, uint t) : base(t, s, immediate) {
+		public LwInstruction(uint t, uint s, uint offset) : base(t, s, offset) {
 			
 		}
 		
-		public override void execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			reg[T] = mem[reg[S] + Immediate];
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+		}
+
+		public override string ToString() {
+			return $"{Name} {Registers.RegisterToName(T)}, 0x{Immediate:X4}({Registers.RegisterToName(S)})";
 		}
 	}
 }

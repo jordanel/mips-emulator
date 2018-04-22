@@ -49,7 +49,7 @@ namespace MIPS_Emulator {
 			uint rt = (instruction >> 16) & FIVE_MASK;
 			uint rs = (instruction >> 21) & FIVE_MASK;
 			uint op = (instruction >> 26) & SIX_MASK;
-			int immediate = (int) (instruction & SIXTEEN_MASK);
+			uint immediate = instruction & SIXTEEN_MASK;
 			uint address = instruction & TWENTY_SIX_MASK;
 
 			if (op == 0) {
@@ -84,25 +84,25 @@ namespace MIPS_Emulator {
 			} else {
 				switch ((Opcode) op) {
 					case Opcode.LW:
-						return new LwInstruction(immediate, rs, rt);
+						return new LwInstruction(rt, rs, immediate);
 					case Opcode.SW:
-						return new SwInstruction(immediate, rs, rt);
+						return new SwInstruction(rt, rs, immediate);
 					case Opcode.ADDI:
-						return new AddiInstruction(immediate, rs, rt);
+						return new AddiInstruction(rt, rs, immediate);
 					case Opcode.ADDIU:
-						return new AddiuInstruction(immediate, rs, rt);
+						return new AddiuInstruction(rt, rs, immediate);
 					case Opcode.SLTI:
-						return new SltiInstruction(immediate, rs, rt);
+						return new SltiInstruction(rt, rs, immediate);
 					case Opcode.SLTIU:
-						return new SltiuInstruction(immediate, rs, rt);
+						return new SltiuInstruction(rt, rs, immediate);
 					case Opcode.ORI:
-						return new OriInstruction(immediate, rs, rt);
+						return new OriInstruction(rt, rs, immediate);
 					case Opcode.LUI:
-						return new LuiInstruction(immediate, rs, rt);
+						return new LuiInstruction(rt, immediate);
 					case Opcode.BEQ:
-						return new BeqInstruction(immediate, rs, rt);
+						return new BeqInstruction(rs, rt, immediate);
 					case Opcode.BNE:
-						return new BneInstruction(immediate, rs, rt);
+						return new BneInstruction(rs, rt, immediate);
 					case Opcode.J:
 						return new JInstruction(address);
 					case Opcode.JAL:
