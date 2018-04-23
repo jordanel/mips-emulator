@@ -10,11 +10,10 @@ namespace MIPS_Emulator.Instructions.IType {
 		}
 
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			pc += 4;
 			if (reg[S] != reg[T]) {
 				pc += (Immediate << 2);
-			} else {
-				pc += 4;
-			}
+			} 
 		}
 		
 		public override string ToString() {

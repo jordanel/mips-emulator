@@ -13,7 +13,6 @@ namespace MIPS_Emulator.Instructions.IType {
 			bool isLessThanImmediate = reg[S] < SignExtend(Immediate);
 			reg[T] = (uint) (isLessThanImmediate ? 1 : 0);
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
 		}
 	}
 }

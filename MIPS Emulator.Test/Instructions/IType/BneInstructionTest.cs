@@ -32,7 +32,7 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 			
 			target.Execute(ref pc, mem, reg);
 			
-			Assert.AreEqual(0x00000010, pc);
+			Assert.AreEqual(0x00000014, pc);
 		}
 
 		[Test]
