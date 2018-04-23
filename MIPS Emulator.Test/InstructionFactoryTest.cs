@@ -11,7 +11,6 @@ namespace MIPS_Emulator.Test {
 			Instruction i = InstructionFactory.CreateInstruction(0x00000000);
 			
 			Assert.AreEqual(typeof(SllInstruction), i.GetType());
-			Assert.AreEqual("SLL $zero $zero $zero", i.ToString());
 		}
 
 		[Test]

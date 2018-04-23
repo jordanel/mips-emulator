@@ -71,15 +71,15 @@ namespace MIPS_Emulator {
 					case Func.SLTU:
 						return new SltuInstruction(rd, rs, rt);
 					case Func.SLL:
-						return new SllInstruction(rd, rs, rt);
+						return new SllInstruction(rd, rt, rs);
 					case Func.SLLV:
-						return new SllvInstruction(rd, rs, rt);
+						return new SllvInstruction(rd, rt, rs);
 					case Func.SRL:
-						return new SrlInstruction(rd, rs, rt);
+						return new SrlInstruction(rd, rt, rs);
 					case Func.SRA:
-						return new SraInstruction(rd, rs, rt);
+						return new SraInstruction(rd, rt, rs);
 					case Func.JR:
-						return new JrInstruction(rd, rs, rt);
+						return new JrInstruction(rs);
 				}
 			} else {
 				switch ((Opcode) op) {

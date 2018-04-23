@@ -5,13 +5,16 @@ namespace MIPS_Emulator.Instructions.RType {
 	public class JrInstruction : RTypeInstruction {
 		protected override string Name => "JR";
 		
-		public JrInstruction(uint d, uint s, uint t) : base(d, s, t) {
+		public JrInstruction(uint s) : base(0, s, 0) {
 			
 		}
 
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
-			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+			pc = reg[S];
+		}
+
+		public override string ToString() {
+			return $"{Name} {Registers.RegisterToName(S)}";
 		}
 	}
 }

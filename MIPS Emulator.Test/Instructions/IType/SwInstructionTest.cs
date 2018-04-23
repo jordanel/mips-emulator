@@ -17,12 +17,12 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 
 		[Test]
 		public void Execute_DataStoredInMem() {
-			reg[8] = 0xDEADBEEF;
+			reg[8] = 0x11037;
 			target = new SwInstruction(8, 9, 0x0004);
 			
 			target.Execute(ref pc, mem, reg);
 			
-			Assert.AreEqual(0xDEADBEEF, mem[4]);
+			Assert.AreEqual(0x11037, mem[4]);
 			Assert.AreEqual(0x00000004, pc);
 		}
 

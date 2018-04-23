@@ -10,8 +10,9 @@ namespace MIPS_Emulator.Instructions.RType {
 		}
 
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			bool isLessThan = (int) reg[S] < (int) reg[T];
+			reg[D] = (uint) (isLessThan ? 1 : 0);
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
 		}
 	}
 }

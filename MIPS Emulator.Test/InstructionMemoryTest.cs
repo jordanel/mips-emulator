@@ -6,6 +6,7 @@ namespace MIPS_Emulator.Test {
 		private InstructionMemory target;
 
 		[Test]
+		//[Ignore("Ignoring while instructions are implemented")]
 		public void TestInitInstructionMemory() {
 
 			uint[] instructions = new uint[] {
@@ -20,16 +21,14 @@ namespace MIPS_Emulator.Test {
 			target = new InstructionMemory(instructions);
 
 			uint pc = 0;
-			var dataMemory = new MemoryUnit(1);
+			var dataMemory = new MemoryUnit(1000);
 			var registers = new Registers();
 
 			while (pc < instructions.Length * 4) {
-				Console.WriteLine(target[pc]);
+				Console.WriteLine($"{pc:X8}: {target[pc]}");
 				target[pc].Execute(ref pc, dataMemory, registers);
-			}
-
-			Assert.IsTrue(true);
-
+				pc += 4;
+			}			
 		}
 	
 	}

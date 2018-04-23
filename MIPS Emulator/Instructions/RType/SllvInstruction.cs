@@ -5,13 +5,17 @@ namespace MIPS_Emulator.Instructions.RType {
 	public class SllvInstruction : RTypeInstruction {
 		protected override string Name => "SLLV";
 
-		public SllvInstruction(uint d, uint s, uint t) : base(d, s, t) {
+		public SllvInstruction(uint d, uint t, uint s) : base(d, s, t) {
 			
 		}
 
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			reg[D] = reg[T] << (int) reg[S];
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
+		}
+		
+		public override string ToString() {
+			return $"{Name} {Registers.RegisterToName(D)}, {Registers.RegisterToName(T)}, {Registers.RegisterToName(S)}";
 		}
 	}
 }

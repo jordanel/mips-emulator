@@ -1,4 +1,6 @@
-﻿namespace MIPS_Emulator {
+﻿using System;
+
+namespace MIPS_Emulator {
 	public class MemoryUnit {
 		private readonly uint[] dataMem;
 
@@ -9,6 +11,10 @@
 		
 		public MemoryUnit(uint size) {
 			dataMem = new uint[size];
+		}
+
+		public override string ToString() {
+			return dataMem.ToString();
 		}
 		
 	}

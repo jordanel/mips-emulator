@@ -10,8 +10,8 @@ namespace MIPS_Emulator.Instructions.RType {
 		}
 
 		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+			reg[D] = reg[S] - reg[T];
 			pc += 4;
-			Console.Error.Write("NOT IMPLEMENTED!");
 		}
 	}
 }
