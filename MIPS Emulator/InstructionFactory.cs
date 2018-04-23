@@ -6,7 +6,7 @@ using MIPS_Emulator.Instructions.RType;
 
 namespace MIPS_Emulator {
 	public class InstructionFactory {
-		public enum Opcode : uint {
+		private enum Opcode : uint {
 			LW    = 0b100011,
 			SW    = 0b101011,
 			ADDI  = 0b001000,
@@ -20,7 +20,8 @@ namespace MIPS_Emulator {
 			J     = 0b000010,
 			JAL   = 0b000011
 		}
-		public enum Func : uint {
+
+		private enum Func : uint {
 			ADD  = 0b100000,
 			SUB  = 0b100010,
 			AND  = 0b100100,

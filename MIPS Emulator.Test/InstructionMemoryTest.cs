@@ -28,8 +28,7 @@ namespace MIPS_Emulator.Test {
 				Console.WriteLine($"{pc:X8}: {target[pc]}");
 				target[pc].Execute(ref pc, dataMemory, registers);
 				pc += 4;
-			}			
+			}
 		}
-	
 	}
 }
