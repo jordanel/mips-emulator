@@ -42,7 +42,7 @@ namespace MIPS_Emulator {
 		private const uint SIXTEEN_MASK = 0b1111111111111111;
 		private const uint TWENTY_SIX_MASK = 0b11111111111111111111111111;
 		
-		public static Instruction CreateInstruction(uint instruction) {
+		public Instruction CreateInstruction(uint instruction) {
 
 			uint func = instruction & SIX_MASK;
 			uint shamt = (instruction >> 6) & FIVE_MASK;

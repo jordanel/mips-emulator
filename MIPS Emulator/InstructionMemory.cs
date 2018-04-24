@@ -27,10 +27,11 @@ namespace MIPS_Emulator {
 		}
 
 		public InstructionMemory(uint[] instructions) {
+			InstructionFactory instrFact = new InstructionFactory();
 			iMem = new Instruction[instructions.Length];
 
 			for (var i = 0; i < instructions.Length; i++) {
-				iMem[i] = InstructionFactory.CreateInstruction(instructions[i]);
+				iMem[i] = instrFact.CreateInstruction(instructions[i]);
 			}
 			
 		}
