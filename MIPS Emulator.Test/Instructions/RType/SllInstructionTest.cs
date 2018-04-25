@@ -5,14 +5,14 @@ namespace MIPS_Emulator.Test.Instructions.RType {
 	public class SllInstructionTest {
 		private uint pc;
 		private Registers reg;
-		private MemoryUnit mem;
+		private MemoryMapper mem;
 		private SllInstruction target;
 
 		[SetUp]
 		public void SetUp() {
 			pc = 0x0;
 			reg = new Registers();
-			mem = new MemoryUnit(8);
+			mem = new MemoryMapper(8);
 		}
 		
 		[Test]

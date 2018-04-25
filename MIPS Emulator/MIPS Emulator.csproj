@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataMemory.cs" />
     <Compile Include="InstructionFactory.cs" />
     <Compile Include="InstructionMemory.cs" />
     <Compile Include="Instructions\Instruction.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Instructions\RType\SrlInstruction.cs" />
     <Compile Include="Instructions\RType\SubInstruction.cs" />
     <Compile Include="Instructions\RType\XorInstruction.cs" />
+    <Compile Include="MemoryMapper.cs" />
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

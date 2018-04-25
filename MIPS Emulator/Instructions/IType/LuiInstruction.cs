@@ -9,7 +9,7 @@ namespace MIPS_Emulator.Instructions.IType {
 			
 		}
 		
-		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
 			reg[T] = Immediate << 16;
 			pc += 4;
 		}

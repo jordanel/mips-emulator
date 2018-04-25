@@ -7,7 +7,7 @@
 			this.Target = target;
 		}
 
-		public abstract void Execute(ref uint pc, MemoryUnit mem, Registers reg);
+		public abstract void Execute(ref uint pc, MemoryMapper mem, Registers reg);
 		
 		public override string ToString() {
 			return $"{Name} 0x{Target:X8}";

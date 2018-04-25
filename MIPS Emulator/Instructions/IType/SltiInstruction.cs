@@ -9,7 +9,7 @@ namespace MIPS_Emulator.Instructions.IType {
 			
 		}
 		
-		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
 			bool isLessThanImmediate = (int) reg[S] < (int) SignExtend(Immediate);
 			reg[T] = (uint) (isLessThanImmediate ? 1 : 0);
 			pc += 4;

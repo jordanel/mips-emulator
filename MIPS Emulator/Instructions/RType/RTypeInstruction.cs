@@ -9,7 +9,7 @@
 			this.T = t;
 		}
 
-		public abstract void Execute(ref uint pc, MemoryUnit mem, Registers reg);
+		public abstract void Execute(ref uint pc, MemoryMapper mem, Registers reg);
 		
 		public override string ToString() {
 			return $"{Name} {Registers.RegisterToName(D)}, {Registers.RegisterToName(S)}, {Registers.RegisterToName(T)}";

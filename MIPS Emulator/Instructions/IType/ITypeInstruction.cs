@@ -9,7 +9,7 @@
 			this.Immediate = immediate;
 		}
 
-		public abstract void Execute(ref uint pc, MemoryUnit mem, Registers reg);
+		public abstract void Execute(ref uint pc, MemoryMapper mem, Registers reg);
 
 		protected static uint SignExtend(uint immediate) {
 			uint sign = (immediate >> 15) & 0b1;

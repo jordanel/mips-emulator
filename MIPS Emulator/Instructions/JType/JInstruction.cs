@@ -8,7 +8,7 @@ namespace MIPS_Emulator.Instructions.JType {
 			
 		}
 		
-		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
 			pc = (pc & 0xF0000000) | (Target << 2);
 		}
 	}

@@ -9,7 +9,7 @@ namespace MIPS_Emulator.Instructions.RType {
 			
 		}
 
-		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
 			pc = reg[S];
 		}
 

@@ -5,14 +5,14 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 	public class BeqInstructionTest {
 		private uint pc;
 		private Registers reg;
-		private MemoryUnit mem;
+		private MemoryMapper mem;
 		private BeqInstruction target;
 		
 		[SetUp]
 		public void SetUp() {
 			pc = 0x00000000;
 			reg = new Registers();
-			mem = new MemoryUnit(8);
+			mem = new MemoryMapper(8);
 		}
 		
 		[Test]

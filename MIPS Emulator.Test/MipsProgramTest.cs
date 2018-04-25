@@ -29,7 +29,7 @@ namespace MIPS_Emulator.Test {
 			target = new InstructionMemory(instrs);
 
 			uint pc = 0;
-			var dataMemory = new MemoryUnit(10000);
+			var dataMemory = new MemoryMapper(10000);
 			var registers = new Registers();
 
 			int icount = 0;

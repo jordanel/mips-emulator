@@ -10,7 +10,7 @@ namespace MIPS_Emulator.Instructions.RType {
 			this.shamt = shamt;
 		}
 
-		public override void Execute(ref uint pc, MemoryUnit mem, Registers reg) {
+		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
 			reg[D] = reg[T] >> (int) shamt;
 			pc += 4;
 		}
