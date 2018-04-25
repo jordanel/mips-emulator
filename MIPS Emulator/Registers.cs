@@ -2,21 +2,13 @@
 	public class Registers {
 		private readonly uint[] registers;
 
-		public uint this[uint regNumber] {
-			get { return (regNumber == 0) ? 0 : registers[regNumber]; }
-			set { registers[regNumber] = value; }
-		}
-
 		public Registers() {
 			registers = new uint[32];
 		}
-
-		public uint GetRegister(uint regNumber) {
-			return (regNumber == 0) ? 0 : registers[regNumber];
-		}
-
-		public void SetRegister(uint regNumber, uint value) {
-			registers[regNumber] = value;
+		
+		public uint this[uint regNumber] {
+			get { return (regNumber == 0) ? 0 : registers[regNumber]; }
+			set { registers[regNumber] = value; }
 		}
 
 		public static string RegisterToName(int regNumber) {
