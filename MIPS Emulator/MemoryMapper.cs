@@ -1,6 +1,12 @@
-﻿namespace MIPS_Emulator {
+﻿using System.Collections.Generic;
+
+namespace MIPS_Emulator {
 	public class MemoryMapper {
 		private readonly uint[] dataMem;
+
+		public MemoryMapper(List<MemoryUnit> memUnits) {
+			
+		}
 		
 		public MemoryMapper(uint size) {
 			dataMem = new uint[size];
