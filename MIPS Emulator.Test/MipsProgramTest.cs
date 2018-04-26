@@ -7,6 +7,7 @@ namespace MIPS_Emulator.Test {
 		private InstructionMemory target;
 
 		[Test]
+		[Ignore("TEST NOT YET NEEDED")]
 		public void TestInitInstructionMemory() {
 
 			uint[] instructions = new uint[] {
@@ -36,7 +37,7 @@ namespace MIPS_Emulator.Test {
 
 			uint a = 99;
 			
-			dataMemory[4] = a;
+			dataMemory[0] = a;
 			
 			while (pc < instructions.Length * 4 && icount < 1000000) {
 				//Console.WriteLine($"{pc:X8}: {target[pc]}");
