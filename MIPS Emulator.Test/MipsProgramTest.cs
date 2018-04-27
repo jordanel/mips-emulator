@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MIPS_Emulator.Instructions;
 using NUnit.Framework;
 
@@ -7,7 +8,7 @@ namespace MIPS_Emulator.Test {
 		private InstructionMemory target;
 
 		[Test]
-		[Ignore("TEST NOT YET NEEDED")]
+		//[Ignore("TEST NOT YET NEEDED")]
 		public void TestInitInstructionMemory() {
 
 			uint[] instructions = new uint[] {
@@ -30,7 +31,11 @@ namespace MIPS_Emulator.Test {
 			target = new InstructionMemory(instrs);
 
 			uint pc = 0;
-			var dataMemory = new MemoryMapper(10000);
+			
+			var dataMem = new DataMemory(10000);
+			var map = new MappedMemoryUnit(dataMem, 0);
+			var unitList = new List<MappedMemoryUnit> {map};
+			var dataMemory = new MemoryMapper(unitList);
 			var registers = new Registers();
 
 			int icount = 0;
@@ -41,6 +46,14 @@ namespace MIPS_Emulator.Test {
 			
 			while (pc < instructions.Length * 4 && icount < 1000000) {
 				//Console.WriteLine($"{pc:X8}: {target[pc]}");
+				if (pc == 27 * 4) {
+					Console.WriteLine(target[pc].ToString());
+					Console.WriteLine($"a1: {registers[4]}, {dataMemory[4]}");
+				}
+				if (pc == 31 * 4) {
+					Console.WriteLine(target[pc].ToString());
+					Console.WriteLine($"a1: {registers[2]}, {dataMemory[0]}");
+				}
 				target[pc].Execute(ref pc, dataMemory, registers);
 				icount++;
 			}

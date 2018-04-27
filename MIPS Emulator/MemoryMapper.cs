@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MIPS_Emulator {
 	public class MemoryMapper {
-		private List<MappedMemoryUnit> memUnits;
+		private readonly List<MappedMemoryUnit> memUnits;
 
 		public MemoryMapper(List<MappedMemoryUnit> memUnits) {
 			this.memUnits = memUnits;
@@ -19,18 +19,35 @@ namespace MIPS_Emulator {
 			memUnits = new List<MappedMemoryUnit> {mappedMem};
 		}
 		
-		public uint this[uint i] {
-			get => ResolveAddress(ref i)[i];
-			set => ResolveAddress(ref i)[i] = value;
+		public uint this[uint address] {
+			get {
+				MappedMemoryUnit unit = FindContainingUnit(address);
+				return unit[ResolveAddress(address, unit)];
+			}
+			set {
+				MappedMemoryUnit m = FindContainingUnit(address);
+				m[ResolveAddress(address, m)] = value;
+			}
 		}
 
-		private MappedMemoryUnit ResolveAddress(ref uint addr) {
-			var a = addr;
-			var m = (from memUnit in memUnits
-				where memUnit.StartAddr <= a && a <= memUnit.EndAddr
-				select memUnit).ToList()[0];
-			addr -= m.StartAddr;
-			return m;
+		private MappedMemoryUnit FindContainingUnit(uint addr) {		
+			foreach (MappedMemoryUnit m in memUnits) {
+				if (m.StartAddr <= addr && addr <= m.EndAddr) {
+					return m;
+				}
+			}
+			throw new UnmappedAddressException(addr);
+		}
+
+		private uint ResolveAddress(uint addr, MappedMemoryUnit memUnit) {
+			return addr - memUnit.StartAddr;
+		}
+	}
+	
+	public class UnmappedAddressException : ArgumentOutOfRangeException {
+		public UnmappedAddressException(uint address) 
+			: base ($"Unable to find memory unit mapped to 0x{address:X8}") {
+				
 		}
 	}
 }
