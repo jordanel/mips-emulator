@@ -2,8 +2,9 @@
 
 namespace MIPS_Emulator {
 	public class DataMemory : MemoryUnit {
+		public uint Size => (uint) memory.Length * 4;
 		private readonly uint[] memory;
-
+		
 		public DataMemory(uint size) {
 			memory = new uint[size];
 		}

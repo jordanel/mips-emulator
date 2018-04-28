@@ -75,6 +75,7 @@
     <Compile Include="Instructions\RType\SrlInstruction.cs" />
     <Compile Include="Instructions\RType\SubInstruction.cs" />
     <Compile Include="Instructions\RType\XorInstruction.cs" />
+    <Compile Include="MappedMemoryUnit.cs" />
     <Compile Include="MemoryMapper.cs" />
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Program.cs" />
