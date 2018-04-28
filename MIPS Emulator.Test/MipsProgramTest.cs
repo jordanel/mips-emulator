@@ -42,18 +42,10 @@ namespace MIPS_Emulator.Test {
 
 			uint a = 99;
 			
-			dataMemory[0] = a;
+			dataMemory[4] = a;
 			
 			while (pc < instructions.Length * 4 && icount < 1000000) {
 				//Console.WriteLine($"{pc:X8}: {target[pc]}");
-				if (pc == 27 * 4) {
-					Console.WriteLine(target[pc].ToString());
-					Console.WriteLine($"a1: {registers[4]}, {dataMemory[4]}");
-				}
-				if (pc == 31 * 4) {
-					Console.WriteLine(target[pc].ToString());
-					Console.WriteLine($"a1: {registers[2]}, {dataMemory[0]}");
-				}
 				target[pc].Execute(ref pc, dataMemory, registers);
 				icount++;
 			}
