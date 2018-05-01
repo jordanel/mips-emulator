@@ -42,12 +42,12 @@ namespace MIPS_Emulator {
 		private uint ResolveAddress(uint addr, MappedMemoryUnit memUnit) {
 			return addr - memUnit.StartAddr;
 		}
-	}
-	
-	public class UnmappedAddressException : ArgumentOutOfRangeException {
-		public UnmappedAddressException(uint address) 
-			: base ($"Unable to find memory unit mapped to 0x{address:X8}") {
+		
+		public class UnmappedAddressException : ArgumentOutOfRangeException {
+			public UnmappedAddressException(uint address) 
+				: base ($"Unable to find memory unit mapped to 0x{address:X8}") {
 				
+			}
 		}
 	}
 }
