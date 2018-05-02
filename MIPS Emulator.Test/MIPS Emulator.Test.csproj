@@ -73,6 +73,7 @@
     <Compile Include="Instructions\RType\SubInstructionTest.cs" />
     <Compile Include="Instructions\RType\XorInstructionTest.cs" />
     <Compile Include="MemoryMapperTest.cs" />
+    <Compile Include="MipsTest.cs" />
     <Compile Include="RegistersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

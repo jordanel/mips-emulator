@@ -78,6 +78,7 @@
     <Compile Include="MappedMemoryUnit.cs" />
     <Compile Include="MemoryMapper.cs" />
     <Compile Include="MemoryUnit.cs" />
+    <Compile Include="Mips.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
