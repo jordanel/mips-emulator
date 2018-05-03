@@ -4,7 +4,9 @@ using MIPS_Emulator.Instructions;
 namespace MIPS_Emulator {
 	public class InstructionMemory {
 		private readonly Instruction[] iMem;
+		public uint Size => (uint) iMem.Length * 4;
 		
+		// TODO: Add offset for InstructionMemory
 		public InstructionMemory(uint size) {
 			iMem = new Instruction[size];
 		}

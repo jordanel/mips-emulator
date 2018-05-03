@@ -6,6 +6,7 @@ using MIPS_Emulator.Instructions.RType;
 
 namespace MIPS_Emulator {
 	public class InstructionFactory {
+		// TODO: Add new instructions (ANDI, XORI, ADDU)
 		private enum Opcode : uint {
 			LW    = 0b100011,
 			SW    = 0b101011,

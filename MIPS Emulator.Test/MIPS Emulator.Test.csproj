@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -45,6 +49,9 @@
     <Compile Include="DataMemoryTest.cs" />
     <Compile Include="InstructionFactoryTest.cs" />
     <Compile Include="InstructionMemoryTest.cs" />
+    <Compile Include="Instructions\IType\AndiInstructionTest.cs" />
+    <Compile Include="Instructions\IType\XoriInstructionTest.cs" />
+    <Compile Include="Instructions\RType\AdduInstructionTest.cs" />
     <Compile Include="MappedMemoryUnitTest.cs" />
     <Compile Include="MipsProgramTest.cs" />
     <Compile Include="Instructions\IType\AddiInstructionTest.cs" />
@@ -74,6 +81,7 @@
     <Compile Include="Instructions\RType\XorInstructionTest.cs" />
     <Compile Include="MemoryMapperTest.cs" />
     <Compile Include="MipsTest.cs" />
+    <Compile Include="ProgramLoaderTest.cs" />
     <Compile Include="RegistersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +90,12 @@
       <Project>{6FCD0B2B-0CA6-45E6-8B3B-39C77DCF85D1}</Project>
       <Name>MIPS Emulator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestProjects\Test1\project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

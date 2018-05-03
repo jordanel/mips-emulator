@@ -1,0 +1,28 @@
+﻿{
+	"projectName": "Test 1",
+	"instructionSet": "2017",
+	"imem": {
+		"filepath": "imem.mem",
+		"offset": 0
+	},
+	"MemoryMappedIO": [
+		{
+			"type": "dmem",
+			"startAddr": 0,
+			"size": 10000,
+			"filepath": "dmem.mem"
+		},
+		{
+			"type": "screenmem",
+			"startAddr": 10000,
+			"endAddr": 10001,
+			"filepath": "smem.mem"
+		},
+		{
+			"type": "bitmapmem",
+			"startAddr": 10002,
+			"endAddr": 10003,
+			"filepath": "bmem.mem"
+		}
+	]
+}

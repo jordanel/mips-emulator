@@ -1,6 +1,3 @@
-
-using System;
-
 namespace MIPS_Emulator.Instructions.IType {
 	public class OriInstruction : ITypeInstruction{
 		protected override string Name => "ORI";

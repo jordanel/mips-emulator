@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -49,6 +53,7 @@
     <Compile Include="Instructions\Instruction.cs" />
     <Compile Include="Instructions\IType\AddiInstruction.cs" />
     <Compile Include="Instructions\IType\AddiuInstruction.cs" />
+    <Compile Include="Instructions\IType\AndiInstruction.cs" />
     <Compile Include="Instructions\IType\BeqInstruction.cs" />
     <Compile Include="Instructions\IType\BneInstruction.cs" />
     <Compile Include="Instructions\IType\ITypeInstruction.cs" />
@@ -58,10 +63,12 @@
     <Compile Include="Instructions\IType\SltiInstruction.cs" />
     <Compile Include="Instructions\IType\SltiuInstruction.cs" />
     <Compile Include="Instructions\IType\SwInstruction.cs" />
+    <Compile Include="Instructions\IType\XoriInstruction.cs" />
     <Compile Include="Instructions\JType\JalInstruction.cs" />
     <Compile Include="Instructions\JType\JInstruction.cs" />
     <Compile Include="Instructions\JType\JTypeInstruction.cs" />
     <Compile Include="Instructions\RType\AddInstruction.cs" />
+    <Compile Include="Instructions\RType\AdduInstruction.cs" />
     <Compile Include="Instructions\RType\AndInstruction.cs" />
     <Compile Include="Instructions\RType\JrInstruction.cs" />
     <Compile Include="Instructions\RType\NorInstruction.cs" />
@@ -80,6 +87,7 @@
     <Compile Include="MemoryUnit.cs" />
     <Compile Include="Mips.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
   </ItemGroup>
