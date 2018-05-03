@@ -23,9 +23,10 @@ namespace MIPS_Emulator.Test {
 			Assert.AreEqual(3, r[1]);
 		}
 
+		// TODO: Implement better register name test
 		[Test]
 		public void TestPrint() {
-			for (int i = 0; i < 32; i++) {
+			for (int i = 0; i < 33; i++) {
 				Console.WriteLine(Registers.RegisterToName(i));
 			}
 		}

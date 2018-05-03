@@ -189,9 +189,16 @@ namespace MIPS_Emulator.Test {
 		}
 
 		[Test]
-		public void UnknownInstruction_ThrowsException() {
+		public void UnknownOpcode_ThrowsException() {
 			Assert.Throws<InstructionFactory.UnknownInstructionException>(
 				() => target.CreateInstruction(0xFFFFFFFF)
+			);
+		}
+		
+		[Test]
+		public void UnknownFunc_ThrowsException() {
+			Assert.Throws<InstructionFactory.UnknownInstructionException>(
+				() => target.CreateInstruction(0x00FFFFFF)
 			);
 		}
 
