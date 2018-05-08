@@ -7,22 +7,31 @@
 	},
 	"MemoryMappedIO": [
 		{
-			"type": "dmem",
+			"type": "DataMemory",
 			"startAddr": 0,
-			"size": 10000,
-			"filepath": "dmem.mem"
+			"length": 50,
+			"initFile": {
+				"filepath": "dmem.mem",
+				"format": "hex"
+			}
 		},
 		{
-			"type": "screenmem",
+			"type": "ScreenMemory",
 			"startAddr": 10000,
-			"endAddr": 10001,
-			"filepath": "smem.mem"
+			"size": 100,
+			"initFile": {
+				"filepath": "smem.mem",
+				"format": "hex"
+			}
 		},
 		{
-			"type": "bitmapmem",
+			"type": "BitmapMemory",
 			"startAddr": 10002,
 			"endAddr": 10003,
-			"filepath": "bmem.mem"
+			"initFile": {
+				"filepath": "bmem.mem",
+				"format": "hex"
+			}
 		}
 	]
 }
