@@ -1,9 +1,13 @@
 ﻿{
 	"projectName": "Test 1",
 	"instructionSet": "2017",
+	"programCounter": 4,
 	"imem": {
-		"filepath": "imem.mem",
-		"offset": 0
+		"offset": 0,
+		"initFile": {
+			"filepath": "imem.mem",
+			"format": "hex"
+		}
 	},
 	"MemoryMappedIO": [
 		{
