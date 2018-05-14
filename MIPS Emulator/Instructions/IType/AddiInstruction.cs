@@ -1,5 +1,5 @@
 namespace MIPS_Emulator.Instructions.IType {
-	public class AddiInstruction : ITypeInstruction{
+	public class AddiInstruction : ITypeInstruction {
 		protected override string Name => "ADDI";
 		
 		public AddiInstruction(uint t, uint s, uint immediate) : base(t, s, immediate) {

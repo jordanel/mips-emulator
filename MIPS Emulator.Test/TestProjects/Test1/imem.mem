@@ -1,8 +1,11 @@
 201d003c 	    // adjusted top-of-stack down by 0x2000
 3c08ffff
 3508ffff
+
 2009ffff
+	   
 1509001b
+// Why do I exist?
 00084600
 3508f000
 00084203
