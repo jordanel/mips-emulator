@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using MIPS_Emulator.Instructions;
 using Newtonsoft.Json.Linq;
 
@@ -23,17 +24,26 @@ namespace MIPS_Emulator {
 			
 			JObject project = JObject.Parse(json);
 			
-			uint pc = ParseNumber(project["programCounter"]);
+			uint pc = ParseRequiredNumber(project["programCounter"]);
 			InstructionMemory imem = BuildInstructionMemory(project["imem"]);
+			MemoryMapper mappedMem = BuildMemoryMapper(project["mappedMemory"]);
 			
-			return new Mips(pc, imem, null);
+			return new Mips(pc, imem, mappedMem);
 		}
 
-		private uint ParseNumber(JToken token) {
-			return ParseNumber((string) token);
+		private uint ParseRequiredNumber(JToken token) {
+			var number = ParseNumber(token);
+			if (number == null) {
+				throw new ArgumentException("Expected field not found in project JSON");
+			}
+			return (uint) number;
+		}
+		
+		private uint? ParseNumber(JToken token) {
+			return token != null ? ParseNumber((string) token) : null;
 		}
 
-		private uint ParseNumber(string token) {
+		private uint? ParseNumber(string token) {
 			return Convert.ToUInt32(token, 10);
 		}
 
@@ -47,6 +57,62 @@ namespace MIPS_Emulator {
 			}
 			
 			return new InstructionMemory(instructions.ToArray());
+		}
+
+		private MemoryMapper BuildMemoryMapper(JToken token) {
+			JArray memories = (JArray) token;
+			List<MappedMemoryUnit> memUnits = new List<MappedMemoryUnit>();
+			
+			for (int i = 0; i < memories.Count; i++) {
+				MappedMemoryUnit mem = BuildMemoryUnit(memories[i]);
+				memUnits.Add(mem);
+			}
+			
+			return new MemoryMapper(memUnits);
+		}
+
+		private MappedMemoryUnit BuildMemoryUnit(JToken token) {
+			string type = (string) token["type"];
+			uint? length = ParseNumber(token["length"]);
+			uint[] init = token["initFile"] != null ? ReadInitFile(token["initFile"]) : null;
+
+			Type t = Type.GetType($"MIPS_Emulator.{type}");
+			Object[] args = { length ?? (uint) init.Length };
+
+			MemoryUnit mem = null;
+			try {
+				mem = (MemoryUnit) Activator.CreateInstance(t, args);
+			} catch (TypeLoadException e) {
+				throw new ArgumentException($"MemoryUnit type {type} does not exist");
+			}
+
+			if (init != null) {
+				for (uint i = 0; i < init.Length; i++) {
+					mem[i * 4] = init[i];
+				}
+			}
+
+			uint? startAddr = ParseNumber(token["startAddr"]);
+			uint? endAddr = ParseNumber(token["endAddr"]);
+			uint? size = ParseNumber(token["size"]);
+			string bitmask = (string) token["bitmask"];
+
+			MappedMemoryUnit mappedMem = null;
+			if (startAddr != null) {
+				if (endAddr != null) {
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) endAddr);
+				} else if (size != null) {
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) (startAddr + size));
+				} else {
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr);
+				}
+			} else if (bitmask != null) {
+				mappedMem = new MappedMemoryUnit(mem, bitmask);
+			} else {
+				throw new ArgumentException("MappedMemoryUnit requires either startAddr or bitmask");
+			}
+			
+			return mappedMem;
 		}
 
 		private uint[] ReadInitFile(JToken token) {

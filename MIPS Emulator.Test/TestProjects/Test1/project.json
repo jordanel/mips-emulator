@@ -10,18 +10,18 @@
 			"format": "hex"
 		}
 	},
-	"MemoryMappedIO": [
+	"mappedMemory": [
 		{
 			"type": "DataMemory",
 			"startAddr": 0,
 			"length": 50,
 			"initFile": {
 				"filepath": "dmem.mem",
-				"format": "hex"
+				"format": "bin"
 			}
 		},
 		{
-			"type": "ScreenMemory",
+			"type": "DataMemory",
 			"startAddr": 10000,
 			"size": 100,
 			"initFile": {
@@ -30,7 +30,7 @@
 			}
 		},
 		{
-			"type": "BitmapMemory",
+			"type": "DataMemory",
 			"startAddr": 10002,
 			"endAddr": 10003,
 			"initFile": {

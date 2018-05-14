@@ -92,10 +92,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestProjects\Test1\bmem.mem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestProjects\Test1\dmem.mem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestProjects\Test1\imem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestProjects\Test1\project.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestProjects\Test1\smem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
