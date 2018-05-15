@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using MIPS_Emulator.Instructions;
 using NUnit.Framework;
 
@@ -8,10 +9,15 @@ namespace MIPS_Emulator.Test {
 		
 		[SetUp]
 		public void SetUp() {
-			string dir = Path.GetDirectoryName(typeof(ProgramLoaderTest).Assembly.Location);
-			FileInfo file = new FileInfo(Path.Combine(dir, "TestProjects/Test1/project.json"));
-			
+			FileInfo file = GetFileInfoFromPath("TestProjects/Project1/no_errors.json");
+
 			target = new ProgramLoader(file);
+		}
+
+		private FileInfo GetFileInfoFromPath(String path) {
+			string dir = Path.GetDirectoryName(typeof(ProgramLoaderTest).Assembly.Location);
+			FileInfo file = new FileInfo(Path.Combine(dir, path));
+			return file;
 		}
 
 		[Test]
@@ -44,8 +50,49 @@ namespace MIPS_Emulator.Test {
 
 		// TODO: More tests, refactor, create screen/bitmap memories
 		[Test]
-		public void MemoryInitialized() {
+		public void MemoryInitialized_WithStartAddr() {
 			Assert.AreEqual(3, target.Mips.Memory[4]);
+		}
+		
+		[Test]
+		public void MemoryInitialized_WithStartAndEndAddr() {
+			Assert.AreEqual(0xf00, target.Mips.Memory[400]);
+			Assert.AreEqual(0x0f0, target.Mips.Memory[2000]);
+		}
+
+		[Test]
+		public void MemoryInitialized_WithStartAddrAndSize() {
+			Assert.AreEqual(0, target.Mips.Memory[200]);
+			Assert.AreEqual(1, target.Mips.Memory[396]);
+		}
+		
+		[Test]
+		public void MemoryInitialized_WithBitmask() {
+			Assert.AreEqual(0xf00, target.Mips.Memory[2048]);
+		}
+
+		[Test]
+		public void MemoryInitialized_WithoutMappingInfo() {
+			FileInfo file = GetFileInfoFromPath("TestProjects/Project1/missing_mapping.json");
+			Assert.Throws<ArgumentException>(
+				() => new ProgramLoader(file)
+			);
+		}
+
+		[Test]
+		public void NonexistentMemoryUnitType() {
+			FileInfo file = GetFileInfoFromPath("TestProjects/Project1/nonexistent_memory_type.json");
+			Assert.Throws<ArgumentException>(
+				() => new ProgramLoader(file)
+			);
+		}
+		
+		[Test]
+		public void InvalidMemoryUnitType() {
+			FileInfo file = GetFileInfoFromPath("TestProjects/Project1/invalid_memory_type.json");
+			Assert.Throws<ArgumentException>(
+				() => new ProgramLoader(file)
+			);
 		}
 	}
 }

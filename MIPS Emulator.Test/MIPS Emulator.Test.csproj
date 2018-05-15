@@ -92,19 +92,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestProjects\Test1\bmem.mem">
+    <Content Include="TestProjects\Project1\bmem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestProjects\Test1\dmem.mem">
+    <Content Include="TestProjects\Project1\dmem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestProjects\Test1\imem.mem">
+    <Content Include="TestProjects\Project1\imem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestProjects\Test1\project.json">
+    <Content Include="TestProjects\Project1\invalid_memory_type.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestProjects\Test1\smem.mem">
+    <Content Include="TestProjects\Project1\missing_mapping.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestProjects\Project1\nonexistent_memory_type.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestProjects\Project1\no_errors.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestProjects\Project1\smem.mem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

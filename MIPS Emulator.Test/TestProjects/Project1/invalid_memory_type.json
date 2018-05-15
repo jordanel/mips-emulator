@@ -1,0 +1,24 @@
+﻿{
+	"projectName": "Test 1",
+	"schema": "1.0",
+	"instructionSet": "2017",
+	"programCounter": 4,
+	"imem": {
+		"offset": 0,
+		"initFile": {
+			"filepath": "imem.mem",
+			"format": "hex"
+		}
+	},
+	"mappedMemory": [
+		{
+			"type": "MemoryMapper",
+			"startAddr": 0,
+			"length": 50,
+			"initFile": {
+				"filepath": "dmem.mem",
+				"format": "bin"
+			}
+		}
+	]
+}

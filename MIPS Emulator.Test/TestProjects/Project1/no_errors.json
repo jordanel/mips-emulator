@@ -22,8 +22,8 @@
 		},
 		{
 			"type": "DataMemory",
-			"startAddr": 10000,
-			"size": 100,
+			"startAddr": 200,
+			"size": 200,
 			"initFile": {
 				"filepath": "smem.mem",
 				"format": "hex"
@@ -31,8 +31,16 @@
 		},
 		{
 			"type": "DataMemory",
-			"startAddr": 10002,
-			"endAddr": 10003,
+			"startAddr": 400,
+			"endAddr": 2000,
+			"initFile": {
+				"filepath": "bmem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "DataMemory",
+			"bitmask": "1xxxxxxxxxxx",
 			"initFile": {
 				"filepath": "bmem.mem",
 				"format": "hex"

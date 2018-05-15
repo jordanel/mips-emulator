@@ -76,14 +76,15 @@ namespace MIPS_Emulator {
 			uint? length = ParseNumber(token["length"]);
 			uint[] init = token["initFile"] != null ? ReadInitFile(token["initFile"]) : null;
 
-			Type t = Type.GetType($"MIPS_Emulator.{type}");
-			Object[] args = { length ?? (uint) init.Length };
-
 			MemoryUnit mem = null;
 			try {
+				Type t = Type.GetType($"MIPS_Emulator.{type}");
+				Object[] args = {length ?? (uint) init.Length};
 				mem = (MemoryUnit) Activator.CreateInstance(t, args);
-			} catch (TypeLoadException e) {
+			} catch (ArgumentNullException) {
 				throw new ArgumentException($"MemoryUnit type {type} does not exist");
+			} catch (InvalidCastException) {
+				throw new ArgumentException($"MemoryUnit type {type} is not a MemoryUnit");
 			}
 
 			if (init != null) {
@@ -92,6 +93,10 @@ namespace MIPS_Emulator {
 				}
 			}
 
+			return MapMemoryToAddresses(token, mem);
+		}
+
+		private MappedMemoryUnit MapMemoryToAddresses(JToken token, MemoryUnit mem) {
 			uint? startAddr = ParseNumber(token["startAddr"]);
 			uint? endAddr = ParseNumber(token["endAddr"]);
 			uint? size = ParseNumber(token["size"]);
@@ -102,7 +107,7 @@ namespace MIPS_Emulator {
 				if (endAddr != null) {
 					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) endAddr);
 				} else if (size != null) {
-					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) (startAddr + size));
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) (startAddr + size - 1));
 				} else {
 					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr);
 				}
@@ -111,7 +116,6 @@ namespace MIPS_Emulator {
 			} else {
 				throw new ArgumentException("MappedMemoryUnit requires either startAddr or bitmask");
 			}
-			
 			return mappedMem;
 		}
 
