@@ -46,7 +46,7 @@ namespace MIPS_Emulator.Test {
 			
 			while (pc < instructions.Length * 4 && icount < 1000000) {
 				//Console.WriteLine($"{pc:X8}: {target[pc]}");
-				target[pc].Execute(ref pc, dataMemory, registers);
+				target.GetInstruction(pc).Execute(ref pc, dataMemory, registers);
 				icount++;
 			}
 
