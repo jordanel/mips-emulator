@@ -15,12 +15,12 @@
 		}
 
 		public void ExecuteNext() {
-			InstrMem[pc].Execute(ref pc, Memory, Reg);
+			InstrMem.GetInstruction(pc).Execute(ref pc, Memory, Reg);
 		}
 
 		public void ExecuteAll() {
 			while (pc < InstrMem.Size) {
-				InstrMem[pc].Execute(ref pc, Memory, Reg);
+				InstrMem.GetInstruction(pc).Execute(ref pc, Memory, Reg);
 			}
 		}
 	}

@@ -3,14 +3,14 @@
 	"schema": "1.0",
 	"instructionSet": "2017",
 	"programCounter": 4,
-	"imem": {
-		"offset": 0,
-		"initFile": {
-			"filepath": "imem.mem",
-			"format": "hex"
-		}
-	},
-	"mappedMemory": [
+	"memories": [
+		{
+			"type": "InstructionMemory",
+			"initFile": {
+				"filepath": "imem.mem",
+				"format": "hex"
+			}
+		},
 		{
 			"type": "DataMemory",
 			"startAddr": 0,
@@ -21,7 +21,7 @@
 			}
 		},
 		{
-			"type": "DataMemory",
+			"type": "ScreenMemory",
 			"startAddr": 200,
 			"size": 200,
 			"initFile": {
@@ -30,7 +30,7 @@
 			}
 		},
 		{
-			"type": "DataMemory",
+			"type": "BitmapMemory",
 			"startAddr": 400,
 			"endAddr": 2000,
 			"initFile": {
@@ -39,7 +39,7 @@
 			}
 		},
 		{
-			"type": "DataMemory",
+			"type": "BitmapMemory",
 			"bitmask": "1xxxxxxxxxxx",
 			"initFile": {
 				"filepath": "bmem.mem",
