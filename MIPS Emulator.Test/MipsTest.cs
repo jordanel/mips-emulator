@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MIPS_Emulator.Instructions;
 using NUnit.Framework;
 
 namespace MIPS_Emulator.Test {
 	public class MipsTest {
 		private Mips target;
+		private IDictionary<Type, List<MemoryUnit>> memDict;
 
 		[SetUp]
 		public void SetUp() {
@@ -28,13 +30,16 @@ namespace MIPS_Emulator.Test {
 			var map = new MappedMemoryUnit(dataMem, 0);
 			var unitList = new List<MappedMemoryUnit> {map};
 			var mem = new MemoryMapper(unitList);
+			memDict = new Dictionary<Type, List<MemoryUnit>>();
+			memDict.Add(instrMem.GetType(), new List<MemoryUnit>{instrMem});
+			memDict.Add(mem.GetType(), new List<MemoryUnit>{mem});
 			
-			target = new Mips(0x0, instrMem, mem);
+			target = new Mips(0x0, memDict);
 		}
 
 		[Test]
 		public void Construct_NoRegisters() {
-			target = new Mips(0x0, null, null);
+			target = new Mips(0x0, memDict);
 			
 			Assert.NotNull(target.Reg);
 		}
@@ -43,7 +48,7 @@ namespace MIPS_Emulator.Test {
 		public void Construct_Registers() {
 			Registers reg = new Registers();
 			
-			target = new Mips(0x0, null, null, reg);
+			target = new Mips(0x0, memDict, reg);
 			
 			Assert.AreEqual(reg, target.Reg);
 		}

@@ -48,7 +48,6 @@ namespace MIPS_Emulator.Test {
 			Assert.AreEqual(expected.ToString(), target.Mips.InstrMem.GetInstruction(0).ToString());
 		}
 
-		// TODO: More tests, refactor, create screen/bitmap memories
 		[Test]
 		public void MemoryInitialized_WithStartAddr() {
 			Assert.AreEqual(3, target.Mips.Memory[4]);

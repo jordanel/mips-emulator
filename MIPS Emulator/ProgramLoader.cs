@@ -26,11 +26,8 @@ namespace MIPS_Emulator {
 			
 			uint pc = ParseRequiredNumber(project["programCounter"]);
 			var memDict = BuildMemoryUnits(project["memories"]);
-			
-			InstructionMemory imem = (InstructionMemory) memDict[typeof(InstructionMemory)][0];
-			MemoryMapper mappedMem = (MemoryMapper) memDict[typeof(MemoryMapper)][0];
-			
-			return new Mips(pc, imem, mappedMem);
+						
+			return new Mips(pc, memDict);
 		}
 
 		private uint ParseRequiredNumber(JToken token) {
