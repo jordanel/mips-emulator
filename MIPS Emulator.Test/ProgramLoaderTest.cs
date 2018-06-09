@@ -37,7 +37,7 @@ namespace MIPS_Emulator.Test {
 			InstructionFactory instrFact = new InstructionFactory();
 			Instruction expected = instrFact.CreateInstruction(0x3c08ffff);
 			
-			Assert.AreEqual(expected.ToString(), target.Mips.InstrMem[4].ToString());
+			Assert.AreEqual(expected.ToString(), target.Mips.InstrMem.GetInstruction(4).ToString());
 		}
 
 		[Test]
@@ -45,7 +45,7 @@ namespace MIPS_Emulator.Test {
 			InstructionFactory instrFact = new InstructionFactory();
 			Instruction expected = instrFact.CreateInstruction(0x201d003c);
 			
-			Assert.AreEqual(expected.ToString(), target.Mips.InstrMem[0].ToString());
+			Assert.AreEqual(expected.ToString(), target.Mips.InstrMem.GetInstruction(0).ToString());
 		}
 
 		// TODO: More tests, refactor, create screen/bitmap memories
@@ -69,14 +69,6 @@ namespace MIPS_Emulator.Test {
 		[Test]
 		public void MemoryInitialized_WithBitmask() {
 			Assert.AreEqual(0xf00, target.Mips.Memory[2048]);
-		}
-
-		[Test]
-		public void MemoryInitialized_WithoutMappingInfo() {
-			FileInfo file = GetFileInfoFromPath("TestProjects/Project1/missing_mapping.json");
-			Assert.Throws<ArgumentException>(
-				() => new ProgramLoader(file)
-			);
 		}
 
 		[Test]

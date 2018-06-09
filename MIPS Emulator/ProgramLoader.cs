@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 namespace MIPS_Emulator {
 	public class ProgramLoader {
 		public Mips Mips { get; }
-		private string basePath;
+		private readonly string basePath;
 
 		public ProgramLoader(FileInfo file) {
 			this.basePath = file.DirectoryName;
@@ -25,8 +25,10 @@ namespace MIPS_Emulator {
 			JObject project = JObject.Parse(json);
 			
 			uint pc = ParseRequiredNumber(project["programCounter"]);
-			InstructionMemory imem = BuildInstructionMemory(project["imem"]);
-			MemoryMapper mappedMem = BuildMemoryMapper(project["mappedMemory"]);
+			var memDict = BuildMemoryUnits(project["memories"]);
+			
+			InstructionMemory imem = (InstructionMemory) memDict[typeof(InstructionMemory)][0];
+			MemoryMapper mappedMem = (MemoryMapper) memDict[typeof(MemoryMapper)][0];
 			
 			return new Mips(pc, imem, mappedMem);
 		}
@@ -46,32 +48,34 @@ namespace MIPS_Emulator {
 		private uint? ParseNumber(string token) {
 			return Convert.ToUInt32(token, 10);
 		}
-
-		private InstructionMemory BuildInstructionMemory(JToken token) {
-			uint[] init = ReadInitFile(token["initFile"]);
-			List<Instruction> instructions = new List<Instruction>();
-			InstructionFactory instrFact = new InstructionFactory(); // TODO: Use instructionSet to determine impl
-			
-			foreach (uint instruction in init) {
-				instructions.Add(instrFact.CreateInstruction(instruction));
-			}
-			
-			return new InstructionMemory(instructions.ToArray());
-		}
-
-		private MemoryMapper BuildMemoryMapper(JToken token) {
+		
+		private IDictionary<Type, List<MemoryUnit>> BuildMemoryUnits(JToken token) {
 			JArray memories = (JArray) token;
+			var memoryDict = new Dictionary<Type, List<MemoryUnit>>();
+			
 			List<MappedMemoryUnit> memUnits = new List<MappedMemoryUnit>();
 			
 			for (int i = 0; i < memories.Count; i++) {
-				MappedMemoryUnit mem = BuildMemoryUnit(memories[i]);
-				memUnits.Add(mem);
+				MemoryUnit mem = BuildMemoryUnit(memories[i]);
+				try {
+					MappedMemoryUnit mappedMem = MapMemoryToAddresses(memories[i], mem);
+					memUnits.Add(mappedMem);
+				} catch (MappingException e) {
+					if (!memoryDict.ContainsKey(mem.GetType())) {
+						memoryDict.Add(mem.GetType(), new List<MemoryUnit>());
+					}
+					memoryDict[mem.GetType()].Add(mem);
+				}
 			}
 			
-			return new MemoryMapper(memUnits);
-		}
+			MemoryMapper mapper = new MemoryMapper(memUnits);
+			memoryDict.Add(mapper.GetType(), new List<MemoryUnit>());
+			memoryDict[mapper.GetType()].Add(mapper);
 
-		private MappedMemoryUnit BuildMemoryUnit(JToken token) {
+			return memoryDict;
+		}
+		
+		private MemoryUnit BuildMemoryUnit(JToken token) {
 			string type = (string) token["type"];
 			uint? length = ParseNumber(token["length"]);
 			uint[] init = token["initFile"] != null ? ReadInitFile(token["initFile"]) : null;
@@ -85,6 +89,8 @@ namespace MIPS_Emulator {
 				throw new ArgumentException($"MemoryUnit type {type} does not exist");
 			} catch (InvalidCastException) {
 				throw new ArgumentException($"MemoryUnit type {type} is not a MemoryUnit");
+			} catch (MissingMethodException) {
+				throw new ArgumentException($"MemoryUnit type {type} is not a MemoryUnit");
 			}
 
 			if (init != null) {
@@ -92,8 +98,7 @@ namespace MIPS_Emulator {
 					mem[i * 4] = init[i];
 				}
 			}
-
-			return MapMemoryToAddresses(token, mem);
+			return mem;
 		}
 
 		private MappedMemoryUnit MapMemoryToAddresses(JToken token, MemoryUnit mem) {
@@ -114,7 +119,7 @@ namespace MIPS_Emulator {
 			} else if (bitmask != null) {
 				mappedMem = new MappedMemoryUnit(mem, bitmask);
 			} else {
-				throw new ArgumentException("MappedMemoryUnit requires either startAddr or bitmask");
+				throw new MappingException("MappedMemoryUnit requires either startAddr or bitmask");
 			}
 			return mappedMem;
 		}
@@ -160,6 +165,12 @@ namespace MIPS_Emulator {
 			line = line.Trim().Replace("_", "");
 			
 			return line;
+		}
+
+		private class MappingException : ArgumentException {
+			public MappingException(string message) 
+				: base (message) {
+			}
 		}
 	}
 }

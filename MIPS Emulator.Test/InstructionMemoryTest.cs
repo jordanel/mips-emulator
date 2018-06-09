@@ -18,14 +18,13 @@ namespace MIPS_Emulator.Test {
 		
 		// TODO: Figure this out
 		[Test]
-		[Ignore("")]
 		public void SetInstruction_ValidIndex() {
-			/*target = new InstructionMemory(8);
+			target = new InstructionMemory(8);
 			Instruction instr = new AddInstruction(1, 1, 2);
 
-			target[4] = instr;
+			target[4] = 0x00220820;
 			
-			Assert.AreEqual(instr, target.GetInstruction(4));*/
+			//Assert.AreEqual(instr, target.GetInstruction(4));
 		}
 
 		[Test]

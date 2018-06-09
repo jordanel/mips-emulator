@@ -21,8 +21,15 @@ namespace MIPS_Emulator {
 					throw new ArgumentException($"Index ({index}) into data memory is not a multiple of 4");
 				}
 			}
-			
-			set { }
+
+			// TODO: consider making read only
+			set {
+				if (index % 4 == 0) {
+					memory[index / 4] = value;
+				} else {
+					throw new ArgumentException($"Index ({index}) into data memory is not a multiple of 4");
+				}
+			}
 		}
 	}
 }

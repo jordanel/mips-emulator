@@ -3,16 +3,16 @@
 	"schema": "1.0",
 	"instructionSet": "2017",
 	"programCounter": 4,
-	"imem": {
-		"offset": 0,
-		"initFile": {
-			"filepath": "imem.mem",
-			"format": "hex"
-		}
-	},
-	"mappedMemory": [
+	"memories": [
 		{
-			"type": "MemoryMapper",
+			"type": "InstructionMemory",
+			"initFile": {
+				"filepath": "imem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "Mips",
 			"startAddr": 0,
 			"length": 50,
 			"initFile": {

@@ -3,14 +3,14 @@
 	"schema": "1.0",
 	"instructionSet": "2017",
 	"programCounter": 4,
-	"imem": {
-		"offset": 0,
-		"initFile": {
-			"filepath": "imem.mem",
-			"format": "hex"
-		}
-	},
-	"mappedMemory": [
+	"memories": [
+		{
+			"type": "InstructionMemory",
+			"initFile": {
+				"filepath": "imem.mem",
+				"format": "hex"
+			}
+		},
 		{
 			"type": "NonexistentMemory",
 			"startAddr": 0,

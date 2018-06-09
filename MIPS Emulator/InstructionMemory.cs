@@ -9,10 +9,12 @@ namespace MIPS_Emulator {
 		
 		public InstructionMemory(uint size) {
 			iMem = new Instruction[size];
+			InstrFact = new InstructionFactory();
 		}
 
 		public InstructionMemory(Instruction[] instructions) {
 			iMem = instructions;
+			InstrFact = new InstructionFactory();
 		}
 		
 		public uint this[uint pc] {

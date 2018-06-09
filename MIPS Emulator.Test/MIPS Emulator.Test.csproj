@@ -109,9 +109,6 @@
     <Content Include="TestProjects\Project1\invalid_memory_type.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestProjects\Project1\missing_mapping.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TestProjects\Project1\nonexistent_memory_type.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
