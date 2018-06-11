@@ -57,7 +57,7 @@ namespace MIPS_Emulator {
 				try {
 					MappedMemoryUnit mappedMem = MapMemoryToAddresses(memories[i], mem);
 					memUnits.Add(mappedMem);
-				} catch (MappingException e) {
+				} catch (MappingException) {
 					if (!memoryDict.ContainsKey(mem.GetType())) {
 						memoryDict.Add(mem.GetType(), new List<MemoryUnit>());
 					}
