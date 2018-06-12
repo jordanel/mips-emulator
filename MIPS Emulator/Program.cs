@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using MIPS_Emulator.Instructions;
 
 namespace MIPS_Emulator {
 	internal class Program {
@@ -31,22 +32,26 @@ namespace MIPS_Emulator {
 
 			while (true) {
 				char token = (char) Console.ReadKey().KeyChar;
+				var mips = loader.Mips;
 				switch (token) {
 					case 'n':
-						loader.Mips.ExecuteNext();
+						mips.ExecuteNext();
 						Console.WriteLine(
-							$"PC: {loader.Mips.Pc}\t Instr: {loader.Mips.InstrMem.GetInstruction(loader.Mips.Pc)}"
+							$"PC: {mips.Pc}\t Instr: {mips.InstrMem.GetInstruction(mips.Pc)}"
 						);
 						break;
 					case 'r':
 						Console.WriteLine("Register Contents:");
 						for (uint i = 0; i < 32; i++) {
-							Console.WriteLine($"{Registers.RegisterToName(i)}\t{loader.Mips.Reg[i]}");
+							Console.WriteLine($"{Registers.RegisterToName(i)}\t{mips.Reg[i]}");
 						}
 
 						break;
-					case 'm':
-						Console.WriteLine("Memory Contents:");
+					case 'i':
+						Console.WriteLine("Instruction Memory Contents:");
+						for (uint i = 0; i < mips.InstrMem.Size; i += 4) {
+							Console.WriteLine($"{(mips.Pc == i ? ">" : " ")} 0x{i:X8} | {mips.InstrMem.GetInstruction(i)}");
+						}
 						break;
 				}
 			}

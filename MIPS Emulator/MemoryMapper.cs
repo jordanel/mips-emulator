@@ -5,9 +5,7 @@ using System.Linq;
 namespace MIPS_Emulator {
 	public class MemoryMapper : MemoryUnit {
 		private readonly List<MappedMemoryUnit> memUnits;
-		public uint Size {
-			get { return memUnits[memUnits.Count - 1].EndAddr - memUnits[0].StartAddr; }
-		}
+		public uint Size => memUnits[memUnits.Count - 1].EndAddr - memUnits[0].StartAddr;
 
 		public MemoryMapper(List<MappedMemoryUnit> memUnits) {
 			this.memUnits = memUnits;
