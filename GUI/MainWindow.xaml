@@ -1,0 +1,22 @@
+﻿<Window x:Class="GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="MIPS Emulator" Height="184.453" Width="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="100"/>
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+		<Button Grid.Row="0" Grid.Column="0" Click="View_imem">View Instruction Memory</Button>
+		<Button Grid.Row="0" Grid.Column="1" Click="ViewRegisters">View Registers</Button>
+		<Button Grid.Row="1" Grid.Column="0" Click="Step">Step</Button>
+    </Grid>
+</Window>
