@@ -35,7 +35,8 @@ namespace MIPS_Emulator {
 			SLLV = 0b000100,
 			SRL  = 0b000010,
 			SRA  = 0b000011,
-			JR   = 0b001000
+			JR   = 0b001000,
+			ADDU = 0b100001
 		}
 		
 		private const uint SIX_MASK = 0b111111;
@@ -82,6 +83,8 @@ namespace MIPS_Emulator {
 						return new SraInstruction(rd, rt, shamt);
 					case Func.JR:
 						return new JrInstruction(rs);
+					case Func.ADDU:
+						return new AdduInstruction(rd, rs, rt);
 				}
 			} else {
 				switch ((Opcode) op) {
@@ -116,7 +119,7 @@ namespace MIPS_Emulator {
 
 		public class UnknownInstructionException : NotImplementedException {
 			public UnknownInstructionException(uint instruction) 
-				: base ($"Unknown instruction: {instruction}") {
+				: base ($"Unknown instruction: 0x{instruction:X8}") {
 				
 			}
 		}

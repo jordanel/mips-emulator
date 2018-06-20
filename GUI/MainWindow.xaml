@@ -10,6 +10,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="100"/>
@@ -17,6 +19,8 @@
 		</Grid.RowDefinitions>
 		<Button Grid.Row="0" Grid.Column="0" Click="View_imem">View Instruction Memory</Button>
 		<Button Grid.Row="0" Grid.Column="1" Click="ViewRegisters">View Registers</Button>
+		<Button Grid.Row="0" Grid.Column="2" Click="ViewVGA">View VGA Display</Button>
+		<Button Grid.Row="0" Grid.Column="3" Click="OpenAll">Just Open Everything!</Button>
 		<Button Grid.Row="1" Grid.Column="0" Click="Step">Step</Button>
     </Grid>
 </Window>

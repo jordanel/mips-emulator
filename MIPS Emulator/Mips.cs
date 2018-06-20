@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MIPS_Emulator {
 	public class Mips {
 		private uint pc;
-		private IDictionary<Type, List<MemoryUnit>> memDict;
+		public IDictionary<Type, List<MemoryUnit>> MemDict;
 
 		public uint Pc => pc;
 		public InstructionMemory InstrMem { get; }
@@ -13,7 +13,7 @@ namespace MIPS_Emulator {
 
 		public Mips(uint pc, IDictionary<Type, List<MemoryUnit>> memDict, Registers reg = null) {
 			this.pc = pc;
-			this.memDict = memDict;
+			this.MemDict = memDict;
 			this.InstrMem = (InstructionMemory) memDict[typeof(InstructionMemory)][0];
 			this.Memory = (MemoryMapper) memDict[typeof(MemoryMapper)][0];
 			this.Reg = reg ?? new Registers();

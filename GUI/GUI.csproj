@@ -60,6 +60,9 @@
     <Compile Include="RegistersViewer.xaml.cs">
       <DependentUpon>RegistersViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VGADisplay.xaml.cs">
+      <DependentUpon>VGADisplay.xaml</DependentUpon>
+    </Compile>
     <Page Include="InsturctionMemoryViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +84,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RegistersViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VGADisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

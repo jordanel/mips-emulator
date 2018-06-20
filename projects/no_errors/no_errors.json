@@ -19,6 +19,20 @@
 				"filepath": "dmem.mem",
 				"format": "bin"
 			}
+		},
+		{
+			"type": "BitmapMemory",
+			"initFile": {
+				"filepath": "bmem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "ScreenMemory",
+			"initFile": {
+				"filepath": "smem.mem",
+				"format": "hex"
+			}
 		}
 	]
 }

@@ -1,0 +1,39 @@
+﻿{
+	"projectName": "Test 1",
+	"schema": "1.0",
+	"instructionSet": "2017",
+	"programCounter": 0,
+	"memories": [
+		{
+			"type": "InstructionMemory",
+			"initFile": {
+				"filepath": "imem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "DataMemory",
+			"startAddr": 268500992,
+			"length": 64,
+			"initFile": {
+				"filepath": "dmem.mem",
+				"format": "bin"
+			}
+		},
+		{
+			"type": "BitmapMemory",
+			"initFile": {
+				"filepath": "bmem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "ScreenMemory",
+			"startAddr": 268566528,
+			"initFile": {
+				"filepath": "smem.mem",
+				"format": "hex"
+			}
+		}
+	]
+}

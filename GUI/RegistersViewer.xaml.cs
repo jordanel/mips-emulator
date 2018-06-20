@@ -27,7 +27,7 @@ namespace GUI {
 
 			for (int i = 0; i < 32; i++) {
 				var item = new ListBoxItem();
-				item.Content = $"{Registers.RegisterToName(i)}:\t{mips.Reg[(uint) i]}";
+				item.Content = $"{Registers.RegisterToName(i)}:\t0x{mips.Reg[(uint) i]:X8}";
 				registerList.Items.Add(item);
 			}
 		}
@@ -35,7 +35,7 @@ namespace GUI {
 		public void Tick() {
 			for (int i = 0; i < 32; i++) {
 				ListBoxItem item = (ListBoxItem) registerList.Items[i];
-				item.Content = $"{Registers.RegisterToName(i)}:\t{mips.Reg[(uint) i]}";
+				item.Content = $"{Registers.RegisterToName(i)}:\t0x{mips.Reg[(uint) i]:X8}";
 			}
 		}
 	}

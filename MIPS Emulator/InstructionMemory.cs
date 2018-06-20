@@ -33,7 +33,7 @@ namespace MIPS_Emulator {
 
 		public Instruction GetInstruction(uint pc) {
 			if (pc % 4 == 0) {
-				return iMem[pc / 4];
+				return iMem[(pc & 0xffff) / 4];
 			} else {
 				throw new ArgumentException($"Index ({pc}) into instruction memory is not a multiple of 4");
 			}

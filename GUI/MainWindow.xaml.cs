@@ -28,7 +28,7 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-			ProgramLoader loader = new ProgramLoader(new FileInfo("../../../projects/no_errors.json"));
+			ProgramLoader loader = new ProgramLoader(new FileInfo("../../../projects/imem_test/imemtest.json"));
 			mips = loader.Mips;
 		}
 
@@ -43,6 +43,25 @@ namespace GUI
 			registersWindow.Show();
 			debuggerViews.Add(registersWindow);
 		}
+
+        private void ViewVGA(object sender, RoutedEventArgs e)
+        {
+            var vgaWindow = new VGADisplay(mips);
+            vgaWindow.Show();
+            debuggerViews.Add(vgaWindow);
+        }
+
+	    private void OpenAll(object sender, RoutedEventArgs e) {
+		    var imemWindow = new InsturctionMemoryViewer(mips);
+		    imemWindow.Show();
+		    debuggerViews.Add(imemWindow);
+			var registersWindow = new RegistersViewer(mips);
+		    registersWindow.Show();
+		    debuggerViews.Add(registersWindow);
+			var vgaWindow = new VGADisplay(mips);
+		    vgaWindow.Show();
+		    debuggerViews.Add(vgaWindow);
+	    }
 
 		private void Step(object sender, RoutedEventArgs e) {
 			mips.ExecuteNext();
