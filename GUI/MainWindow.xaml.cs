@@ -1,9 +1,11 @@
 ﻿using MIPS_Emulator;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -69,6 +71,39 @@ namespace GUI
 				view.Tick();
 			}
 		}
+	    
+	    private void RunAll(object sender, RoutedEventArgs e) {
+		    var thread1 = new Thread(() => ExecuteAll(mips));
+			thread1.Start();
+			var thread2 = new Thread(() => TickTimer());
+			thread2.Start();
 
-	}
+		}
+
+	    private void ExecuteAll(Mips mips) {
+			while(true) {
+				mips.ExecuteNext();
+			}
+		    
+	    }
+
+		private void TickTimer() {
+			var Timer = new Timer((state) => TickAll(debuggerViews), "state", 0, 33);
+			while(true);
+		}
+		
+
+	    private void TickAll(List<DebuggerView> debuggerViews) {
+			this.Dispatcher.Invoke(() => {
+				foreach (var view in debuggerViews) {
+					view.Tick();
+				}
+			});
+		}
+
+	    private void MainWindow_OnClosing(object sender, CancelEventArgs e) {
+			Console.Beep();
+			//TODO: Something
+	    }
+    }
 }

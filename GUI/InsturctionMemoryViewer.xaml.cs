@@ -33,8 +33,8 @@ namespace GUI {
 		}
 
 		public void Tick() {
-			instructionsList.SelectedIndex = (int) (mips.Pc & 0xffff) / 4;
-			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / 4]);
+			instructionsList.SelectedIndex = (int)(mips.Pc & 0xffff) / 4;
+			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / 4]);						
 		}
 	}
 }
