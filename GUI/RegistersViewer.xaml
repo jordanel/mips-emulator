@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="RegistersViewer" Height="800" Width="400">
-    <Grid>
-		<ListBox Name="registerList"></ListBox>
+	<Grid>
+		<ListBox Name="registerList" />
 	</Grid>
 </Window>

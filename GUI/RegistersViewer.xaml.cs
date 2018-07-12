@@ -17,25 +17,24 @@ namespace GUI {
 	/// <summary>
 	/// Interaction logic for RegistersViewer.xaml
 	/// </summary>
-	public partial class RegistersViewer : Window, DebuggerView {
+	public partial class RegistersViewer : DebuggerView {
+		private Registers reg;
 
-		private Mips mips;
-
-		public RegistersViewer(Mips mips) {
+		public RegistersViewer(Registers reg) {
 			InitializeComponent();
-			this.mips = mips;
+			this.reg = reg;
 
 			for (int i = 0; i < 32; i++) {
-				var item = new ListBoxItem();
-				item.Content = $"{Registers.RegisterToName(i)}:\t0x{mips.Reg[(uint) i]:X8}";
+				ListBoxItem item = new ListBoxItem();
+				item.Content = $"{Registers.RegisterToName(i)}:\t0x{reg[(uint) i]:X8}";
 				registerList.Items.Add(item);
 			}
 		}
 
-		public void Tick() {
+		public void RefreshDisplay() {
 			for (int i = 0; i < 32; i++) {
 				ListBoxItem item = (ListBoxItem) registerList.Items[i];
-				item.Content = $"{Registers.RegisterToName(i)}:\t0x{mips.Reg[(uint) i]:X8}";
+				item.Content = $"{Registers.RegisterToName(i)}:\t0x{reg[(uint) i]:X8}";
 			}
 		}
 	}

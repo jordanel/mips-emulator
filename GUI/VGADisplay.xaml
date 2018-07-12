@@ -1,4 +1,4 @@
-﻿<Window x:Class="GUI.VGADisplay"
+﻿<Window x:Class="GUI.VgaDisplay"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="VGA Display" Height="480" Width="640">
-    <Grid Name="displayGrid">
-        
-    </Grid>
+    <Grid Name="displayGrid" />
 </Window>

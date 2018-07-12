@@ -63,7 +63,7 @@
     <Compile Include="VGADisplay.xaml.cs">
       <DependentUpon>VGADisplay.xaml</DependentUpon>
     </Compile>
-    <Page Include="InsturctionMemoryViewer.xaml">
+    <Page Include="InstructionMemoryViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -77,7 +77,7 @@
     </Compile>
     <Compile Include="DebuggerView.cs" />
     <Compile Include="InsturctionMemoryViewer.xaml.cs">
-      <DependentUpon>InsturctionMemoryViewer.xaml</DependentUpon>
+      <DependentUpon>InstructionMemoryViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

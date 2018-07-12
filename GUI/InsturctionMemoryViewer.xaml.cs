@@ -15,26 +15,27 @@ using System.Windows.Shapes;
 
 namespace GUI {
     /// <summary>
-    /// Interaction logic for InsturctionMemoryViewer.xaml
+    /// Interaction logic for InstructionMemoryViewer.xaml
     /// </summary>
-    public partial class InsturctionMemoryViewer : Window, DebuggerView {
+    public partial class InstructionMemoryViewer : DebuggerView {
+		private Mips mips;
+	    private const int wordSize = 4;
 
-		private Mips mips; 
-
-        public InsturctionMemoryViewer(Mips mips) {
+        public InstructionMemoryViewer(Mips mips) {
             InitializeComponent();
 			this.mips = mips;
+	        
 			for (uint i = 0; i < mips.InstrMem.Size; i += 4) {
-				var item = new ListBoxItem();
+				ListBoxItem item = new ListBoxItem();
 				item.Content = $"0x{i:X8}: {mips.InstrMem.GetInstruction(i)}";
 				instructionsList.Items.Add(item);
 			}
-			Tick();
+			RefreshDisplay();
 		}
 
-		public void Tick() {
-			instructionsList.SelectedIndex = (int)(mips.Pc & 0xffff) / 4;
-			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / 4]);						
+		public void RefreshDisplay() {
+			instructionsList.SelectedIndex = (int)(mips.Pc & 0xffff) / wordSize;
+			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / wordSize]);						
 		}
 	}
 }
