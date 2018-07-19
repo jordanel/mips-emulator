@@ -1,11 +1,10 @@
-﻿using MIPS_Emulator;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
 
-namespace GUI {
+namespace MIPS_Emulator.GUI {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>

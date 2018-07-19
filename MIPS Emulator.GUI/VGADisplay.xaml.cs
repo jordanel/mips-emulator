@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using MIPS_Emulator;
 
-namespace GUI {
+namespace MIPS_Emulator.GUI {
 	/// <summary>
 	/// Interaction logic for VgaDisplay.xaml
 	/// </summary>

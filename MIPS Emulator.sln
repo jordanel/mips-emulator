@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIPS Emulator", "MIPS Emula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIPS Emulator.Test", "MIPS Emulator.Test\MIPS Emulator.Test.csproj", "{9C2E972A-C959-4F8C-8B6F-453B48B020A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{7F2FC01C-AC22-42CA-B766-39E4A90A2A48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIPS Emulator.GUI", "MIPS Emulator.GUI\MIPS Emulator.GUI.csproj", "{7F2FC01C-AC22-42CA-B766-39E4A90A2A48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

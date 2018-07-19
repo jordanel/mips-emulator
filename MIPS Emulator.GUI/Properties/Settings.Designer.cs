@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GUI.Properties
+namespace MIPS_Emulator.GUI.Properties
 {
 
 

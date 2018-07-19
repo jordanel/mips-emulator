@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 
-namespace GUI {
+namespace MIPS_Emulator.GUI {
 	public partial class FileSelect {
 		List<MipsToolbar> toolbars = new List<MipsToolbar>();
 		
