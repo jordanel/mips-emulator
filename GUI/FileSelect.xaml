@@ -1,0 +1,18 @@
+﻿<Window x:Class="GUI.FileSelect"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GUI"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="300"
+             Closing="FileSelect_OnClosing">
+    <Grid>
+        <WrapPanel>
+            <TextBlock>Select a project file:</TextBlock>
+            <TextBox Name="FileName" Width="300"></TextBox>
+            <Button Name="FileBrowserButton" Click="OpenFile">Browse</Button>
+            <Button Name="StartButton" Click="Start">Start</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

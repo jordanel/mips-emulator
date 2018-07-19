@@ -1,33 +1,23 @@
 ﻿using MIPS_Emulator;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GUI {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow {
+	public partial class MipsToolbar {
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Mips mips;
+		private Thread execution;
+		private Thread refresh;
 
-		public MainWindow() {
+		public MipsToolbar(FileInfo project) {
 			InitializeComponent();
-			ProgramLoader loader = new ProgramLoader(new FileInfo("../../../projects/imem_test/imemtest.json"));
+			ProgramLoader loader = new ProgramLoader(project);
 			mips = loader.Mips;
 		}
 
@@ -63,10 +53,10 @@ namespace GUI {
 		}
 	    
 		private void RunAll(object sender, RoutedEventArgs e) {
-			Thread thread1 = new Thread(ExecuteAll);
-			thread1.Start();
-			Thread thread2 = new Thread(TickTimer);
-			thread2.Start();
+			execution = new Thread(ExecuteAll);
+			execution.Start();
+			refresh = new Thread(TickTimer);
+			refresh.Start();
 		}
 
 		private void ExecuteAll() {
@@ -88,9 +78,12 @@ namespace GUI {
 			});
 		}
 
-		private void MainWindow_OnClosing(object sender, CancelEventArgs e) {
-			Console.Beep();
-			//TODO: Close all windows
+		private void MipsToolbar_OnClosing(object sender, CancelEventArgs e) {
+			foreach (DebuggerView view in debuggerViews) {
+				view.Close();
+			}
+			refresh.Abort();
+			execution.Abort();
 		}
 	}
 }

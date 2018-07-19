@@ -57,17 +57,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileSelect.xaml.cs">
+      <DependentUpon>FileSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistersViewer.xaml.cs">
       <DependentUpon>RegistersViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="VGADisplay.xaml.cs">
       <DependentUpon>VGADisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="FileSelect.xaml" />
     <Page Include="InstructionMemoryViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MipsToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -76,11 +80,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DebuggerView.cs" />
-    <Compile Include="InsturctionMemoryViewer.xaml.cs">
+    <Compile Include="InstructionMemoryViewer.xaml.cs">
       <DependentUpon>InstructionMemoryViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MipsToolbar.xaml.cs">
+      <DependentUpon>MipsToolbar.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RegistersViewer.xaml">
