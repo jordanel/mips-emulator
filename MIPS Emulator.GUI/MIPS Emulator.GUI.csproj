@@ -57,11 +57,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands.cs" />
     <Compile Include="FileSelect.xaml.cs">
       <DependentUpon>FileSelect.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistersViewer.xaml.cs">
       <DependentUpon>RegistersViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestVga.xaml.cs">
+      <DependentUpon>TestVga.xaml</DependentUpon>
     </Compile>
     <Compile Include="VGADisplay.xaml.cs">
       <DependentUpon>VGADisplay.xaml</DependentUpon>
@@ -71,6 +78,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainWindow.xaml" />
     <Page Include="MipsToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,6 +99,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TestVga.xaml" />
     <Page Include="VGADisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
