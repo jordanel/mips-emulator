@@ -4,7 +4,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace MIPS_Emulator.GUI {
-	public partial class VgaDisplay : UserControl, DebuggerView {
+	/// <summary>
+	/// Interaction logic for VgaDisplay.xaml
+	/// </summary>
+	public partial class VgaDisplay : DebuggerView {
 		private BitmapSource[] bitmaps;
 		private ScreenMemory smem;
 		private Image[] images;
@@ -45,7 +48,6 @@ namespace MIPS_Emulator.GUI {
 		private void AddGridImages() {
 			for (int i = 0; i < gridWidth * gridHeight; i++) {
 				Image cell = new Image();
-				RenderOptions.SetBitmapScalingMode(cell, BitmapScalingMode.NearestNeighbor);
 				displayGrid.Children.Add(cell);
 				Grid.SetRow(cell, i / gridWidth);
 				Grid.SetColumn(cell, i % gridWidth);
