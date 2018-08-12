@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace MIPS_Emulator.GUI {
-	public partial class TestVga : UserControl, DebuggerView {
+	public partial class VgaDisplay : UserControl, DebuggerView {
 		private BitmapSource[] bitmaps;
 		private ScreenMemory smem;
 		private Image[] images;
@@ -15,7 +15,7 @@ namespace MIPS_Emulator.GUI {
 		private const int bitmapHeight = 16;
 		private const int wordSize = 4;
 
-		public TestVga(Mips mips) {
+		public VgaDisplay(Mips mips) {
 			images = new Image[gridWidth * gridHeight];
 			
 			InitializeComponent();

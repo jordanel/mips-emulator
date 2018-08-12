@@ -22,6 +22,26 @@ namespace MIPS_Emulator.GUI {
 			}
 		);
 		
+		public static readonly RoutedUICommand StepForward = new RoutedUICommand (
+			"StepForward",
+			"StepForward",
+			typeof(Commands),
+			new InputGestureCollection()
+			{
+				new KeyGesture(Key.F6)
+			}
+		);
+		
+		public static readonly RoutedUICommand Pause = new RoutedUICommand (
+			"Pause",
+			"Pause",
+			typeof(Commands),
+			new InputGestureCollection()
+			{
+				new KeyGesture(Key.F7)
+			}
+		);
+		
 		public static readonly RoutedUICommand ViewRegisters = new RoutedUICommand (
 			"ViewRegisters",
 			"ViewRegisters",

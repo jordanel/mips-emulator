@@ -58,31 +58,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands.cs" />
-    <Compile Include="FileSelect.xaml.cs">
-      <DependentUpon>FileSelect.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistersViewer.xaml.cs">
       <DependentUpon>RegistersViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestVga.xaml.cs">
-      <DependentUpon>TestVga.xaml</DependentUpon>
+    <Compile Include="VgaDisplay.xaml.cs">
+      <DependentUpon>VgaDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VGADisplay.xaml.cs">
-      <DependentUpon>VGADisplay.xaml</DependentUpon>
-    </Compile>
-    <Page Include="FileSelect.xaml" />
     <Page Include="InstructionMemoryViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml" />
-    <Page Include="MipsToolbar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -91,19 +80,11 @@
     <Compile Include="InstructionMemoryViewer.xaml.cs">
       <DependentUpon>InstructionMemoryViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MipsToolbar.xaml.cs">
-      <DependentUpon>MipsToolbar.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="RegistersViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestVga.xaml" />
-    <Page Include="VGADisplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Include="VgaDisplay.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

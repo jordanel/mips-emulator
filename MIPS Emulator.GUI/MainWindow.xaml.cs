@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -13,6 +12,7 @@ namespace MIPS_Emulator.GUI {
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private Thread refresh;
+		private bool isExecuting = false;
 		
 		public MainWindow() {
 			InitializeComponent();
@@ -25,17 +25,18 @@ namespace MIPS_Emulator.GUI {
 				ProgramLoader loader = new ProgramLoader(new FileInfo(openFileDialog.FileName));
 				mips = loader.Mips;
 				
-				TestVga vga = new TestVga(mips);
+				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
 				debuggerViews.Add(vga);
 			}
 		}
 
-		private void EmulatorCommands_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-			e.CanExecute = mips != null;
+		private void RunAll_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = !isExecuting && mips != null;
 		}
 		
 		private void RunAll_Executed(object sender, RoutedEventArgs e) {
+			isExecuting = true;
 			execution = new Thread(ExecuteAll);
 			execution.Start();
 			refresh = new Thread(TickTimer);
@@ -43,22 +44,46 @@ namespace MIPS_Emulator.GUI {
 		}
 
 		private void ExecuteAll() {
-			while(true) {
+			while(isExecuting) {
 				mips.ExecuteNext();
 			}
 		}
 
 		private void TickTimer() {
 			Timer timer = new Timer((state) => TickAll(), "state", 0, 33);
-			while(true);
+			while(isExecuting);
 		}
 		
 		private void TickAll() {
-			this.Dispatcher.Invoke(() => {
+			Dispatcher.Invoke(() => {
 				foreach (DebuggerView view in debuggerViews) {
 					view.RefreshDisplay();
 				}
 			});
+		}
+
+		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = isExecuting && mips != null;
+		}
+		
+		private void Pause_Executed(object sender, RoutedEventArgs e) {
+			isExecuting = false;
+			execution.Join();
+		}
+		
+		private void StepForward_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = !isExecuting && mips != null;
+		}
+		
+		private void StepForward_Executed(object sender, RoutedEventArgs e) {
+			isExecuting = true;
+			mips.ExecuteNext();
+			TickAll();
+			isExecuting = false;
+		}
+		
+		private void EmulatorViews_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = mips != null;
 		}
 		
 		private void ViewRegisters_Executed(object sender, RoutedEventArgs e) {
