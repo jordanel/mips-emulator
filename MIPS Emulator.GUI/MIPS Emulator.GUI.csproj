@@ -61,6 +61,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MemoryMapperViewer.xaml.cs">
+      <DependentUpon>MemoryMapperViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistersViewer.xaml.cs">
       <DependentUpon>RegistersViewer.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,7 @@
     <Compile Include="InstructionMemoryViewer.xaml.cs">
       <DependentUpon>InstructionMemoryViewer.xaml</DependentUpon>
     </Compile>
+    <Page Include="MemoryMapperViewer.xaml" />
     <Page Include="RegistersViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

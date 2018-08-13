@@ -61,5 +61,15 @@ namespace MIPS_Emulator.GUI {
 				new KeyGesture(Key.I, ModifierKeys.Control)
 			}
 		);
+		
+		public static readonly RoutedUICommand ViewMemory = new RoutedUICommand (
+			"ViewMemory",
+			"ViewMemory",
+			typeof(Commands),
+			new InputGestureCollection()
+			{
+				new KeyGesture(Key.M, ModifierKeys.Control)
+			}
+		);
 	}
 }

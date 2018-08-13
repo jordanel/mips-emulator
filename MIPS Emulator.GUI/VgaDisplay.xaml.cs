@@ -4,9 +4,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace MIPS_Emulator.GUI {
-	/// <summary>
-	/// Interaction logic for VgaDisplay.xaml
-	/// </summary>
 	public partial class VgaDisplay : DebuggerView {
 		private BitmapSource[] bitmaps;
 		private ScreenMemory smem;

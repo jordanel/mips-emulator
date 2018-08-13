@@ -95,8 +95,18 @@ namespace MIPS_Emulator.GUI {
 		}
 		private void ViewInstructions_Executed(object sender, RoutedEventArgs e) {
 			InstructionMemoryViewer imemViewer = new InstructionMemoryViewer(mips);
+			imemViewer.Top = this.Top;
+			imemViewer.Left = this.Left - imemViewer.Width;
 			imemViewer.Show();
 			debuggerViews.Add(imemViewer);
+		}
+		
+		private void ViewMemory_Executed(object sender, RoutedEventArgs e) {
+			MemoryMapperViewer memoryViewer = new MemoryMapperViewer(mips.Memory);
+			memoryViewer.Top = this.Top + this.Height;
+			memoryViewer.Left = this.Left;
+			memoryViewer.Show();
+			debuggerViews.Add(memoryViewer);
 		}
 		
 		private void Exit_Executed(object sender, EventArgs e) {
