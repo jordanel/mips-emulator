@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MIPS_Emulator.GUI"
              mc:Ignorable="d"
-             Height="300" Width="300">
+             Title="Memory Mapper" Height="300" Width="300">
     <Grid>
         <ListBox Name="memoryList"></ListBox>
     </Grid>
