@@ -9,6 +9,7 @@ using Microsoft.Win32;
 namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
+		private Keyboard keyboard;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private Thread refresh;
@@ -16,7 +17,10 @@ namespace MIPS_Emulator.GUI {
 		
 		public MainWindow() {
 			InitializeComponent();
+			KeyDown += OnKeyDown;
 		}
+
+		#region CommandMethods
 
 		private void OpenProject_Executed(object sender, RoutedEventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -24,6 +28,9 @@ namespace MIPS_Emulator.GUI {
 			if (openFileDialog.ShowDialog() == true) {
 				ProgramLoader loader = new ProgramLoader(new FileInfo(openFileDialog.FileName));
 				mips = loader.Mips;
+				if (mips.MemDict[typeof(Keyboard)].Count != 0) {
+					keyboard = (Keyboard) mips.MemDict[typeof(Keyboard)][0];
+				}
 				
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
@@ -115,6 +122,12 @@ namespace MIPS_Emulator.GUI {
 			}
 			refresh.Abort();
 			execution.Abort();
+		}
+
+		#endregion
+
+		private void OnKeyDown(object sender, KeyEventArgs e) {
+			Title = ((uint) e.Key).ToString();
 		}
 	}
 }
