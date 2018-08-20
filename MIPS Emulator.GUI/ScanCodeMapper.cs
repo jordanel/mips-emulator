@@ -16,6 +16,7 @@ namespace MIPS_Emulator.GUI {
 		public static uint GetScanCode(Key key) {
 			string scanCode = data["Nexus"][((uint) key).ToString()];
 			return UInt32.Parse(scanCode);
+			// TODO: nonexistent mapping
 		}
 	}
 }
