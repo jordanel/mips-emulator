@@ -127,7 +127,7 @@ namespace MIPS_Emulator.GUI {
 		#endregion
 
 		private void OnKeyDown(object sender, KeyEventArgs e) {
-			Title = ((uint) e.Key).ToString();
+			Title = ScanCodeMapper.GetScanCode(e.Key).ToString();
 		}
 	}
 }
