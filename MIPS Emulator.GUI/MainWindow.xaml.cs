@@ -66,8 +66,10 @@ namespace MIPS_Emulator.GUI {
 				try {
 					mips.ExecuteNext();
 				} catch (Exception e) {
-					MessageBox.Show($"YO DAWG YOU DUNG OOFd \n{e}");
-					isExecuting = false;
+					if (e.GetType() != typeof(ThreadAbortException)) {
+						MessageBox.Show($"Runtime Exception encountered: {e}");
+						isExecuting = false;
+					}
 				}
 			}
 		}
