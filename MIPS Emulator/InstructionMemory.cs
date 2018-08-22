@@ -4,17 +4,20 @@ using MIPS_Emulator.Instructions;
 namespace MIPS_Emulator {
 	public class InstructionMemory : MemoryUnit {
 		private readonly Instruction[] iMem;
-		public uint Size => (uint) iMem.Length * 4;
+		public uint Size => (uint) iMem.Length * WordSize;
+		public uint WordSize { get; }
 		public InstructionFactory InstrFact { get; set; }
 		
-		public InstructionMemory(uint size) {
+		public InstructionMemory(uint size, uint wordSize = 4) {
 			iMem = new Instruction[size];
 			InstrFact = new InstructionFactory();
+			WordSize = wordSize;
 		}
 
-		public InstructionMemory(Instruction[] instructions) {
+		public InstructionMemory(Instruction[] instructions, uint wordSize = 4) {
 			iMem = instructions;
 			InstrFact = new InstructionFactory();
+			WordSize = wordSize;
 		}
 		
 		public uint this[uint pc] {
@@ -23,19 +26,19 @@ namespace MIPS_Emulator {
 			}
 			
 			set {
-				if (pc % 4 == 0) {
-					iMem[pc / 4] = InstrFact.CreateInstruction(value);
+				if (pc % WordSize == 0) {
+					iMem[pc / WordSize] = InstrFact.CreateInstruction(value);
 				} else {
-					throw new ArgumentException($"Index ({pc}) into instruction memory is not a multiple of 4");
+					throw new ArgumentException($"Index ({pc}) into instruction memory is not a multiple of word size ({WordSize})");
 				}
 			}
 		}
 
 		public Instruction GetInstruction(uint pc) {
-			if (pc % 4 == 0) {
-				return iMem[pc / 4];
+			if (pc % WordSize == 0) {
+				return iMem[(pc & 0xffff) / WordSize];
 			} else {
-				throw new ArgumentException($"Index ({pc}) into instruction memory is not a multiple of 4");
+				throw new ArgumentException($"Index ({pc}) into instruction memory is not a multiple of word size ({WordSize})");
 			}
 		}
 	}

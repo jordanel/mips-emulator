@@ -57,13 +57,16 @@ namespace MIPS_Emulator {
 				try {
 					MappedMemoryUnit mappedMem = MapMemoryToAddresses(memories[i], mem);
 					memUnits.Add(mappedMem);
-				} catch (MappingException) {
-					if (!memoryDict.ContainsKey(mem.GetType())) {
+				}
+				catch (MappingException) {
+					//nop
+				}
+
+				if (!memoryDict.ContainsKey(mem.GetType())) {
 						memoryDict.Add(mem.GetType(), new List<MemoryUnit>());
 					}
 					memoryDict[mem.GetType()].Add(mem);
 				}
-			}
 			
 			MemoryMapper mapper = new MemoryMapper(memUnits);
 			memoryDict.Add(mapper.GetType(), new List<MemoryUnit>());
@@ -75,12 +78,19 @@ namespace MIPS_Emulator {
 		private MemoryUnit BuildMemoryUnit(JToken token) {
 			string type = (string) token["type"];
 			uint? length = ParseNumber(token["length"]);
+			uint? wordSize = ParseNumber(token["wordSize"]);
 			uint[] init = token["initFile"] != null ? ReadInitFile(token["initFile"]) : null;
 
 			MemoryUnit mem = null;
 			try {
 				Type t = Type.GetType($"MIPS_Emulator.{type}");
-				Object[] args = {length ?? (uint) init.Length};
+				object[] args;
+				if (length != null || init != null) {
+					args = new object[] {length ?? (uint) init.Length, wordSize ?? 4};
+				} else {
+					args = new object[0];
+				}
+
 				mem = (MemoryUnit) Activator.CreateInstance(t, args);
 			} catch (ArgumentNullException) {
 				throw new ArgumentException($"MemoryUnit type {type} does not exist");
@@ -92,7 +102,7 @@ namespace MIPS_Emulator {
 
 			if (init != null) {
 				for (uint i = 0; i < init.Length; i++) {
-					mem[i * 4] = init[i];
+					mem[i * mem.WordSize] = init[i];
 				}
 			}
 			return mem;

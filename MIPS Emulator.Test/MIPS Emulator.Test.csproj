@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MIPS_Emulator.Test</RootNamespace>
-    <AssemblyName>MIPS_Emulator.Test</AssemblyName>
+    <AssemblyName>MIPSEmulator.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

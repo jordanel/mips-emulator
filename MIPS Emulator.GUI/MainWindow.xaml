@@ -1,0 +1,42 @@
+﻿<Window x:Class="MIPS_Emulator.GUI.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MIPS_Emulator.GUI"
+             mc:Ignorable="d"
+             Title="MIPS Emulator"
+             Height="480" Width="640"
+             Closed="Exit_Executed"
+             Background="Black">
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenProject_Executed"></CommandBinding>
+        <CommandBinding Command="local:Commands.Exit" Executed="Exit_Executed"></CommandBinding>
+        <CommandBinding Command="local:Commands.Run" Executed="RunAll_Executed" CanExecute="RunAll_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.Pause" Executed="Pause_Executed" CanExecute="Pause_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.StepForward" Executed="StepForward_Executed" CanExecute="StepForward_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.ViewRegisters" Executed="ViewRegisters_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.ViewInstructions" Executed="ViewInstructions_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.ViewMemory" Executed="ViewMemory_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
+    </Window.CommandBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Command="Open"></MenuItem>
+                <MenuItem Header="_Exit" Command="local:Commands.Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Emulator">
+                <MenuItem Header="_Run" Command="local:Commands.Run"></MenuItem>
+                <MenuItem Header="_Pause" Command="local:Commands.Pause"></MenuItem>
+                <MenuItem Header="_Step Forward" Command="local:Commands.StepForward"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Registers" Command="local:Commands.ViewRegisters"></MenuItem>
+                <MenuItem Header="_Instruction Memory" Command="local:Commands.ViewInstructions"></MenuItem>
+                <MenuItem Header="_Data Memory" Command="local:Commands.ViewMemory"></MenuItem>
+            </MenuItem>
+        </Menu>
+        
+        <Viewbox Name="Display" StretchDirection="Both" DockPanel.Dock="Bottom"></Viewbox>
+    </DockPanel>
+</Window>

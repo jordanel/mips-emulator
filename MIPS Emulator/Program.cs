@@ -49,7 +49,7 @@ namespace MIPS_Emulator {
 						break;
 					case 'i':
 						Console.WriteLine("Instruction Memory Contents:");
-						for (uint i = 0; i < mips.InstrMem.Size; i += 4) {
+						for (uint i = 0; i < mips.InstrMem.Size; i += mips.InstrMem.WordSize) {
 							Console.WriteLine($"{(mips.Pc == i ? ">" : " ")} 0x{i:X8} | {mips.InstrMem.GetInstruction(i)}");
 						}
 						break;

@@ -1,9 +1,9 @@
 ﻿namespace MIPS_Emulator {
 	public class ScreenMemory : DataMemory {
-		public ScreenMemory(uint size) : base(size) {
+		public ScreenMemory(uint size, uint wordSize = 4) : base(size, wordSize) {
 		}
 
-		public ScreenMemory(uint[] memory) : base(memory) {
+		public ScreenMemory(uint[] memory, uint wordSize) : base(memory, wordSize) {
 		}
 	}
 }

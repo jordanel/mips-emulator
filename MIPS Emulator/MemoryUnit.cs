@@ -2,5 +2,6 @@
 	public interface MemoryUnit {
 		uint this[uint index] { get; set; }
 		uint Size { get; }
+		uint WordSize { get; }
 	}
 }
