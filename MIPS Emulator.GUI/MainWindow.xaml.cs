@@ -27,7 +27,14 @@ namespace MIPS_Emulator.GUI {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Filter = "Project files (*.json)|*.json|All files (*.*)|*.*";
 			if (openFileDialog.ShowDialog() == true) {
-				ProgramLoader loader = new ProgramLoader(new FileInfo(openFileDialog.FileName));
+				ProgramLoader loader;
+				try {
+					loader = new ProgramLoader(new FileInfo(openFileDialog.FileName));
+				} catch (Exception ex) {
+					MessageBox.Show($"Error initializing project: {ex}");
+					return;
+				}
+
 				mips = loader.Mips;
 				keyboard = (Keyboard) GetMemoryTypeIfPresent(typeof(Keyboard))?[0];
 				
