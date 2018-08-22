@@ -6,13 +6,12 @@ namespace MIPS_Emulator.GUI {
     /// </summary>
     public partial class InstructionMemoryViewer : DebuggerView {
 		private Mips mips;
-	    private const int wordSize = 4;
 
         public InstructionMemoryViewer(Mips mips) {
             InitializeComponent();
 			this.mips = mips;
 	        
-			for (uint i = 0; i < mips.InstrMem.Size; i += 4) {
+			for (uint i = 0; i < mips.InstrMem.Size; i += mips.InstrMem.WordSize) {
 				ListBoxItem item = new ListBoxItem();
 				item.Content = $"0x{i:X8}: {mips.InstrMem.GetInstruction(i)}";
 				instructionsList.Items.Add(item);
@@ -21,8 +20,8 @@ namespace MIPS_Emulator.GUI {
 		}
 
 		public void RefreshDisplay() {
-			instructionsList.SelectedIndex = (int)(mips.Pc & 0xffff) / wordSize;
-			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / wordSize]);						
+			instructionsList.SelectedIndex = (int)(mips.Pc & 0xffff) / (int) mips.InstrMem.WordSize;
+			instructionsList.ScrollIntoView(instructionsList.Items[(int)(mips.Pc & 0xffff) / (int) mips.InstrMem.WordSize]);						
 		}
 	}
 }

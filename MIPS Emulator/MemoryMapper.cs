@@ -6,6 +6,7 @@ namespace MIPS_Emulator {
 	public class MemoryMapper : MemoryUnit {
 		private readonly List<MappedMemoryUnit> memUnits;
 		public uint Size => memUnits[memUnits.Count - 1].EndAddr - memUnits[0].StartAddr;
+		public uint WordSize => 1;
 		public uint StartAddr => memUnits[0].StartAddr;
 
 		public event EventHandler<ValueSetEventArgs> ValueSet;

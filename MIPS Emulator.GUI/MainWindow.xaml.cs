@@ -18,6 +18,7 @@ namespace MIPS_Emulator.GUI {
 		public MainWindow() {
 			InitializeComponent();
 			KeyDown += OnKeyDown;
+			KeyUp += OnKeyUp;
 		}
 
 		#region CommandMethods
@@ -28,14 +29,16 @@ namespace MIPS_Emulator.GUI {
 			if (openFileDialog.ShowDialog() == true) {
 				ProgramLoader loader = new ProgramLoader(new FileInfo(openFileDialog.FileName));
 				mips = loader.Mips;
-				if (mips.MemDict[typeof(Keyboard)].Count != 0) {
-					keyboard = (Keyboard) mips.MemDict[typeof(Keyboard)][0];
-				}
+				keyboard = (Keyboard) GetMemoryTypeIfPresent(typeof(Keyboard))?[0];
 				
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
 				debuggerViews.Add(vga);
 			}
+		}
+
+		private List<MemoryUnit> GetMemoryTypeIfPresent(Type type) {
+			return (mips.MemDict.TryGetValue(type, out var memories) && memories.Count != 0) ? memories : null;
 		}
 
 		private void RunAll_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
@@ -127,7 +130,11 @@ namespace MIPS_Emulator.GUI {
 		#endregion
 
 		private void OnKeyDown(object sender, KeyEventArgs e) {
-			Title = ScanCodeMapper.GetScanCode(e.Key).ToString();
+			keyboard?.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key));
+		}
+
+		private void OnKeyUp(object sender, KeyEventArgs e) {
+			keyboard?.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
 		}
 	}
 }

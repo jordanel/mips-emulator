@@ -13,7 +13,6 @@ namespace MIPS_Emulator.GUI {
 		private const int gridHeight = 30;
 		private const int bitmapWidth = 16;
 		private const int bitmapHeight = 16;
-		private const int wordSize = 4;
 
 		public VgaDisplay(Mips mips) {
 			images = new Image[gridWidth * gridHeight];
@@ -53,13 +52,13 @@ namespace MIPS_Emulator.GUI {
 		}
 		
 		private void GenerateBitmaps(BitmapMemory bmem) {
-			int bitmapCount = (int) (bmem.Size / (bitmapWidth * bitmapHeight * wordSize));
+			int bitmapCount = (int) (bmem.Size / (bitmapWidth * bitmapHeight * bmem.WordSize));
 			bitmaps = new BitmapSource[bitmapCount];
 
 			for (int i = 0; i < bitmapCount; i++) {
 				var pixels = new byte[256 * 3];
 				for (int j = 0; j < 256; j++) {
-					uint pixel = bmem[(uint) ((i * 256 + j) * 4)];
+					uint pixel = bmem[(uint) ((i * 256 + j) * bmem.WordSize)];
 					pixels[j * 3 + 2] = (byte) ((pixel >> 8) * 16);
 					pixels[j * 3 + 1] = (byte) ((pixel >> 4 & 0xf) * 16);
 					pixels[j * 3] = (byte) ((pixel & 0xf) * 16);
@@ -73,7 +72,7 @@ namespace MIPS_Emulator.GUI {
 		
 		public void RefreshDisplay() {
 			for (int i = 0; i < gridWidth * gridHeight; i++) {
-				images[i].Source = bitmaps[smem[(uint) i * 4]];
+				images[i].Source = bitmaps[smem[(uint) i * smem.WordSize]];
 			}
 		}
 
