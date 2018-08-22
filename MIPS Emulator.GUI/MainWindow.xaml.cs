@@ -24,6 +24,7 @@ namespace MIPS_Emulator.GUI {
 		#region CommandMethods
 
 		private void OpenProject_Executed(object sender, RoutedEventArgs e) {
+			isExecuting = false;
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Filter = "Project files (*.json)|*.json|All files (*.*)|*.*";
 			if (openFileDialog.ShowDialog() == true) {
@@ -62,7 +63,12 @@ namespace MIPS_Emulator.GUI {
 
 		private void ExecuteAll() {
 			while(isExecuting) {
-				mips.ExecuteNext();
+				try {
+					mips.ExecuteNext();
+				} catch (Exception e) {
+					MessageBox.Show($"YO DAWG YOU DUNG OOFd \n{e}");
+					isExecuting = false;
+				}
 			}
 		}
 
