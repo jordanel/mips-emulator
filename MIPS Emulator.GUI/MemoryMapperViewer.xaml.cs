@@ -21,14 +21,14 @@ namespace MIPS_Emulator.GUI {
 			foreach (var unitInfo in mappingInfo) {
 				for (uint index = unitInfo.startAddr; index < unitInfo.endAddr; index += unitInfo.wordSize) {
 					BuildListItem($"0x{index:X8}: {mapper[index]}");
-					addressListBoxMap[index] = memoryList.Items.Count - 1;
+					addressListBoxMap[index] = MemoryList.Items.Count - 1;
 				}
 			}
 		}
 
 		private void BuildListItem(object content) {
 			ListBoxItem item = new ListBoxItem {Content = content};
-			memoryList.Items.Add(item);
+			MemoryList.Items.Add(item);
 		}
 
 		public void RefreshDisplay() {}
@@ -40,7 +40,7 @@ namespace MIPS_Emulator.GUI {
 			}
 			
 			int listIndex = addressListBoxMap[e.Address];
-			if (memoryList.Items[listIndex] is ListBoxItem item) item.Content = $"0x{e.Address:X8}: {mapper[e.Address]} UPDATED";
+			if (MemoryList.Items[listIndex] is ListBoxItem item) item.Content = $"0x{e.Address:X8}: {mapper[e.Address]} UPDATED";
 		}
 	}
 }
