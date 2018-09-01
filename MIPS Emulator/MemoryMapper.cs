@@ -62,6 +62,16 @@ namespace MIPS_Emulator {
 				
 			}
 		}
+
+		// TODO: Generate name, add tests
+		public List<(uint startAddr, uint endAddr, uint wordSize, string name)> GetMappingInfo() {
+			var mappingInfo = new List<(uint, uint, uint, string)>();
+			foreach (MappedMemoryUnit mappedMemUnit in memUnits) {
+				mappingInfo.Add((mappedMemUnit.StartAddr, Math.Min(mappedMemUnit.EndAddr, mappedMemUnit.StartAddr + mappedMemUnit.MemUnit.Size - 1), mappedMemUnit.MemUnit.WordSize, "Test"));
+			}
+
+			return mappingInfo;
+		}
 	}
 	
 	public class ValueSetEventArgs : EventArgs {
