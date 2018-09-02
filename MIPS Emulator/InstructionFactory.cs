@@ -12,6 +12,7 @@ namespace MIPS_Emulator {
 			SW    = 0b101011,
 			ADDI  = 0b001000,
 			ADDIU = 0b001001,
+			ANDI = 0b001100,
 			SLTI  = 0b001010,
 			SLTIU = 0b001011,
 			ORI   = 0b001101,
@@ -96,6 +97,8 @@ namespace MIPS_Emulator {
 						return new AddiInstruction(rt, rs, immediate);
 					case Opcode.ADDIU:
 						return new AddiuInstruction(rt, rs, immediate);
+					case Opcode.ANDI:
+						return new AndiInstruction(rt, rs, immediate);
 					case Opcode.SLTI:
 						return new SltiInstruction(rt, rs, immediate);
 					case Opcode.SLTIU:
