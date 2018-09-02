@@ -34,6 +34,7 @@ namespace MIPS_Emulator.GUI {
 
 			if (hasSprite) {
 				GenerateSpriteImage((SpriteBitmapMemory) mips.MemDict[typeof(SpriteBitmapMemory)][0]);
+				spmem = (SpriteMemory) mips.MemDict[typeof(SpriteMemory)][0];
 			}
 
 			RefreshDisplay();
@@ -55,6 +56,8 @@ namespace MIPS_Emulator.GUI {
 		private void AddGridImages() {
 			for (int i = 0; i < gridWidth * gridHeight; i++) {
 				Image cell = new Image();
+				cell.SnapsToDevicePixels = true;
+				
 				displayGrid.Children.Add(cell);
 				Grid.SetRow(cell, i / gridWidth);
 				Grid.SetColumn(cell, i % gridWidth);
@@ -85,7 +88,7 @@ namespace MIPS_Emulator.GUI {
 			var pixels = new byte[256 * 4];
 			for (int j = 0; j < 256; j++) {
 				uint pixel = spriteBitmapMemory[(uint) ((j) * spriteBitmapMemory.WordSize)];
-				pixels[j * 4 + 3] = 128; //a
+				pixels[j * 4 + 3] = (byte) ((pixel >> 12) == 1 ? 255 : 0); //a
 				pixels[j * 4 + 2] = (byte) ((pixel >> 8) * 16); //r
 				pixels[j * 4 + 1] = (byte) ((pixel >> 4 & 0xf) * 16); //g
 				pixels[j * 4] = (byte) ((pixel & 0xf) * 16); //b
@@ -95,11 +98,17 @@ namespace MIPS_Emulator.GUI {
 			spriteImage = new Image();
 			spriteImage.Source = bitmap;
 
+			canvas.Children.Add(spriteImage);
 		}
 
 		public void RefreshDisplay() {
 			for (int i = 0; i < gridWidth * gridHeight; i++) {
 				images[i].Source = bitmaps[smem[(uint) i * smem.WordSize]];
+			}
+
+			if (hasSprite) {
+				Canvas.SetLeft(spriteImage, spmem.SpriteX);
+				Canvas.SetTop(spriteImage, spmem.SpriteY);
 			}
 		}
 
