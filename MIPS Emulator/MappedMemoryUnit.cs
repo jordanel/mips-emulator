@@ -13,7 +13,7 @@ namespace MIPS_Emulator {
 			this.MemUnit = memUnit;
 			this.StartAddr = startAddr;
 			this.EndAddr = endAddr;
-			this.Name = name ?? memUnit?.GetType().ToString();
+			this.Name = name ?? memUnit?.GetType().Name;
 		}
 
 		public MappedMemoryUnit(MemoryUnit memUnit, uint startAddr, string name = null) 
@@ -29,7 +29,7 @@ namespace MIPS_Emulator {
 			this.MemUnit = memUnit;
 			this.StartAddr = Convert.ToUInt32(cleanedBitmask.Replace("x", "0"), 2);
 			this.EndAddr = Convert.ToUInt32(cleanedBitmask.Replace("x", "1"), 2);
-			this.Name = name ?? memUnit?.GetType().ToString();
+			this.Name = name ?? memUnit?.GetType().Name;
 		}
 		
 		public uint this[uint index] {
