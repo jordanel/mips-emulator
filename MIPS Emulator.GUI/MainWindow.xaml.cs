@@ -63,13 +63,17 @@ namespace MIPS_Emulator.GUI {
 
 		private void ExecuteAll() {
 			while(isExecuting) {
-				try {
-					mips.ExecuteNext();
-				} catch (Exception e) {
-					if (e.GetType() != typeof(ThreadAbortException)) {
-						MessageBox.Show($"Runtime Exception encountered: {e}");
-						isExecuting = false;
-					}
+				TryExecuteNextInstruction();
+			}
+		}
+
+		private void TryExecuteNextInstruction() {
+			try {
+				mips.ExecuteNext();
+			} catch (Exception e) {
+				if (e.GetType() != typeof(ThreadAbortException)) {
+					MessageBox.Show($"Runtime Exception encountered: {e}");
+					isExecuting = false;
 				}
 			}
 		}
@@ -102,7 +106,7 @@ namespace MIPS_Emulator.GUI {
 		
 		private void StepForward_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
-			mips.ExecuteNext();
+			TryExecuteNextInstruction();
 			TickAll();
 			isExecuting = false;
 		}
