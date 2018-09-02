@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
     <Compile Include="ScreenMemory.cs" />
+    <Compile Include="SpriteBitmapMemory.cs" />
     <Compile Include="SpriteMemory.cs" />
   </ItemGroup>
   <ItemGroup>

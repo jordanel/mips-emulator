@@ -46,6 +46,13 @@
 				"filepath": "spmem.mem",
 				"format": "bin"
 			}
+		},
+		{
+			"type": "SpriteBitmapMemory",
+			"initFile": {
+				"filepath": "sbmem.mem",
+				"format": "hex"
+			}
 		}
 	]
 }
