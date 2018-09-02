@@ -113,18 +113,19 @@ namespace MIPS_Emulator {
 			uint? endAddr = ParseNumber(token["endAddr"]);
 			uint? size = ParseNumber(token["size"]);
 			string bitmask = (string) token["bitmask"];
+			string name = (string) token["name"];
 
 			MappedMemoryUnit mappedMem = null;
 			if (startAddr != null) {
 				if (endAddr != null) {
-					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) endAddr);
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) endAddr, name);
 				} else if (size != null) {
-					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) (startAddr + size - 1));
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, (uint) (startAddr + size - 1), name);
 				} else {
-					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr);
+					mappedMem = new MappedMemoryUnit(mem, (uint) startAddr, name);
 				}
 			} else if (bitmask != null) {
-				mappedMem = new MappedMemoryUnit(mem, bitmask);
+				mappedMem = new MappedMemoryUnit(mem, bitmask, name);
 			} else {
 				throw new MappingException("MappedMemoryUnit requires either startAddr or bitmask");
 			}
