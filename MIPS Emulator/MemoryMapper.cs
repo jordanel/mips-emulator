@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace MIPS_Emulator {
 	public class MemoryMapper : MemoryUnit {
-		private readonly List<MappedMemoryUnit> memUnits;
-		public uint Size => memUnits[memUnits.Count - 1].EndAddr - memUnits[0].StartAddr;
+		public List<MappedMemoryUnit> MemUnits { get; }
+		public uint Size => MemUnits[MemUnits.Count - 1].EndAddr - MemUnits[0].StartAddr;
 		public uint WordSize => 1;
-		public uint StartAddr => memUnits[0].StartAddr;
+		public uint StartAddr => MemUnits[0].StartAddr;
 
 		public event EventHandler<ValueSetEventArgs> ValueSet;
 
 		public MemoryMapper(List<MappedMemoryUnit> memUnits) {
-			this.memUnits = memUnits;
-			this.memUnits.Sort((x, y) => x.StartAddr.CompareTo(y.StartAddr));
+			this.MemUnits = memUnits;
+			this.MemUnits.Sort((x, y) => x.StartAddr.CompareTo(y.StartAddr));
 		}
 		
 		[Obsolete]
@@ -21,7 +21,7 @@ namespace MIPS_Emulator {
 			uint[] data = new uint[size];
 			DataMemory dataMem = new DataMemory(data);
 			MappedMemoryUnit mappedMem = new MappedMemoryUnit(dataMem, 0);
-			memUnits = new List<MappedMemoryUnit> {mappedMem};
+			MemUnits = new List<MappedMemoryUnit> {mappedMem};
 		}
 		
 		public uint this[uint address] {
@@ -39,7 +39,7 @@ namespace MIPS_Emulator {
 		}
 
 		private MappedMemoryUnit FindContainingUnit(uint addr) {		
-			foreach (MappedMemoryUnit m in memUnits) {
+			foreach (MappedMemoryUnit m in MemUnits) {
 				if (m.StartAddr <= addr && addr <= m.EndAddr) {
 					return m;
 				}
@@ -66,7 +66,7 @@ namespace MIPS_Emulator {
 		// TODO: Generate name, add tests
 		public List<(uint startAddr, uint endAddr, uint wordSize, string name)> GetMappingInfo() {
 			var mappingInfo = new List<(uint, uint, uint, string)>();
-			foreach (MappedMemoryUnit mappedMemUnit in memUnits) {
+			foreach (MappedMemoryUnit mappedMemUnit in MemUnits) {
 				mappingInfo.Add((mappedMemUnit.StartAddr, Math.Min(mappedMemUnit.EndAddr, mappedMemUnit.StartAddr + mappedMemUnit.MemUnit.Size - 1), mappedMemUnit.MemUnit.WordSize, "Test"));
 			}
 
