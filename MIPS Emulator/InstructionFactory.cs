@@ -12,7 +12,7 @@ namespace MIPS_Emulator {
 			SW    = 0b101011,
 			ADDI  = 0b001000,
 			ADDIU = 0b001001,
-			ANDI = 0b001100,
+			ANDI  = 0b001100,
 			SLTI  = 0b001010,
 			SLTIU = 0b001011,
 			ORI   = 0b001101,
