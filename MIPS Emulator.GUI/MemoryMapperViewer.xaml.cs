@@ -5,18 +5,13 @@ using System.Windows.Controls;
 namespace MIPS_Emulator.GUI {
 	public partial class MemoryMapperViewer : DebuggerView {
 		private MemoryMapper mapper;
-		//private List<(uint startAddr, uint endAddr, uint wordSize, string name)> mappingInfo;
 		private List<MappedMemoryUnit> memUnits;
-		private Dictionary<uint, int> addressListBoxMap;
 		
 		public MemoryMapperViewer(MemoryMapper mapper) {
 			InitializeComponent();
 			this.mapper = mapper;
-			//mappingInfo = mapper.GetMappingInfo();
 			memUnits = mapper.MemUnits;
 
-			addressListBoxMap = new Dictionary<uint, int>();
-			//PopulateList();
 			Initialize();
 			mapper.ValueSet += OnValueChanged;
 		}
@@ -24,6 +19,7 @@ namespace MIPS_Emulator.GUI {
 		private void Initialize() {
 			foreach (MappedMemoryUnit mappedMemoryUnit in memUnits) {
 				TabItem tab = new TabItem {Header = mappedMemoryUnit.Name};
+				//tab.Content = BuildMemoryDisplay(mappedMemoryUnit);
 				MemoryTabs.Items.Add(tab);
 			}
 		}
@@ -31,7 +27,6 @@ namespace MIPS_Emulator.GUI {
 		private void OnTabChanged(object sender, SelectionChangedEventArgs e) {
 			ListBox memList = BuildMemoryDisplay(memUnits[MemoryTabs.SelectedIndex]);
 			if (MemoryTabs.SelectedItem is TabItem selectedTab) selectedTab.Content = memList;
-			// add listbox to selected tab
 		}
 
 		private ListBox BuildMemoryDisplay(MappedMemoryUnit selectedUnit) {
@@ -41,6 +36,7 @@ namespace MIPS_Emulator.GUI {
 				uint relativeAddress = index;
 				uint value = selectedUnit[index];
 				ListBoxItem item = new ListBoxItem {Content = $"0x{relativeAddress:X8}: {value}"};
+				memList.Items.Add(item);
 			}
 			
 			return memList;
@@ -69,8 +65,11 @@ namespace MIPS_Emulator.GUI {
 				return;
 			}
 			
-			int listIndex = addressListBoxMap[e.Address];
 //			if (MemoryList.Items[listIndex] is ListBoxItem item) item.Content = $"0x{e.Address:X8}: {mapper[e.Address]} UPDATED";
+		}
+
+		private void Close(object sender, EventArgs e) {
+			mapper.ValueSet -= OnValueChanged;
 		}
 	}
 }

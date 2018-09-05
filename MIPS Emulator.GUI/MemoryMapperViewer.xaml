@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MIPS_Emulator.GUI"
              mc:Ignorable="d"
+             Closed="Close"
              Title="Memory Mapper" Height="400" Width="640">
     <Grid>
         <!-- <ListBox Name="MemoryList"></ListBox> --> <!-- TODO: delete when changes made -->
