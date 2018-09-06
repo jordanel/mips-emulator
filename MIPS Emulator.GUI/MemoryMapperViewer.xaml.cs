@@ -6,6 +6,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MemoryMapperViewer : DebuggerView {
 		private MemoryMapper mapper;
 		private List<MappedMemoryUnit> memUnits;
+		private ListView selectedList;
 		
 		public MemoryMapperViewer(MemoryMapper mapper) {
 			InitializeComponent();
@@ -19,43 +20,28 @@ namespace MIPS_Emulator.GUI {
 		private void Initialize() {
 			foreach (MappedMemoryUnit mappedMemoryUnit in memUnits) {
 				TabItem tab = new TabItem {Header = mappedMemoryUnit.Name};
-				//tab.Content = BuildMemoryDisplay(mappedMemoryUnit);
 				MemoryTabs.Items.Add(tab);
 			}
 		}
 
 		private void OnTabChanged(object sender, SelectionChangedEventArgs e) {
-			ListBox memList = BuildMemoryDisplay(memUnits[MemoryTabs.SelectedIndex]);
+			ListView memList = BuildMemoryDisplay(memUnits[MemoryTabs.SelectedIndex]);
 			if (MemoryTabs.SelectedItem is TabItem selectedTab) selectedTab.Content = memList;
+			selectedList = memList;
 		}
 
-		private ListBox BuildMemoryDisplay(MappedMemoryUnit selectedUnit) {
-			ListBox memList = new ListBox();
+		private ListView BuildMemoryDisplay(MappedMemoryUnit selectedUnit) {
+			ListView memList = new ListView();
 			for (uint index = 0; index < selectedUnit.MemUnit.Size; index += selectedUnit.MemUnit.WordSize) {
 				uint? mappedAddress = (index < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
 				uint relativeAddress = index;
 				uint value = selectedUnit[index];
-				ListBoxItem item = new ListBoxItem {Content = $"0x{relativeAddress:X8}: {value}"};
+				ListViewItem item = new ListViewItem {Content = $"0x{relativeAddress:X8}: {value}"};
 				memList.Items.Add(item);
 			}
 			
 			return memList;
 		}
-		
-		// To be deleted/repurposed
-//		private void PopulateList() {
-//			foreach (var unitInfo in mappingInfo) {
-//				for (uint index = unitInfo.startAddr; index < unitInfo.endAddr; index += unitInfo.wordSize) {
-//					BuildListItem($"0x{index:X8}: {mapper[index]}");
-//					addressListBoxMap[index] = MemoryList.Items.Count - 1;
-//				}
-//			}
-//		}
-
-//		private void BuildListItem(object content) {
-//			ListBoxItem item = new ListBoxItem {Content = content};
-//			MemoryList.Items.Add(item);
-//		}
 
 		public void RefreshDisplay() {}
 		
@@ -64,8 +50,14 @@ namespace MIPS_Emulator.GUI {
 				Dispatcher.Invoke(delegate {OnValueChanged(sender, e);});
 				return;
 			}
-			
-//			if (MemoryList.Items[listIndex] is ListBoxItem item) item.Content = $"0x{e.Address:X8}: {mapper[e.Address]} UPDATED";
+
+			// TODO: expose more MemUnit functionality in MappedMemUnit, send changed value in args?
+			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
+			if (e.Address >= selectedUnit.StartAddr &&
+			    e.Address <= selectedUnit.StartAddr + selectedUnit.MemUnit.Size - 1) {
+				uint relativeAddress = e.Address - selectedUnit.StartAddr;
+				if (selectedList.Items[(int) (relativeAddress / selectedUnit.MemUnit.WordSize)] is ListViewItem item) item.Content = $"0x{relativeAddress:X8}: {selectedUnit[relativeAddress]} UPDATED";
+			}
 		}
 
 		private void Close(object sender, EventArgs e) {

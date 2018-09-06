@@ -8,7 +8,6 @@
              Closed="Close"
              Title="Memory Mapper" Height="400" Width="640">
     <Grid>
-        <!-- <ListBox Name="MemoryList"></ListBox> --> <!-- TODO: delete when changes made -->
         <TabControl Name="MemoryTabs" SelectionChanged="OnTabChanged"></TabControl>
     </Grid>
 </Window>
