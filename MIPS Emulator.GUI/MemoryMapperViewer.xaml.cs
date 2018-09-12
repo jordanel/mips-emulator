@@ -8,7 +8,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MemoryMapperViewer : DebuggerView {
 		private MemoryMapper mapper;
 		private List<MappedMemoryUnit> memUnits;
-		private ListView selectedList;
+		private ObservableCollection<MappedLocation> currentList;
 		
 		public MemoryMapperViewer(MemoryMapper mapper) {
 			InitializeComponent();
@@ -29,7 +29,7 @@ namespace MIPS_Emulator.GUI {
 		private void OnTabChanged(object sender, SelectionChangedEventArgs e) {
 			ListView memList = BuildMemoryDisplay(memUnits[MemoryTabs.SelectedIndex]);
 			if (MemoryTabs.SelectedItem is TabItem selectedTab) selectedTab.Content = memList;
-			selectedList = memList;
+			// TODO: store current ObservableCollection in currentList
 		}
 
 		private ListView BuildMemoryDisplay(MappedMemoryUnit selectedUnit) {
@@ -44,6 +44,9 @@ namespace MIPS_Emulator.GUI {
 			
 			memList.View = BuildColumns();
 			memList.ItemsSource = mapped;
+			
+			// TODO: Trying this here for now
+			currentList = mapped;
 
 			return memList;
 		}
@@ -74,13 +77,13 @@ namespace MIPS_Emulator.GUI {
 				return;
 			}
 			
-			// TODO: expose more MemUnit functionality in MappedMemUnit, send changed value in args?
+			// TODO: expose more MemUnit functionality in MappedMemUnit?
 			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
 			if (e.Address >= selectedUnit.StartAddr &&
 			    e.Address <= selectedUnit.StartAddr + selectedUnit.MemUnit.Size - 1) {
 				uint relativeAddress = e.Address - selectedUnit.StartAddr;
 				
-				if (selectedList.Items[(int) (relativeAddress / selectedUnit.MemUnit.WordSize)] is ListViewItem item) item.Content = $"0x{relativeAddress:X8}: {e.Value} UPDATED";
+				currentList[(int) (relativeAddress / selectedUnit.MemUnit.WordSize)] = new MappedLocation(e.Address, relativeAddress, e.Value);
 			}
 		}
 
