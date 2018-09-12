@@ -33,7 +33,7 @@ namespace MIPS_Emulator {
 				MappedMemoryUnit m = FindContainingUnit(address);
 				m[ResolveAddress(address, m)] = value;
 				
-				ValueSetEventArgs args = new ValueSetEventArgs { Address = address };
+				ValueSetEventArgs args = new ValueSetEventArgs { Address = address, Value = value};
 				OnValueSet(args);
 			}
 		}
@@ -76,5 +76,6 @@ namespace MIPS_Emulator {
 	
 	public class ValueSetEventArgs : EventArgs {
 		public uint Address { get; set; }
+		public uint Value { get; set; }
 	}
 }
