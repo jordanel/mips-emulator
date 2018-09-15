@@ -39,6 +39,10 @@ namespace MIPS_Emulator.GUI {
 				mips = loader.Mips;
 				keyboard = (Keyboard) GetMemoryTypeIfPresent(typeof(Keyboard))?[0];
 				
+				foreach (DebuggerView view in debuggerViews) {
+					view.Close();
+				}
+				
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
 				debuggerViews.Add(vga);
