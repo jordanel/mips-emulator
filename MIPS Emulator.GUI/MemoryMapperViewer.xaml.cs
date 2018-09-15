@@ -9,6 +9,10 @@ namespace MIPS_Emulator.GUI {
 		private MemoryMapper mapper;
 		private List<MappedMemoryUnit> memUnits;
 		private ObservableCollection<MappedLocation> currentList;
+
+		private string mappedAddressFormat = "0x{0:X8}";
+		private string relativeAddressFormat = "0x{0:X8}";
+		private string valueFormat = "0x{0:X8}";
 		
 		public MemoryMapperViewer(MemoryMapper mapper) {
 			InitializeComponent();
@@ -53,20 +57,19 @@ namespace MIPS_Emulator.GUI {
 
 		private GridView BuildColumns() {
 			GridView gridView = new GridView();
-			GridViewColumn mappedAddressColumn = new GridViewColumn {
-				Header = "Mapped Address", DisplayMemberBinding = new Binding("MappedAddress")
-			};
-			GridViewColumn relativeAddressColumn = new GridViewColumn {
-				Header = "Relative Address", DisplayMemberBinding = new Binding("RelativeAddress")
-			};
-			GridViewColumn valueColumn = new GridViewColumn {
-				Header = "Value", DisplayMemberBinding = new Binding("Value")
-			};
-			gridView.Columns.Add(mappedAddressColumn);
-			gridView.Columns.Add(relativeAddressColumn);
-			gridView.Columns.Add(valueColumn);
+			gridView.Columns.Add(BuildGridViewColumn("Mapped Address", "MappedAddress", mappedAddressFormat));
+			gridView.Columns.Add(BuildGridViewColumn("Relative Address", "RelativeAddress", relativeAddressFormat));
+			gridView.Columns.Add(BuildGridViewColumn("Value", "Value", valueFormat));
 
 			return gridView;
+		}
+
+		private GridViewColumn BuildGridViewColumn(string header, string boundProperty, string format) {
+			Binding binding = new Binding(boundProperty) {StringFormat = format};
+			GridViewColumn mappedAddressColumn = new GridViewColumn {
+				Header = header, DisplayMemberBinding = binding
+			};
+			return mappedAddressColumn;
 		}
 
 		public void RefreshDisplay() {}
