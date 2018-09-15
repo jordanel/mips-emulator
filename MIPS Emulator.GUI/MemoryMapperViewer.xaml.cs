@@ -8,7 +8,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MemoryMapperViewer : DebuggerView {
 		private MemoryMapper mapper;
 		private List<MappedMemoryUnit> memUnits;
-		private ObservableCollection<MappedLocation> currentList;
+		private ObservableCollection<MemoryLocationInfo> selectedMemoryContents;
 
 		private string mappedAddressFormat = "0x{0:X8}";
 		private string relativeAddressFormat = "0x{0:X8}";
@@ -33,25 +33,22 @@ namespace MIPS_Emulator.GUI {
 		private void OnTabChanged(object sender, SelectionChangedEventArgs e) {
 			ListView memList = BuildMemoryDisplay(memUnits[MemoryTabs.SelectedIndex]);
 			if (MemoryTabs.SelectedItem is TabItem selectedTab) selectedTab.Content = memList;
-			// TODO: store current ObservableCollection in currentList
+			selectedMemoryContents = memList.ItemsSource as ObservableCollection<MemoryLocationInfo>;
 		}
 
 		private ListView BuildMemoryDisplay(MappedMemoryUnit selectedUnit) {
 			ListView memList = new ListView();
-			ObservableCollection<MappedLocation> mapped = new ObservableCollection<MappedLocation>();
-			for (uint index = 0; index < selectedUnit.MemUnit.Size; index += selectedUnit.MemUnit.WordSize) {
+			ObservableCollection<MemoryLocationInfo> memoryItems = new ObservableCollection<MemoryLocationInfo>();
+			for (uint index = 0; index < selectedUnit.Size; index += selectedUnit.WordSize) {
 				uint? mappedAddress = (index < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
 				uint relativeAddress = index;
 				uint value = selectedUnit[index];
-				mapped.Add(new MappedLocation(mappedAddress, relativeAddress, value));
+				memoryItems.Add(new MemoryLocationInfo(mappedAddress, relativeAddress, value));
 			}
 			
 			memList.View = BuildColumns();
-			memList.ItemsSource = mapped;
+			memList.ItemsSource = memoryItems;
 			
-			// TODO: Trying this here for now
-			currentList = mapped;
-
 			return memList;
 		}
 
@@ -61,6 +58,10 @@ namespace MIPS_Emulator.GUI {
 			gridView.Columns.Add(BuildGridViewColumn("Relative Address", "RelativeAddress", relativeAddressFormat));
 			gridView.Columns.Add(BuildGridViewColumn("Value", "Value", valueFormat));
 
+			ContextMenu context = new ContextMenu();
+			context.Items.Add(new MenuItem() {Header = "Test"});
+			gridView.ColumnHeaderContextMenu = context;
+			
 			return gridView;
 		}
 
@@ -80,13 +81,12 @@ namespace MIPS_Emulator.GUI {
 				return;
 			}
 			
-			// TODO: expose more MemUnit functionality in MappedMemUnit?
 			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
 			if (e.Address >= selectedUnit.StartAddr &&
-			    e.Address <= selectedUnit.StartAddr + selectedUnit.MemUnit.Size - 1) {
+			    e.Address <= selectedUnit.StartAddr + selectedUnit.Size - 1) {
 				uint relativeAddress = e.Address - selectedUnit.StartAddr;
 				
-				currentList[(int) (relativeAddress / selectedUnit.MemUnit.WordSize)] = new MappedLocation(e.Address, relativeAddress, e.Value);
+				selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(e.Address, relativeAddress, e.Value);
 			}
 		}
 
@@ -95,12 +95,12 @@ namespace MIPS_Emulator.GUI {
 		}
 	}
 
-	public class MappedLocation {
+	public class MemoryLocationInfo {
 		public uint? MappedAddress { get; set; }
 		public uint RelativeAddress { get; set; }
 		public uint Value { get; set; }
 
-		public MappedLocation(uint? mappedAddress, uint relativeAddress, uint value) {
+		public MemoryLocationInfo(uint? mappedAddress, uint relativeAddress, uint value) {
 			MappedAddress = mappedAddress;
 			RelativeAddress = relativeAddress;
 			Value = value;

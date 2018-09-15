@@ -6,6 +6,12 @@ namespace MIPS_Emulator {
 		public MemoryUnit MemUnit { get; }
 		public uint StartAddr { get; } 
 		public uint EndAddr { get; }
+		public uint Size {
+			get { return MemUnit.Size; }
+		}
+		public uint WordSize {
+			get { return MemUnit.WordSize; }
+		}
 		public string Name { get; }
 		private readonly Regex bitmaskFormat = new Regex("^(0|1)+x*$");
 
