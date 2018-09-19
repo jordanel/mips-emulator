@@ -9,11 +9,11 @@ using Microsoft.Win32;
 namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
-		private Keyboard keyboard;
+		private MappedMemoryUnit keyboard;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private Thread refresh;
-		private bool isExecuting = false;
+		private bool isExecuting;
 		
 		public MainWindow() {
 			InitializeComponent();
@@ -37,7 +37,11 @@ namespace MIPS_Emulator.GUI {
 				}
 
 				mips = loader.Mips;
-				keyboard = (Keyboard) GetMemoryTypeIfPresent(typeof(Keyboard))?[0];
+				keyboard = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Keyboard)));
+				
+				foreach (DebuggerView view in debuggerViews) {
+					view.Close();
+				}
 				
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
@@ -63,13 +67,17 @@ namespace MIPS_Emulator.GUI {
 
 		private void ExecuteAll() {
 			while(isExecuting) {
-				try {
-					mips.ExecuteNext();
-				} catch (Exception e) {
-					if (e.GetType() != typeof(ThreadAbortException)) {
-						MessageBox.Show($"Runtime Exception encountered: {e}");
-						isExecuting = false;
-					}
+				TryExecuteNextInstruction();
+			}
+		}
+
+		private void TryExecuteNextInstruction() {
+			try {
+				mips.ExecuteNext();
+			} catch (Exception e) {
+				if (e.GetType() != typeof(ThreadAbortException)) {
+					MessageBox.Show($"Runtime Exception encountered: {e}");
+					isExecuting = false;
 				}
 			}
 		}
@@ -102,7 +110,7 @@ namespace MIPS_Emulator.GUI {
 		
 		private void StepForward_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
-			mips.ExecuteNext();
+			TryExecuteNextInstruction();
 			TickAll();
 			isExecuting = false;
 		}
@@ -145,11 +153,19 @@ namespace MIPS_Emulator.GUI {
 		#endregion
 
 		private void OnKeyDown(object sender, KeyEventArgs e) {
-			keyboard?.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key));
+			if (keyboard != null) {
+				Keyboard kb = (Keyboard) keyboard.MemUnit;
+				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key));
+				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key);          // Setter used to update MemoryMapperViewer
+			}
 		}
 
 		private void OnKeyUp(object sender, KeyEventArgs e) {
-			keyboard?.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
+			if (keyboard != null) {
+				Keyboard kb = (Keyboard) keyboard.MemUnit;
+				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
+				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key) | 0xF000; // Setter used to update MemoryMapperViewer
+			}
 		}
 	}
 }
