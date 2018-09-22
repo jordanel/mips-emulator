@@ -6,6 +6,22 @@
         mc:Ignorable="d"
         Title="Instruction Memory" Height="800" Width="400">
 	<Grid>
-		<ListBox Name="instructionsList"></ListBox>
+		<ListView Name="InstructionsList">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Address, StringFormat=0x{0:X8}}">
+						<GridViewColumnHeader Content = "Address">
+							<GridViewColumnHeader.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Decimal" Click="DecimalItem_Click" />
+									<MenuItem Header="Hexadecimal" Click="HexItem_Click" />
+								</ContextMenu>
+							</GridViewColumnHeader.ContextMenu>
+						</GridViewColumnHeader>
+					</GridViewColumn>
+					<GridViewColumn Header="Instruction" DisplayMemberBinding="{Binding Instruction}" />
+				</GridView>
+			</ListView.View>
+		</ListView>
 	</Grid>
 </Window>

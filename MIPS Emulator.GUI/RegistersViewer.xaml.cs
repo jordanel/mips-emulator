@@ -33,6 +33,7 @@ namespace MIPS_Emulator.GUI {
 			ChangeBindingStringFormat((MenuItem) sender, "0x{0:X8}");
 		}
 		
+		// TODO: Consider pulling into common method for all views
 		private void ChangeBindingStringFormat(MenuItem sender, string format) {
 			MenuItem item = sender;
 			ContextMenu contextMenu = (ContextMenu) item.Parent;
