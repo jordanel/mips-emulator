@@ -71,5 +71,15 @@ namespace MIPS_Emulator.GUI {
 				new KeyGesture(Key.M, ModifierKeys.Control)
 			}
 		);
+		
+		public static readonly RoutedUICommand OpenAllViews = new RoutedUICommand (
+			"OpenAllViews",
+			"OpenAllViews",
+			typeof(Commands),
+			new InputGestureCollection()
+			{
+				new KeyGesture(Key.P, ModifierKeys.Control)
+			}
+		); 
 	}
 }

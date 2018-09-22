@@ -141,6 +141,12 @@ namespace MIPS_Emulator.GUI {
 			memoryViewer.Show();
 			debuggerViews.Add(memoryViewer);
 		}
+
+		private void OpenAllViews_Executed(object sender, RoutedEventArgs e) {
+			ViewRegisters_Executed(sender, e);
+			ViewInstructions_Executed(sender, e);
+			ViewMemory_Executed(sender, e);
+		}
 		
 		private void Exit_Executed(object sender, EventArgs e) {
 			foreach (DebuggerView view in debuggerViews) {

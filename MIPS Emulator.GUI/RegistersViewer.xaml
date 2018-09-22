@@ -6,6 +6,22 @@
         mc:Ignorable="d"
         Title="RegistersViewer" Height="800" Width="400">
 	<Grid>
-		<ListBox Name="registerList" />
+		<ListView Name="RegisterList">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Value, StringFormat=0x{0:X8}}">
+						<GridViewColumnHeader Content = "Value">
+							<GridViewColumnHeader.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Decimal" Click="DecimalItem_Click" />
+									<MenuItem Header="Hexadecimal" Click="HexItem_Click" />
+								</ContextMenu>
+							</GridViewColumnHeader.ContextMenu>
+						</GridViewColumnHeader>
+					</GridViewColumn>
+				</GridView>
+			</ListView.View>
+		</ListView>
 	</Grid>
 </Window>
