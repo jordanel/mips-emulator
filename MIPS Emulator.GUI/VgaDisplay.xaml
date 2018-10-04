@@ -5,5 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Height="480" Width="640">
-    <Grid Name="displayGrid" />
+    
+    <Canvas Name="canvas">
+        <Grid Name="displayGrid" />
+    </Canvas>
 </UserControl>
