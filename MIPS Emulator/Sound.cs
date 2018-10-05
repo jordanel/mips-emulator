@@ -26,6 +26,7 @@ namespace MIPS_Emulator {
 
 		public Sound(uint size, uint wordSize = 4) {
 			var waveOut = new WaveOut();
+			waveOut.DesiredLatency = 50;
 			generator = new SoundWaveGenerator(44100) {Period = 100_000, Amplitude = 0};
 			waveOut.Init(generator);
 			waveOut.Play();
