@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -12,9 +13,11 @@ namespace MIPS_Emulator.GUI {
 		private MappedMemoryUnit keyboard;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
-		private Thread refresh;
 		private bool isExecuting;
-		
+		private int cycleCount;
+		private DateTime lastCheck = DateTime.Now;
+		private Timer tickTimer;
+
 		public MainWindow() {
 			InitializeComponent();
 			KeyDown += OnKeyDown;
@@ -46,6 +49,8 @@ namespace MIPS_Emulator.GUI {
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
 				debuggerViews.Add(vga);
+
+				Title = $"MIPS Emulator - {mips.Name}";
 			}
 		}
 
@@ -57,17 +62,22 @@ namespace MIPS_Emulator.GUI {
 			e.CanExecute = !isExecuting && mips != null;
 		}
 		
+		[MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
 		private void RunAll_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
 			execution = new Thread(ExecuteAll);
 			execution.Start();
-			refresh = new Thread(TickTimer);
-			refresh.Start();
+			tickTimer = new Timer((state) => TickAll(), "state", 0, 33);
 		}
 
 		private void ExecuteAll() {
-			while(isExecuting) {
-				TryExecuteNextInstruction();
+			try {
+				for (; isExecuting; Interlocked.Increment(ref cycleCount)) {
+					mips.ExecuteNext();
+				}
+			}
+			catch (Exception e) {
+				HandleRuntimeException(e);
 			}
 		}
 
@@ -75,16 +85,15 @@ namespace MIPS_Emulator.GUI {
 			try {
 				mips.ExecuteNext();
 			} catch (Exception e) {
-				if (e.GetType() != typeof(ThreadAbortException)) {
-					MessageBox.Show($"Runtime Exception encountered: {e}");
-					isExecuting = false;
-				}
+				HandleRuntimeException(e);
 			}
 		}
 
-		private void TickTimer() {
-			Timer timer = new Timer((state) => TickAll(), "state", 0, 33);
-			while(isExecuting);
+		private void HandleRuntimeException(Exception e) {
+			if (e.GetType() != typeof(ThreadAbortException)) {
+				MessageBox.Show($"Runtime Exception encountered: {e}");
+				isExecuting = false;
+			}
 		}
 		
 		private void TickAll() {
@@ -93,10 +102,23 @@ namespace MIPS_Emulator.GUI {
 					view.RefreshDisplay();
 				}
 			});
+			UpdateFrequencyDisplay();
+		}
+
+		private void UpdateFrequencyDisplay() {
+			if (cycleCount > 10_000_000) {
+				TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
+				double hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+				Dispatcher.Invoke(() => { Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; });
+
+				lastCheck = DateTime.Now;
+				cycleCount = 0;
+			}
 		}
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
 			e.CanExecute = isExecuting && mips != null;
+			
 		}
 		
 		private void Pause_Executed(object sender, RoutedEventArgs e) {
@@ -152,7 +174,6 @@ namespace MIPS_Emulator.GUI {
 			foreach (DebuggerView view in debuggerViews) {
 				view.Close();
 			}
-			refresh.Abort();
 			execution.Abort();
 		}
 

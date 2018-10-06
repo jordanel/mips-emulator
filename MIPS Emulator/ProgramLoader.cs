@@ -17,6 +17,8 @@ namespace MIPS_Emulator {
 		}
 
 		private Mips LoadMipsFromFile(FileInfo file) {
+			SoundModule.waveOut.Stop();
+			
 			string json;
 			using (StreamReader r = file.OpenText()) {
 				json = r.ReadToEnd();
@@ -26,8 +28,10 @@ namespace MIPS_Emulator {
 			
 			uint pc = ParseRequiredNumber(project["programCounter"]);
 			var memDict = BuildMemoryUnits(project["memories"]);
-						
-			return new Mips(pc, memDict);
+
+			string name = (string) project["projectName"] ?? file.Name;
+			
+			return new Mips(pc, memDict, name: name);
 		}
 
 		private uint ParseRequiredNumber(JToken token) {
