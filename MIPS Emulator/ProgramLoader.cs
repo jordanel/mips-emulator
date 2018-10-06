@@ -28,8 +28,10 @@ namespace MIPS_Emulator {
 			
 			uint pc = ParseRequiredNumber(project["programCounter"]);
 			var memDict = BuildMemoryUnits(project["memories"]);
-						
-			return new Mips(pc, memDict);
+
+			string name = (string) project["projectName"] ?? file.Name;
+			
+			return new Mips(pc, memDict, name: name);
 		}
 
 		private uint ParseRequiredNumber(JToken token) {

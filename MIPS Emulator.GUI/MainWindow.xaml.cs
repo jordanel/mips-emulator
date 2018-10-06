@@ -14,6 +14,10 @@ namespace MIPS_Emulator.GUI {
 		private Thread execution;
 		private Thread refresh;
 		private bool isExecuting;
+		private int cycleCount;
+		private Queue<int> counts = new Queue<int>();
+		private DateTime lastCheck = DateTime.Now;
+		private readonly object countLock = new object();
 		
 		public MainWindow() {
 			InitializeComponent();
@@ -46,6 +50,8 @@ namespace MIPS_Emulator.GUI {
 				VgaDisplay vga = new VgaDisplay(mips);
 				Display.Child = vga;
 				debuggerViews.Add(vga);
+
+				this.Title = $"MIPS Emulator - {mips.Name}";
 			}
 		}
 
@@ -74,6 +80,7 @@ namespace MIPS_Emulator.GUI {
 		private void TryExecuteNextInstruction() {
 			try {
 				mips.ExecuteNext();
+				Interlocked.Increment(ref cycleCount);
 			} catch (Exception e) {
 				if (e.GetType() != typeof(ThreadAbortException)) {
 					MessageBox.Show($"Runtime Exception encountered: {e}");
@@ -93,6 +100,16 @@ namespace MIPS_Emulator.GUI {
 					view.RefreshDisplay();
 				}
 			});
+			lock (countLock) {
+				if (cycleCount > 10_000_000) {
+					var timeSinceLastCheck = DateTime.Now - lastCheck;
+					var hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+					Dispatcher.Invoke(new Action(() => { this.Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; }));
+
+					lastCheck = DateTime.Now;
+					cycleCount = 0;
+				}
+			}
 		}
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
