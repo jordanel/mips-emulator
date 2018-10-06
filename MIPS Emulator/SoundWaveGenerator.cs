@@ -36,7 +36,6 @@ namespace MIPS_Emulator {
 					case WaveShape.TRIANGLE:
 						buffer[offset + index] = (short) (Amplitude * (Math.Abs(phaseAngle / Math.PI - 1) * 2 - 1));
 						break;
-
 				}
  				
 				phaseAngle += 2 * Math.PI * frequency / WaveFormat.SampleRate;
