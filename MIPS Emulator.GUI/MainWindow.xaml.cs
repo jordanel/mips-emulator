@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -62,7 +62,6 @@ namespace MIPS_Emulator.GUI {
 			e.CanExecute = !isExecuting && mips != null;
 		}
 		
-		[MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
 		private void RunAll_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
 			execution = new Thread(ExecuteAll);

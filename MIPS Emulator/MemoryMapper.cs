@@ -4,10 +4,12 @@ using System.Linq;
 
 namespace MIPS_Emulator {
 	public class MemoryMapper : MemoryUnit {
+	
 		public List<MappedMemoryUnit> MemUnits { get; }
 		public uint Size => MemUnits[MemUnits.Count - 1].EndAddr - MemUnits[0].StartAddr;
 		public uint WordSize => 1;
 		public uint StartAddr => MemUnits[0].StartAddr;
+		
 
 		public MemoryMapper(List<MappedMemoryUnit> memUnits) {
 			this.MemUnits = memUnits;
@@ -33,8 +35,9 @@ namespace MIPS_Emulator {
 			}
 		}
 
-		private MappedMemoryUnit FindContainingUnit(uint addr) {		
-			foreach (MappedMemoryUnit m in MemUnits) {
+		private MappedMemoryUnit FindContainingUnit(uint addr) {
+			for(var i = 0; i < MemUnits.Count; i++) {
+				var m = MemUnits[i];
 				if (m.StartAddr <= addr && addr <= m.EndAddr) {
 					return m;
 				}
