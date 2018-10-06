@@ -107,10 +107,14 @@ namespace MIPS_Emulator.GUI {
 					view.RefreshDisplay();
 				}
 			});
+			UpdateFrequencyDisplay();
+		}
+
+		private void UpdateFrequencyDisplay() {
 			if (cycleCount > 10_000_000) {
-				var timeSinceLastCheck = DateTime.Now - lastCheck;
-				var hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
-				Dispatcher.Invoke(new Action(() => { this.Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; }));
+				TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
+				double hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+				Dispatcher.Invoke(() => { Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; });
 
 				lastCheck = DateTime.Now;
 				cycleCount = 0;

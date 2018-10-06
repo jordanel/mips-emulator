@@ -34,7 +34,7 @@ namespace MIPS_Emulator {
 			}
 		}
 
-		public Instruction GetInstruction(in uint pc) {
+		public Instruction GetInstruction(uint pc) {
 			if (pc % WordSize == 0) {
 				return iMem[(pc & 0xffff) / WordSize];
 			} else {
