@@ -22,7 +22,7 @@ namespace MIPS_Emulator {
 		}
 
 		public void ExecuteNext() {
-			InstrMem.GetInstruction(pc).Execute(ref pc, Memory, Reg);
+			InstrMem.GetInstruction(in pc).Execute(ref pc, Memory, Reg);
 		}
 
 		public void ExecuteAll() {

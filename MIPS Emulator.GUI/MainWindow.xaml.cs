@@ -71,20 +71,28 @@ namespace MIPS_Emulator.GUI {
 		}
 
 		private void ExecuteAll() {
-			while(isExecuting) {
-				TryExecuteNextInstruction();
+			try {
+				for (; isExecuting; Interlocked.Increment(ref cycleCount)) {
+					mips.ExecuteNext();
+				}
+			}
+			catch (Exception e) {
+				HandleRuntimeException(e);
 			}
 		}
 
 		private void TryExecuteNextInstruction() {
 			try {
 				mips.ExecuteNext();
-				Interlocked.Increment(ref cycleCount);
 			} catch (Exception e) {
-				if (e.GetType() != typeof(ThreadAbortException)) {
-					MessageBox.Show($"Runtime Exception encountered: {e}");
-					isExecuting = false;
-				}
+				HandleRuntimeException(e);
+			}
+		}
+
+		private void HandleRuntimeException(Exception e) {
+			if (e.GetType() != typeof(ThreadAbortException)) {
+				MessageBox.Show($"Runtime Exception encountered: {e}");
+				isExecuting = false;
 			}
 		}
 
@@ -99,19 +107,13 @@ namespace MIPS_Emulator.GUI {
 					view.RefreshDisplay();
 				}
 			});
-			UpdateFrequencyDisplay();
-		}
+			if (cycleCount > 10_000_000) {
+				var timeSinceLastCheck = DateTime.Now - lastCheck;
+				var hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+				Dispatcher.Invoke(new Action(() => { this.Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; }));
 
-		private void UpdateFrequencyDisplay() {
-			lock (countLock) {
-				if (cycleCount > 10_000_000) {
-					TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
-					double frequency = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
-					Dispatcher.Invoke(() => { Title = $"MIPS Emulator - {mips.Name} - {frequency:F} MHz"; });
-
-					lastCheck = DateTime.Now;
-					cycleCount = 0;
-				}
+				lastCheck = DateTime.Now;
+				cycleCount = 0;
 			}
 		}
 
