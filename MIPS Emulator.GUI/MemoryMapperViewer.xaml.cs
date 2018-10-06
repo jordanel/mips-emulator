@@ -53,7 +53,7 @@ namespace MIPS_Emulator.GUI {
 		}
 		
 		private GridViewColumn BuildGridViewColumn(string header, string boundProperty, string format) {
-			Binding binding = new Binding(boundProperty) {StringFormat = format};
+			Binding binding = new Binding(boundProperty) {StringFormat = format, TargetNullValue = "Unmapped"};
 			GridViewColumn mappedAddressColumn = new GridViewColumn {
 				Header = header, DisplayMemberBinding = binding
 			};
@@ -70,7 +70,7 @@ namespace MIPS_Emulator.GUI {
 		private static ObservableCollection<MemoryLocationInfo> GetMemoryContents(MappedMemoryUnit selectedUnit) {
 			ObservableCollection<MemoryLocationInfo> memoryItems = new ObservableCollection<MemoryLocationInfo>();
 			for (uint index = 0; index < selectedUnit.Size; index += selectedUnit.WordSize) {
-				uint? mappedAddress = (index < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
+				uint? mappedAddress = (index + selectedUnit.StartAddr < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
 				uint relativeAddress = index;
 				uint value = selectedUnit[index];
 				memoryItems.Add(new MemoryLocationInfo(mappedAddress, relativeAddress, value));
@@ -98,15 +98,16 @@ namespace MIPS_Emulator.GUI {
 			GridViewColumnHeader header = (GridViewColumnHeader) contextMenu.PlacementTarget;
 			GridViewColumn column = header.Column;
 			string bindingPath = ((Binding) column.DisplayMemberBinding)?.Path.Path;
-			column.DisplayMemberBinding = new Binding(bindingPath) {StringFormat = format};
+			column.DisplayMemberBinding = new Binding(bindingPath) {StringFormat = format, TargetNullValue = "Unmapped"};
 		}
 
 		public void RefreshDisplay() {
 			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
 			for (uint index = selectedUnit.StartAddr; index < selectedUnit.StartAddr + selectedUnit.Size; index += selectedUnit.WordSize) {
 				uint relativeAddress = index - selectedUnit.StartAddr;
-				if (selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)].Value != mapper[index]) {
-					selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(index, relativeAddress, mapper[index]);
+				if (selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)].Value != selectedUnit[relativeAddress]) {
+					uint? mappedAddress = (index < selectedUnit.EndAddr) ? index : (uint?) null;
+					selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(mappedAddress, relativeAddress, mapper[index]);
 				}
 			}
 		}

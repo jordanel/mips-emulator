@@ -9,8 +9,6 @@ namespace MIPS_Emulator {
 		public uint WordSize => 1;
 		public uint StartAddr => MemUnits[0].StartAddr;
 
-		public event EventHandler<ValueSetEventArgs> ValueSet;
-
 		public MemoryMapper(List<MappedMemoryUnit> memUnits) {
 			this.MemUnits = memUnits;
 			this.MemUnits.Sort((x, y) => x.StartAddr.CompareTo(y.StartAddr));
@@ -32,9 +30,6 @@ namespace MIPS_Emulator {
 			set {
 				MappedMemoryUnit m = FindContainingUnit(address);
 				m[ResolveAddress(address, m)] = value;
-				
-				ValueSetEventArgs args = new ValueSetEventArgs { Address = address, Value = value};
-				OnValueSet(args);
 			}
 		}
 
@@ -50,11 +45,6 @@ namespace MIPS_Emulator {
 		private uint ResolveAddress(uint addr, MappedMemoryUnit memUnit) {
 			return addr - memUnit.StartAddr;
 		}
-
-		private void OnValueSet(ValueSetEventArgs e) {
-			EventHandler<ValueSetEventArgs> handler = ValueSet;
-			handler?.Invoke(this, e);
-		}
 		
 		public class UnmappedAddressException : ArgumentOutOfRangeException {
 			public UnmappedAddressException(uint address) 
@@ -62,20 +52,5 @@ namespace MIPS_Emulator {
 				
 			}
 		}
-
-		// TODO: Generate name, add tests
-		public List<(uint startAddr, uint endAddr, uint wordSize, string name)> GetMappingInfo() {
-			var mappingInfo = new List<(uint, uint, uint, string)>();
-			foreach (MappedMemoryUnit mappedMemUnit in MemUnits) {
-				mappingInfo.Add((mappedMemUnit.StartAddr, Math.Min(mappedMemUnit.EndAddr, mappedMemUnit.StartAddr + mappedMemUnit.MemUnit.Size - 1), mappedMemUnit.MemUnit.WordSize, "Test"));
-			}
-
-			return mappingInfo;
-		}
-	}
-	
-	public class ValueSetEventArgs : EventArgs {
-		public uint Address { get; set; }
-		public uint Value { get; set; }
 	}
 }
