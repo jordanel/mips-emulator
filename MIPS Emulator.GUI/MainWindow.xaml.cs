@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -17,7 +18,8 @@ namespace MIPS_Emulator.GUI {
 		private int cycleCount;
 		private DateTime lastCheck = DateTime.Now;
 		private readonly object countLock = new object();
-		
+		private Timer tickTimer;
+
 		public MainWindow() {
 			InitializeComponent();
 			KeyDown += OnKeyDown;
@@ -62,12 +64,12 @@ namespace MIPS_Emulator.GUI {
 			e.CanExecute = !isExecuting && mips != null;
 		}
 		
+		[MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
 		private void RunAll_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
 			execution = new Thread(ExecuteAll);
 			execution.Start();
-			refresh = new Thread(TickTimer);
-			refresh.Start();
+			tickTimer = new Timer((state) => TickAll(), "state", 0, 33);
 		}
 
 		private void ExecuteAll() {
@@ -95,11 +97,6 @@ namespace MIPS_Emulator.GUI {
 				isExecuting = false;
 			}
 		}
-
-		private void TickTimer() {
-			Timer timer = new Timer((state) => TickAll(), "state", 0, 33);
-			while(isExecuting);
-		}
 		
 		private void TickAll() {
 			Dispatcher.Invoke(() => {
@@ -123,6 +120,7 @@ namespace MIPS_Emulator.GUI {
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
 			e.CanExecute = isExecuting && mips != null;
+			
 		}
 		
 		private void Pause_Executed(object sender, RoutedEventArgs e) {

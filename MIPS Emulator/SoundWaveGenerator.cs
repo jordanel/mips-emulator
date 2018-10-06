@@ -17,11 +17,10 @@ namespace MIPS_Emulator {
 		public WaveShape Shape { get; set; }
 
 		public SoundWaveGenerator(int sampleRate) : base(sampleRate, 1) {
-			Shape = WaveShape.SINE;
+			Shape = WaveShape.SQUARE;
 		}
 		
 		public override int Read(short[] buffer, int offset, int sampleCount) {
-			double frequency = 100_000_000.0 / Period;
 			for (int index = 0; index < sampleCount; index++) {
 				switch (Shape) {
 					case WaveShape.SINE:
@@ -38,7 +37,7 @@ namespace MIPS_Emulator {
 						break;
 				}
  				
-				phaseAngle += 2 * Math.PI * frequency / WaveFormat.SampleRate;
+				phaseAngle += 2 * Math.PI * (100_000_000.0 / Period) / WaveFormat.SampleRate;
 				if (phaseAngle > 2 * Math.PI) {
 					phaseAngle -= 2 * Math.PI;
 				}
