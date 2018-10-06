@@ -13,11 +13,9 @@ namespace MIPS_Emulator.GUI {
 		private MappedMemoryUnit keyboard;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
-		private Thread refresh;
 		private bool isExecuting;
 		private int cycleCount;
 		private DateTime lastCheck = DateTime.Now;
-		private readonly object countLock = new object();
 		private Timer tickTimer;
 
 		public MainWindow() {
@@ -176,7 +174,6 @@ namespace MIPS_Emulator.GUI {
 			foreach (DebuggerView view in debuggerViews) {
 				view.Close();
 			}
-			refresh.Abort();
 			execution.Abort();
 		}
 
