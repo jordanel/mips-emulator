@@ -21,7 +21,6 @@ namespace MIPS_Emulator.GUI {
 			memUnits = mapper.MemUnits;
 
 			InitializeTabs();
-			mapper.ValueSet += OnValueChanged;
 		}
 
 		private void InitializeTabs() {
@@ -102,26 +101,17 @@ namespace MIPS_Emulator.GUI {
 			column.DisplayMemberBinding = new Binding(bindingPath) {StringFormat = format};
 		}
 
-		public void RefreshDisplay() {}
-		
-		private void OnValueChanged(object sender, ValueSetEventArgs e) {
-			if (!Dispatcher.CheckAccess()) {
-				Dispatcher.Invoke(delegate {OnValueChanged(sender, e);});
-				return;
-			}
-			
+		public void RefreshDisplay() {
 			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
-			if (e.Address >= selectedUnit.StartAddr &&
-			    e.Address <= selectedUnit.StartAddr + selectedUnit.Size - 1) {
-				uint relativeAddress = e.Address - selectedUnit.StartAddr;
-				
-				selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(e.Address, relativeAddress, e.Value);
+			for (uint index = selectedUnit.StartAddr; index < selectedUnit.StartAddr + selectedUnit.Size; index += selectedUnit.WordSize) {
+				uint relativeAddress = index - selectedUnit.StartAddr;
+				if (selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)].Value != mapper[index]) {
+					selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(index, relativeAddress, mapper[index]);
+				}
 			}
 		}
 
-		private void Close(object sender, EventArgs e) {
-			mapper.ValueSet -= OnValueChanged;
-		}
+		private void Close(object sender, EventArgs e) {}
 	}
 
 	public class MemoryLocationInfo {
