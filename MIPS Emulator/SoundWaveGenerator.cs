@@ -8,7 +8,8 @@ namespace MIPS_Emulator {
 		public enum WaveShape {
 			SINE,
 			SQUARE,
-			SAWTOOTH
+			SAWTOOTH,
+			TRIANGLE
 		}
 		
 		public uint Period { set; get; }
@@ -16,7 +17,7 @@ namespace MIPS_Emulator {
 		public WaveShape Shape { get; set; }
 
 		public SoundWaveGenerator(int sampleRate) : base(sampleRate, 1) {
-			Shape = WaveShape.SQUARE;
+			Shape = WaveShape.SINE;
 		}
 		
 		public override int Read(short[] buffer, int offset, int sampleCount) {
@@ -31,6 +32,9 @@ namespace MIPS_Emulator {
 						break;
 					case WaveShape.SAWTOOTH:
 						buffer[offset + index] = (short) (Amplitude * (phaseAngle / Math.PI - 1));
+						break;
+					case WaveShape.TRIANGLE:
+						buffer[offset + index] = (short) (Amplitude * (Math.Abs(phaseAngle / Math.PI - 1) * 2 - 1));
 						break;
 
 				}
