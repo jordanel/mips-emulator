@@ -21,7 +21,6 @@ namespace MIPS_Emulator.GUI {
 			memUnits = mapper.MemUnits;
 
 			InitializeTabs();
-			mapper.ValueSet += OnValueChanged;
 		}
 
 		private void InitializeTabs() {
@@ -54,7 +53,7 @@ namespace MIPS_Emulator.GUI {
 		}
 		
 		private GridViewColumn BuildGridViewColumn(string header, string boundProperty, string format) {
-			Binding binding = new Binding(boundProperty) {StringFormat = format};
+			Binding binding = new Binding(boundProperty) {StringFormat = format, TargetNullValue = "Unmapped"};
 			GridViewColumn mappedAddressColumn = new GridViewColumn {
 				Header = header, DisplayMemberBinding = binding
 			};
@@ -71,7 +70,7 @@ namespace MIPS_Emulator.GUI {
 		private static ObservableCollection<MemoryLocationInfo> GetMemoryContents(MappedMemoryUnit selectedUnit) {
 			ObservableCollection<MemoryLocationInfo> memoryItems = new ObservableCollection<MemoryLocationInfo>();
 			for (uint index = 0; index < selectedUnit.Size; index += selectedUnit.WordSize) {
-				uint? mappedAddress = (index < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
+				uint? mappedAddress = (index + selectedUnit.StartAddr < selectedUnit.EndAddr) ? index + selectedUnit.StartAddr : (uint?) null;
 				uint relativeAddress = index;
 				uint value = selectedUnit[index];
 				memoryItems.Add(new MemoryLocationInfo(mappedAddress, relativeAddress, value));
@@ -99,29 +98,21 @@ namespace MIPS_Emulator.GUI {
 			GridViewColumnHeader header = (GridViewColumnHeader) contextMenu.PlacementTarget;
 			GridViewColumn column = header.Column;
 			string bindingPath = ((Binding) column.DisplayMemberBinding)?.Path.Path;
-			column.DisplayMemberBinding = new Binding(bindingPath) {StringFormat = format};
+			column.DisplayMemberBinding = new Binding(bindingPath) {StringFormat = format, TargetNullValue = "Unmapped"};
 		}
 
-		public void RefreshDisplay() {}
-		
-		private void OnValueChanged(object sender, ValueSetEventArgs e) {
-			if (!Dispatcher.CheckAccess()) {
-				Dispatcher.Invoke(delegate {OnValueChanged(sender, e);});
-				return;
-			}
-			
+		public void RefreshDisplay() {
 			MappedMemoryUnit selectedUnit = memUnits[MemoryTabs.SelectedIndex];
-			if (e.Address >= selectedUnit.StartAddr &&
-			    e.Address <= selectedUnit.StartAddr + selectedUnit.Size - 1) {
-				uint relativeAddress = e.Address - selectedUnit.StartAddr;
-				
-				selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(e.Address, relativeAddress, e.Value);
+			for (uint index = selectedUnit.StartAddr; index < selectedUnit.StartAddr + selectedUnit.Size; index += selectedUnit.WordSize) {
+				uint relativeAddress = index - selectedUnit.StartAddr;
+				if (selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)].Value != selectedUnit[relativeAddress]) {
+					uint? mappedAddress = (index < selectedUnit.EndAddr) ? index : (uint?) null;
+					selectedMemoryContents[(int) (relativeAddress / selectedUnit.WordSize)] = new MemoryLocationInfo(mappedAddress, relativeAddress, mapper[index]);
+				}
 			}
 		}
 
-		private void Close(object sender, EventArgs e) {
-			mapper.ValueSet -= OnValueChanged;
-		}
+		private void Close(object sender, EventArgs e) {}
 	}
 
 	public class MemoryLocationInfo {
