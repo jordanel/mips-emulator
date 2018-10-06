@@ -17,6 +17,8 @@ namespace MIPS_Emulator {
 		}
 
 		private Mips LoadMipsFromFile(FileInfo file) {
+			SoundModule.waveOut.Stop();
+			
 			string json;
 			using (StreamReader r = file.OpenText()) {
 				json = r.ReadToEnd();

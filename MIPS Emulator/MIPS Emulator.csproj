@@ -104,6 +104,7 @@
     <Compile Include="Registers.cs" />
     <Compile Include="ScreenMemory.cs" />
     <Compile Include="Sound.cs" />
+    <Compile Include="SoundModule.cs" />
     <Compile Include="SoundWaveGenerator.cs" />
     <Compile Include="SpriteBitmapMemory.cs" />
     <Compile Include="SpriteMemory.cs" />
