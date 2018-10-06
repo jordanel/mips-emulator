@@ -15,7 +15,6 @@ namespace MIPS_Emulator.GUI {
 		private Thread refresh;
 		private bool isExecuting;
 		private int cycleCount;
-		private Queue<int> counts = new Queue<int>();
 		private DateTime lastCheck = DateTime.Now;
 		private readonly object countLock = new object();
 		
@@ -51,7 +50,7 @@ namespace MIPS_Emulator.GUI {
 				Display.Child = vga;
 				debuggerViews.Add(vga);
 
-				this.Title = $"MIPS Emulator - {mips.Name}";
+				Title = $"MIPS Emulator - {mips.Name}";
 			}
 		}
 
@@ -100,11 +99,15 @@ namespace MIPS_Emulator.GUI {
 					view.RefreshDisplay();
 				}
 			});
+			UpdateFrequencyDisplay();
+		}
+
+		private void UpdateFrequencyDisplay() {
 			lock (countLock) {
 				if (cycleCount > 10_000_000) {
-					var timeSinceLastCheck = DateTime.Now - lastCheck;
-					var hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
-					Dispatcher.Invoke(new Action(() => { this.Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; }));
+					TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
+					double frequency = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+					Dispatcher.Invoke(() => { Title = $"MIPS Emulator - {mips.Name} - {frequency:F} MHz"; });
 
 					lastCheck = DateTime.Now;
 					cycleCount = 0;

@@ -2,7 +2,6 @@ using NAudio.Wave;
 
 namespace MIPS_Emulator {
 	public static class SoundModule {
-
 		public static WaveOut waveOut;
 		public static SoundWaveGenerator generator;
 
@@ -11,6 +10,5 @@ namespace MIPS_Emulator {
 			generator = new SoundWaveGenerator(44100) {Period = 100_000, Amplitude = 0};
 			waveOut.Init(generator);
 		}
-		
 	}
 }

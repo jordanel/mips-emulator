@@ -1,9 +1,5 @@
-using System.Data.OleDb;
-using NAudio.Wave;
-
 namespace MIPS_Emulator {
 	public class Sound : MemoryUnit {
-
 		public uint Size => 4;
 		public uint WordSize => 4;
 		
@@ -25,6 +21,5 @@ namespace MIPS_Emulator {
 			SoundModule.generator.Amplitude = 0;
 			SoundModule.waveOut.Play();
 		}
-		
 	}
 }

@@ -3,7 +3,6 @@ using NAudio.Wave;
 
 namespace MIPS_Emulator {
 	public class SoundWaveGenerator : WaveProvider16 {
-
 		private double phaseAngle;
 		
 		public uint Period { set; get; }
