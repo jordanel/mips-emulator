@@ -1,10 +1,12 @@
+using System.Runtime.Remoting.Messaging;
+
 namespace MIPS_Emulator {
 	public class Sound : MemoryUnit {
 		public uint Size => 4;
 		public uint WordSize => 4;
 		
 		public uint this[uint index] {
-			get => throw new System.NotImplementedException();
+			get => SoundModule.generator.Period;
 			set {
 				if (SoundModule.generator == null) return;
 				if (value == 0) {
