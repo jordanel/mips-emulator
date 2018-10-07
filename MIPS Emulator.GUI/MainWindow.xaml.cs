@@ -66,7 +66,7 @@ namespace MIPS_Emulator.GUI {
 			isExecuting = true;
 			execution = new Thread(ExecuteAll);
 			execution.Start();
-			tickTimer = new Timer((state) => TickAll(), "state", 0, 33);
+			tickTimer = new Timer((state) => TickAll(), "state", 0, 10);
 		}
 
 		private void ExecuteAll() {

@@ -17,7 +17,7 @@ namespace MIPS_Emulator {
 		public WaveShape Shape { get; set; }
 
 		public SoundWaveGenerator(int sampleRate) : base(sampleRate, 1) {
-			Shape = WaveShape.SQUARE;
+			Shape = WaveShape.TRIANGLE;
 		}
 		
 		public override int Read(short[] buffer, int offset, int sampleCount) {
