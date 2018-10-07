@@ -23,6 +23,10 @@ namespace MIPS_Emulator {
 			iMem = instructions;
 			InstrFact = new InstructionFactory();
 			WordSize = wordSize;
+			wordSizeLog = (int)Math.Log(wordSize, 2);
+			if (Math.Pow(2, wordSizeLog) != wordSize) {
+				throw new ArgumentException($"WordSize ({wordSize}) in instruction memory is not a power of two");
+			}
 		}
 		
 		public uint this[uint pc] {
