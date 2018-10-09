@@ -19,17 +19,30 @@
         <CommandBinding Command="local:Commands.ViewInstructions" Executed="ViewInstructions_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.ViewMemory" Executed="ViewMemory_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.OpenAllViews" Executed="OpenAllViews_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.SetSoundShape" Executed="SetSoundShape_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Command="Open"></MenuItem>
+                <Separator />
                 <MenuItem Header="_Exit" Command="local:Commands.Exit"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Emulator">
                 <MenuItem Header="_Run" Command="local:Commands.Run"></MenuItem>
                 <MenuItem Header="_Pause" Command="local:Commands.Pause"></MenuItem>
                 <MenuItem Header="_Step Forward" Command="local:Commands.StepForward"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Sound" Name="SoundMenu" IsEnabled="False">
+                <MenuItem Header="_Volume"></MenuItem>
+                <MenuItem Header="_Shape">
+                    <MenuItem Header="S_quare" IsCheckable="True" IsChecked="True" Command="local:Commands.SetSoundShape" CommandParameter="SQUARE"></MenuItem>
+                    <MenuItem Header="_Sine" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SINE"></MenuItem>
+                    <MenuItem Header="Sa_wtooth" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SAWTOOTH"></MenuItem>
+                    <MenuItem Header="_Triangle" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="TRIANGLE"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Buffer Size"></MenuItem>
+                <MenuItem Header="Sample _Rate"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Registers" Command="local:Commands.ViewRegisters"></MenuItem>

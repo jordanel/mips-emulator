@@ -80,6 +80,12 @@ namespace MIPS_Emulator.GUI {
 			{
 				new KeyGesture(Key.P, ModifierKeys.Control)
 			}
-		); 
+		);
+		
+		public static readonly RoutedUICommand SetSoundShape = new RoutedUICommand (
+			"SetSoundShape",
+			"SetSoundShape",
+			typeof(Commands)
+		);
 	}
 }

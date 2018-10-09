@@ -4,8 +4,12 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Win32;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using Timer = System.Threading.Timer;
 
 namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
@@ -41,6 +45,7 @@ namespace MIPS_Emulator.GUI {
 
 				mips = loader.Mips;
 				keyboard = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Keyboard)));
+				SoundMenu.IsEnabled = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Sound))) != null;
 				
 				foreach (DebuggerView view in debuggerViews) {
 					view.Close();
@@ -174,6 +179,19 @@ namespace MIPS_Emulator.GUI {
 				view.Close();
 			}
 			execution.Abort();
+		}
+
+		private void SetSoundShape_Executed(object sender, ExecutedRoutedEventArgs e) {
+			if (Enum.TryParse((string) e.Parameter, false, out SoundWaveGenerator.WaveShape shape)) {
+				SoundModule.generator.Shape = shape;
+			}
+
+			MenuItem selectedItem = (MenuItem) e.OriginalSource;
+			foreach (MenuItem item in ((MenuItem) selectedItem.Parent).Items) {
+				item.IsChecked = false;
+			}
+
+			selectedItem.IsChecked = true;
 		}
 
 		#endregion

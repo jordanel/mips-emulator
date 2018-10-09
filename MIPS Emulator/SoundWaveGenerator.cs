@@ -12,12 +12,12 @@ namespace MIPS_Emulator {
 			TRIANGLE
 		}
 		
-		public uint Period { set; get; }
-		public short Amplitude { set; get; }
+		public uint Period { get; set; }
+		public short Amplitude { get; set; }
 		public WaveShape Shape { get; set; }
 
 		public SoundWaveGenerator(int sampleRate) : base(sampleRate, 1) {
-			Shape = WaveShape.TRIANGLE;
+			Shape = WaveShape.SQUARE;
 		}
 		
 		public override int Read(short[] buffer, int offset, int sampleCount) {
