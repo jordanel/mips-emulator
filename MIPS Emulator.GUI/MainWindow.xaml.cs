@@ -64,7 +64,7 @@ namespace MIPS_Emulator.GUI {
 		
 		private void RunAll_Executed(object sender, RoutedEventArgs e) {
 			isExecuting = true;
-			execution = new Thread(ExecuteAll);
+			execution = mips.ClockSpeed == 0 ? new Thread(ExecuteAll) : new Thread(() => ExecuteAllThrottled(mips.ClockSpeed));
 			execution.Start();
 			tickTimer = new Timer((state) => TickAll(), "state", 0, 10);
 		}
@@ -77,6 +77,30 @@ namespace MIPS_Emulator.GUI {
 			}
 			catch (Exception e) {
 				HandleRuntimeException(e);
+			}
+		}
+
+		private void ExecuteAllThrottled(float clockSpeed) {
+			while (isExecuting) {
+				int targetCycles = (int) (1_000_000 * clockSpeed / 30);
+				var startTime = DateTime.Now;
+				try {
+					for (int localCycleCount = 0;
+						isExecuting && localCycleCount < targetCycles;
+						localCycleCount++, Interlocked.Increment(ref cycleCount)) {
+						mips.ExecuteNext();
+					}
+				}
+				catch (Exception e) {
+					HandleRuntimeException(e);
+				}
+	
+				TimeSpan elapsedTime = DateTime.Now - startTime;
+				TimeSpan oneFrame = TimeSpan.FromSeconds(1 / 30.0);
+				if (elapsedTime > oneFrame) {
+					continue;
+				}
+				Thread.Sleep(oneFrame - elapsedTime); //TODO: Use a more consistent timing system
 			}
 		}
 
@@ -108,7 +132,13 @@ namespace MIPS_Emulator.GUI {
 			if (cycleCount > 10_000_000) {
 				TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
 				double hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
-				Dispatcher.Invoke(() => { Title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz"; });
+				Dispatcher.Invoke(() => {
+					string title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz";
+					if (mips.ClockSpeed != 0) {
+						title += $" ({Math.Round(hertz / mips.ClockSpeed * 100)}%)";
+					}
+					Title = title;
+				});
 
 				lastCheck = DateTime.Now;
 				cycleCount = 0;

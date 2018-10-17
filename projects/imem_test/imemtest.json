@@ -3,6 +3,7 @@
 	"schema": "1.0",
 	"instructionSet": "2017",
 	"programCounter": 0,
+	"clockSpeed": 25,
 	"memories": [
 		{
 			"type": "InstructionMemory",

@@ -30,8 +30,9 @@ namespace MIPS_Emulator {
 			var memDict = BuildMemoryUnits(project["memories"]);
 
 			string name = (string) project["projectName"] ?? file.Name;
+			float desiredClockSpeed = (float) (project["clockSpeed"] ?? 0);
 			
-			return new Mips(pc, memDict, name: name);
+			return new Mips(pc, memDict, name: name, clockSpeed: desiredClockSpeed);
 		}
 
 		private uint ParseRequiredNumber(JToken token) {
