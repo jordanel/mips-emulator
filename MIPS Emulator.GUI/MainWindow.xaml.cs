@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -19,10 +20,11 @@ namespace MIPS_Emulator.GUI {
 		private Thread execution;
 		private bool isExecuting;
 		private int cycleCount;
-		private DateTime lastCheck = DateTime.Now;
+		private Stopwatch globalTickCounter = new Stopwatch();
 		private Timer tickTimer;
 
 		public MainWindow() {
+			globalTickCounter.Start();
 			InitializeComponent();
 			KeyDown += OnKeyDown;
 			KeyUp += OnKeyUp;
@@ -71,6 +73,7 @@ namespace MIPS_Emulator.GUI {
 			isExecuting = true;
 			execution = mips.ClockSpeed == 0 ? new Thread(ExecuteAll) : new Thread(() => ExecuteAllThrottled(mips.ClockSpeed));
 			execution.Start();
+			tickTimer?.Dispose();
 			tickTimer = new Timer((state) => TickAll(), "state", 0, 10);
 		}
 
@@ -86,9 +89,12 @@ namespace MIPS_Emulator.GUI {
 		}
 
 		private void ExecuteAllThrottled(float clockSpeed) {
+			var localStopwatch = new Stopwatch();
+			localStopwatch.Start();
+			var waitHandle = new AutoResetEvent(false);
+			TimeSpan oneFrame = TimeSpan.FromSeconds(1 / 120.0);
 			while (isExecuting) {
-				int targetCycles = (int) (1_000_000 * clockSpeed / 30);
-				var startTime = DateTime.Now;
+				int targetCycles = (int) (1_000_000 * clockSpeed / 120);
 				try {
 					for (int localCycleCount = 0;
 						isExecuting && localCycleCount < targetCycles;
@@ -99,13 +105,13 @@ namespace MIPS_Emulator.GUI {
 				catch (Exception e) {
 					HandleRuntimeException(e);
 				}
-	
-				TimeSpan elapsedTime = DateTime.Now - startTime;
-				TimeSpan oneFrame = TimeSpan.FromSeconds(1 / 30.0);
+				TimeSpan elapsedTime = localStopwatch.Elapsed;
 				if (elapsedTime > oneFrame) {
+					localStopwatch.Restart();
 					continue;
 				}
-				Thread.Sleep(oneFrame - elapsedTime); //TODO: Use a more consistent timing system
+				waitHandle.WaitOne(oneFrame - elapsedTime);
+				localStopwatch.Restart();
 			}
 		}
 
@@ -135,8 +141,10 @@ namespace MIPS_Emulator.GUI {
 
 		private void UpdateFrequencyDisplay() {
 			if (cycleCount > 10_000_000) {
-				TimeSpan timeSinceLastCheck = DateTime.Now - lastCheck;
-				double hertz = cycleCount / timeSinceLastCheck.TotalSeconds / 1_000_000;
+				TimeSpan timeSinceLastCheck = globalTickCounter.Elapsed;
+				globalTickCounter.Restart();
+				double hertz = cycleCount / timeSinceLastCheck.TotalMilliseconds / 1_000;
+				cycleCount = 0;
 				Dispatcher.Invoke(() => {
 					string title = $"MIPS Emulator - {mips.Name} - {hertz:F} MHz";
 					if (mips.ClockSpeed != 0) {
@@ -144,9 +152,6 @@ namespace MIPS_Emulator.GUI {
 					}
 					Title = title;
 				});
-
-				lastCheck = DateTime.Now;
-				cycleCount = 0;
 			}
 		}
 
