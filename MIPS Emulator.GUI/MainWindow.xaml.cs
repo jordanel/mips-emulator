@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -58,6 +59,8 @@ namespace MIPS_Emulator.GUI {
 				debuggerViews.Add(vga);
 
 				Title = $"MIPS Emulator - {mips.Name}";
+				DefaultClockSpeed.CommandParameter = mips.ClockSpeed.ToString(CultureInfo.InvariantCulture);
+				DefaultClockSpeed.Header = $"Default ({mips.ClockSpeed} MHz)";
 			}
 		}
 
@@ -157,7 +160,6 @@ namespace MIPS_Emulator.GUI {
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
 			e.CanExecute = isExecuting && mips != null;
-			
 		}
 		
 		private void Pause_Executed(object sender, RoutedEventArgs e) {
@@ -221,11 +223,21 @@ namespace MIPS_Emulator.GUI {
 				SoundModule.generator.Shape = shape;
 			}
 
+			CheckSelectedMenuItem(e);
+		}
+		
+		private void SetClockSpeed_Executed(object sender, ExecutedRoutedEventArgs e) {
+			float newClockSpeed = float.Parse((string) e.Parameter);
+			mips.ClockSpeed = newClockSpeed;
+			
+			CheckSelectedMenuItem(e);
+		}
+
+		private static void CheckSelectedMenuItem(ExecutedRoutedEventArgs e) {
 			MenuItem selectedItem = (MenuItem) e.OriginalSource;
 			foreach (MenuItem item in ((MenuItem) selectedItem.Parent).Items) {
 				item.IsChecked = false;
 			}
-
 			selectedItem.IsChecked = true;
 		}
 

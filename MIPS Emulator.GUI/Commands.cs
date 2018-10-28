@@ -87,5 +87,11 @@ namespace MIPS_Emulator.GUI {
 			"SetSoundShape",
 			typeof(Commands)
 		);
+		
+		public static readonly RoutedUICommand SetClockSpeed = new RoutedUICommand (
+			"SetClockSpeed",
+			"SetClockSpeed",
+			typeof(Commands)
+		);
 	}
 }
