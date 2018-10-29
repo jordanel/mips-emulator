@@ -17,6 +17,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
 		private MappedMemoryUnit keyboard;
+		private MappedMemoryUnit accelerometer;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private bool isExecuting;
@@ -48,6 +49,7 @@ namespace MIPS_Emulator.GUI {
 
 				mips = loader.Mips;
 				keyboard = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Keyboard)));
+				accelerometer = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Accelerometer)));	
 				SoundMenu.IsEnabled = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Sound))) != null;
 				
 				foreach (DebuggerView view in debuggerViews) {
@@ -205,10 +207,25 @@ namespace MIPS_Emulator.GUI {
 			debuggerViews.Add(memoryViewer);
 		}
 
+		private void ViewAccelerometer_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = mips != null && accelerometer != null;
+		}
+		
+		private void ViewAccelerometer_Executed(object sender, RoutedEventArgs e) {
+			AccelerometerControl accelerometerControl = new AccelerometerControl(accelerometer, mips.Memory);
+			accelerometerControl.Top = this.Top - accelerometerControl.Height;
+			accelerometerControl.Left = this.Left;
+			accelerometerControl.Show();
+			debuggerViews.Add(accelerometerControl);
+		}
+
 		private void OpenAllViews_Executed(object sender, RoutedEventArgs e) {
 			ViewRegisters_Executed(sender, e);
 			ViewInstructions_Executed(sender, e);
 			ViewMemory_Executed(sender, e);
+			if (accelerometer != null) {
+				ViewAccelerometer_Executed(sender, e);
+			}
 		}
 		
 		private void Exit_Executed(object sender, EventArgs e) {
@@ -247,7 +264,6 @@ namespace MIPS_Emulator.GUI {
 			if (keyboard != null) {
 				Keyboard kb = (Keyboard) keyboard.MemUnit;
 				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key));
-				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key);          // Setter used to update MemoryMapperViewer
 			}
 		}
 
@@ -255,7 +271,6 @@ namespace MIPS_Emulator.GUI {
 			if (keyboard != null) {
 				Keyboard kb = (Keyboard) keyboard.MemUnit;
 				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
-				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key) | 0xF000; // Setter used to update MemoryMapperViewer
 			}
 		}
 	}

@@ -9,6 +9,10 @@
 			set { }
 		}
 
+		public Keyboard() { }
+		
+		public Keyboard(uint size, uint wordSize) { }
+
 		public void SetKeyCode(uint value) {
 			keyCode = value;
 		}

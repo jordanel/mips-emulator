@@ -92,6 +92,8 @@ namespace MIPS_Emulator {
 				object[] args;
 				if (length != null || init != null) {
 					args = new object[] {length ?? (uint) init.Length, wordSize ?? 4};
+				} else if (wordSize != null) {
+					args = new object[] {0, wordSize};
 				} else {
 					args = new object[0];
 				}

@@ -21,6 +21,7 @@
         <CommandBinding Command="local:Commands.OpenAllViews" Executed="OpenAllViews_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.SetSoundShape" Executed="SetSoundShape_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.SetClockSpeed" Executed="SetClockSpeed_Executed" CanExecute="RunAll_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.ViewAccelerometer" Executed="ViewAccelerometer_Executed" CanExecute="ViewAccelerometer_CanExecute"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -58,6 +59,7 @@
                 <MenuItem Header="_Registers" Command="local:Commands.ViewRegisters"></MenuItem>
                 <MenuItem Header="_Instruction Memory" Command="local:Commands.ViewInstructions"></MenuItem>
                 <MenuItem Header="_Data Memory" Command="local:Commands.ViewMemory"></MenuItem>
+                <MenuItem Header="A_ccelerometer" Command="local:Commands.ViewAccelerometer"></MenuItem>
                 <MenuItem Header="_All Views" Command="local:Commands.OpenAllViews"></MenuItem>
             </MenuItem>
         </Menu>

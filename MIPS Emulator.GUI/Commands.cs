@@ -72,6 +72,16 @@ namespace MIPS_Emulator.GUI {
 			}
 		);
 		
+		public static readonly RoutedUICommand ViewAccelerometer = new RoutedUICommand (
+			"ViewAccelerometer",
+			"ViewAccelerometer",
+			typeof(Commands),
+			new InputGestureCollection()
+			{
+				new KeyGesture(Key.C, ModifierKeys.Control)
+			}
+		);
+		
 		public static readonly RoutedUICommand OpenAllViews = new RoutedUICommand (
 			"OpenAllViews",
 			"OpenAllViews",
