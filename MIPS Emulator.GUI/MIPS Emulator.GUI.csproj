@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccelerometerControl.xaml.cs">
+      <DependentUpon>AccelerometerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commands.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -83,6 +86,7 @@
     <Compile Include="VgaDisplay.xaml.cs">
       <DependentUpon>VgaDisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccelerometerControl.xaml" />
     <Page Include="InstructionMemoryViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

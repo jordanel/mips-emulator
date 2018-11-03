@@ -44,9 +44,6 @@ namespace MIPS_Emulator.GUI {
 			MenuItem hexItem = new MenuItem {Header = "Hexadecimal"};
 			hexItem.Click += HexItem_Click;
 			context.Items.Add(hexItem);
-			MenuItem binaryItem = new MenuItem {Header = "Binary"};
-			binaryItem.Click += BinaryItem_Click;
-			context.Items.Add(binaryItem);
 			gridView.ColumnHeaderContextMenu = context;
 			
 			return gridView;
@@ -85,11 +82,6 @@ namespace MIPS_Emulator.GUI {
 		
 		private void HexItem_Click(object sender, RoutedEventArgs e) {
 			ChangeBindingStringFormat((MenuItem) sender, "0x{0:X8}");
-		}
-		
-		// TODO: figure out how to format as binary
-		private void BinaryItem_Click(object sender, RoutedEventArgs e) {
-			ChangeBindingStringFormat((MenuItem) sender, "0b{0:B32}");
 		}
 		
 		private void ChangeBindingStringFormat(MenuItem sender, string format) {

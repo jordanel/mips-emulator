@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -16,6 +17,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
 		private MappedMemoryUnit keyboard;
+		private (MappedMemoryUnit x, MappedMemoryUnit y) accelerometer;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private bool isExecuting;
@@ -47,6 +49,9 @@ namespace MIPS_Emulator.GUI {
 
 				mips = loader.Mips;
 				keyboard = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Keyboard)));
+				
+				accelerometer = ExtractAccelerometer();
+
 				SoundMenu.IsEnabled = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Sound))) != null;
 				
 				foreach (DebuggerView view in debuggerViews) {
@@ -58,11 +63,15 @@ namespace MIPS_Emulator.GUI {
 				debuggerViews.Add(vga);
 
 				Title = $"MIPS Emulator - {mips.Name}";
+				DefaultClockSpeed.CommandParameter = mips.ClockSpeed.ToString(CultureInfo.InvariantCulture);
+				DefaultClockSpeed.Header = $"Default ({mips.ClockSpeed} MHz)";
 			}
 		}
 
-		private List<MemoryUnit> GetMemoryTypeIfPresent(Type type) {
-			return (mips.MemDict.TryGetValue(type, out var memories) && memories.Count != 0) ? memories : null;
+		private (MappedMemoryUnit, MappedMemoryUnit) ExtractAccelerometer() {
+			MappedMemoryUnit accelerometerX = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerX)));
+			MappedMemoryUnit accelerometerY = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerY)));
+			return (accelerometerX, accelerometerY);
 		}
 
 		private void RunAll_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
@@ -157,7 +166,6 @@ namespace MIPS_Emulator.GUI {
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
 			e.CanExecute = isExecuting && mips != null;
-			
 		}
 		
 		private void Pause_Executed(object sender, RoutedEventArgs e) {
@@ -203,10 +211,25 @@ namespace MIPS_Emulator.GUI {
 			debuggerViews.Add(memoryViewer);
 		}
 
+		private void ViewAccelerometer_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = mips != null && !accelerometer.Equals((null, null));
+		}
+		
+		private void ViewAccelerometer_Executed(object sender, RoutedEventArgs e) {
+			AccelerometerControl accelerometerControl = new AccelerometerControl(accelerometer.x, accelerometer.y);
+			accelerometerControl.Top = this.Top - accelerometerControl.Height;
+			accelerometerControl.Left = this.Left;
+			accelerometerControl.Show();
+			debuggerViews.Add(accelerometerControl);
+		}
+
 		private void OpenAllViews_Executed(object sender, RoutedEventArgs e) {
 			ViewRegisters_Executed(sender, e);
 			ViewInstructions_Executed(sender, e);
 			ViewMemory_Executed(sender, e);
+			if (!accelerometer.Equals((null, null))) {
+				ViewAccelerometer_Executed(sender, e);
+			}
 		}
 		
 		private void Exit_Executed(object sender, EventArgs e) {
@@ -221,11 +244,21 @@ namespace MIPS_Emulator.GUI {
 				SoundModule.generator.Shape = shape;
 			}
 
+			CheckSelectedMenuItem(e);
+		}
+		
+		private void SetClockSpeed_Executed(object sender, ExecutedRoutedEventArgs e) {
+			float newClockSpeed = float.Parse((string) e.Parameter);
+			mips.ClockSpeed = newClockSpeed;
+			
+			CheckSelectedMenuItem(e);
+		}
+
+		private static void CheckSelectedMenuItem(ExecutedRoutedEventArgs e) {
 			MenuItem selectedItem = (MenuItem) e.OriginalSource;
 			foreach (MenuItem item in ((MenuItem) selectedItem.Parent).Items) {
 				item.IsChecked = false;
 			}
-
 			selectedItem.IsChecked = true;
 		}
 
@@ -235,15 +268,21 @@ namespace MIPS_Emulator.GUI {
 			if (keyboard != null) {
 				Keyboard kb = (Keyboard) keyboard.MemUnit;
 				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key));
-				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key);          // Setter used to update MemoryMapperViewer
 			}
 		}
 
 		private void OnKeyUp(object sender, KeyEventArgs e) {
 			if (keyboard != null) {
 				Keyboard kb = (Keyboard) keyboard.MemUnit;
-				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
-				mips.Memory[keyboard.StartAddr] = ScanCodeMapper.GetScanCode(e.Key) | 0xF000; // Setter used to update MemoryMapperViewer
+				uint scanCode = ScanCodeMapper.GetScanCode(e.Key);
+				if (scanCode == 0xE07C) {
+					// Special case for print screen
+					kb.SetKeyCode(0xE0F012);
+				} else if (scanCode > 0xFF) {
+					kb.SetKeyCode(scanCode | 0xE0F000);	
+				} else {
+					kb.SetKeyCode(scanCode | 0xF000);
+				}
 			}
 		}
 	}

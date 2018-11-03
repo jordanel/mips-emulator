@@ -40,9 +40,11 @@
 			"type": "Keyboard",
 			"bitmask": "1_0000_0000_0011_0000_0000_0000_0000"
 		},
+		
 		{
 			"type": "SpriteMemory",
-			"bitmask": "1_0000_0000_0011_0000_0000_0000_XXXX",
+			"startAddr": "268632068",
+			"length": 4,
 			"initFile": {
 				"filepath": "spmem.mem",
 				"format": "bin"
@@ -54,6 +56,14 @@
 				"filepath": "sbmem.mem",
 				"format": "hex"
 			}
+		},
+		{
+			"type": "AccelerometerX",
+			"bitmask": "1_0000_0000_0011_0000_0000_0001_0000"
+		},
+		{
+			"type": "AccelerometerY",
+			"bitmask": "1_0000_0000_0011_0000_0000_0000_1100"
 		}
 	]
 }

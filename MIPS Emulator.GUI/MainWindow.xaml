@@ -20,6 +20,8 @@
         <CommandBinding Command="local:Commands.ViewMemory" Executed="ViewMemory_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.OpenAllViews" Executed="OpenAllViews_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
         <CommandBinding Command="local:Commands.SetSoundShape" Executed="SetSoundShape_Executed" CanExecute="EmulatorViews_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.SetClockSpeed" Executed="SetClockSpeed_Executed" CanExecute="RunAll_CanExecute"></CommandBinding>
+        <CommandBinding Command="local:Commands.ViewAccelerometer" Executed="ViewAccelerometer_Executed" CanExecute="ViewAccelerometer_CanExecute"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -34,20 +36,27 @@
                 <MenuItem Header="_Step Forward" Command="local:Commands.StepForward"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Sound" Name="SoundMenu" IsEnabled="False">
-                <MenuItem Header="_Volume"></MenuItem>
                 <MenuItem Header="_Shape">
                     <MenuItem Header="S_quare" IsCheckable="True" IsChecked="True" Command="local:Commands.SetSoundShape" CommandParameter="SQUARE"></MenuItem>
                     <MenuItem Header="_Sine" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SINE"></MenuItem>
                     <MenuItem Header="Sa_wtooth" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SAWTOOTH"></MenuItem>
                     <MenuItem Header="_Triangle" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="TRIANGLE"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Buffer Size"></MenuItem>
-                <MenuItem Header="Sample _Rate"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Config">
+                <MenuItem Header="_Clock Speed" Command="local:Commands.SetClockSpeed">
+                    <MenuItem Header="100 MHz" IsCheckable="True" Command="local:Commands.SetClockSpeed" CommandParameter="100"></MenuItem>
+                    <MenuItem Header="50 MHz" IsCheckable="True" Command="local:Commands.SetClockSpeed" CommandParameter="50"></MenuItem>
+                    <MenuItem Header="25 MHz" IsCheckable="True" Command="local:Commands.SetClockSpeed" CommandParameter="25"></MenuItem>
+                    <MenuItem Header="12.5 MHz" IsCheckable="True" Command="local:Commands.SetClockSpeed" CommandParameter="12.5"></MenuItem>
+                    <MenuItem Name="DefaultClockSpeed" Header="Default" IsCheckable="True" IsChecked="True" Command="local:Commands.SetClockSpeed" CommandParameter="0"></MenuItem>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Registers" Command="local:Commands.ViewRegisters"></MenuItem>
                 <MenuItem Header="_Instruction Memory" Command="local:Commands.ViewInstructions"></MenuItem>
                 <MenuItem Header="_Data Memory" Command="local:Commands.ViewMemory"></MenuItem>
+                <MenuItem Header="A_ccelerometer" Command="local:Commands.ViewAccelerometer"></MenuItem>
                 <MenuItem Header="_All Views" Command="local:Commands.OpenAllViews"></MenuItem>
             </MenuItem>
         </Menu>
