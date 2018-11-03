@@ -274,7 +274,15 @@ namespace MIPS_Emulator.GUI {
 		private void OnKeyUp(object sender, KeyEventArgs e) {
 			if (keyboard != null) {
 				Keyboard kb = (Keyboard) keyboard.MemUnit;
-				kb.SetKeyCode(ScanCodeMapper.GetScanCode(e.Key) | 0xF000);
+				uint scanCode = ScanCodeMapper.GetScanCode(e.Key);
+				if (scanCode == 0xE07C) {
+					// Special case for print screen
+					kb.SetKeyCode(0xE0F012);
+				} else if (scanCode > 0xFF) {
+					kb.SetKeyCode(scanCode | 0xE0F000);	
+				} else {
+					kb.SetKeyCode(scanCode | 0xF000);
+				}
 			}
 		}
 	}
