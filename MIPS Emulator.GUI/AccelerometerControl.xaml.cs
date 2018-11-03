@@ -2,19 +2,35 @@ using System.Windows;
 
 namespace MIPS_Emulator.GUI {
 	public partial class AccelerometerControl : DebuggerView {
-		private MappedMemoryUnit accelerometer;
-		private MemoryMapper mapper;
+		private MappedMemoryUnit accelerometerX;
+		private MappedMemoryUnit accelerometerY;
+		private const uint defaultValue = 255;
 		
-		public AccelerometerControl(MappedMemoryUnit accelerometer, MemoryMapper mapper) {
+		public AccelerometerControl(MappedMemoryUnit accelerometerX, MappedMemoryUnit accelerometerY) {
 			InitializeComponent();
-			this.accelerometer = accelerometer;
-			this.mapper = mapper;
+			
+			this.accelerometerX = accelerometerX;
+			this.accelerometerY = accelerometerY;
+
+			if (accelerometerX == null) { XPanel.Visibility = Visibility.Collapsed; }
+			if (accelerometerY == null) { YPanel.Visibility = Visibility.Collapsed; }
 		}
 
-		private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-			((Accelerometer) accelerometer.MemUnit).Coordinates = ((uint) XSlider.Value, (uint) YSlider.Value);
-			mapper[accelerometer.StartAddr] = (uint) XSlider.Value;
-			mapper[accelerometer.StartAddr + accelerometer.WordSize] = (uint) YSlider.Value;
+		private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+			if (accelerometerX != null) {
+				((AccelerometerX) accelerometerX.MemUnit).xValue = (uint) XSlider.Value;
+			}
+		}
+
+		private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+			if (accelerometerY != null) {
+				((AccelerometerY) accelerometerY.MemUnit).yValue = (uint) YSlider.Value;
+			}
+		}
+
+		private void ResetButton_OnClick(object sender, RoutedEventArgs e) {
+			XSlider.Value = defaultValue;
+			YSlider.Value = defaultValue;
 		}
 
 		public void RefreshDisplay() { }

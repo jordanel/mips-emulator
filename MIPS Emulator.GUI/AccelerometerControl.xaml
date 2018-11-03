@@ -7,13 +7,14 @@
         mc:Ignorable="d"
         Title="Accelerometer" Height="150" Width="640">
     <StackPanel>
-        <DockPanel>
+        <DockPanel Name="XPanel">
             <Label>X: </Label>
-            <Slider Name="XSlider" Minimum="-100" Maximum="100" ValueChanged="Slider_ValueChanged" />
+            <Slider Name="XSlider" Minimum="0" Maximum="511" Value="255" IsDirectionReversed="True" ValueChanged="XSlider_ValueChanged" />
         </DockPanel>
-        <DockPanel>
+        <DockPanel Name="YPanel">
             <Label>Y: </Label>
-            <Slider Name="YSlider" Minimum="-100" Maximum="100" ValueChanged="Slider_ValueChanged" />
+            <Slider Name="YSlider" Minimum="0" Maximum="511" Value="255" IsDirectionReversed="True" ValueChanged="YSlider_ValueChanged" />
         </DockPanel>
+        <Button Click="ResetButton_OnClick">Reset</Button>
     </StackPanel>
 </Window>

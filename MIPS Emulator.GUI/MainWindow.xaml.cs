@@ -17,7 +17,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
 		private MappedMemoryUnit keyboard;
-		private MappedMemoryUnit accelerometer;
+		private (MappedMemoryUnit x, MappedMemoryUnit y) accelerometer;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private bool isExecuting;
@@ -49,7 +49,9 @@ namespace MIPS_Emulator.GUI {
 
 				mips = loader.Mips;
 				keyboard = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Keyboard)));
-				accelerometer = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Accelerometer)));	
+				
+				accelerometer = ExtractAccelerometer();
+
 				SoundMenu.IsEnabled = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Sound))) != null;
 				
 				foreach (DebuggerView view in debuggerViews) {
@@ -66,8 +68,10 @@ namespace MIPS_Emulator.GUI {
 			}
 		}
 
-		private List<MemoryUnit> GetMemoryTypeIfPresent(Type type) {
-			return (mips.MemDict.TryGetValue(type, out var memories) && memories.Count != 0) ? memories : null;
+		private (MappedMemoryUnit, MappedMemoryUnit) ExtractAccelerometer() {
+			MappedMemoryUnit accelerometerX = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerX)));
+			MappedMemoryUnit accelerometerY = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerY)));
+			return (accelerometerX, accelerometerY);
 		}
 
 		private void RunAll_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
@@ -208,11 +212,11 @@ namespace MIPS_Emulator.GUI {
 		}
 
 		private void ViewAccelerometer_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-			e.CanExecute = mips != null && accelerometer != null;
+			e.CanExecute = mips != null && !accelerometer.Equals((null, null));
 		}
 		
 		private void ViewAccelerometer_Executed(object sender, RoutedEventArgs e) {
-			AccelerometerControl accelerometerControl = new AccelerometerControl(accelerometer, mips.Memory);
+			AccelerometerControl accelerometerControl = new AccelerometerControl(accelerometer.x, accelerometer.y);
 			accelerometerControl.Top = this.Top - accelerometerControl.Height;
 			accelerometerControl.Left = this.Left;
 			accelerometerControl.Show();
@@ -223,7 +227,7 @@ namespace MIPS_Emulator.GUI {
 			ViewRegisters_Executed(sender, e);
 			ViewInstructions_Executed(sender, e);
 			ViewMemory_Executed(sender, e);
-			if (accelerometer != null) {
+			if (!accelerometer.Equals((null, null))) {
 				ViewAccelerometer_Executed(sender, e);
 			}
 		}

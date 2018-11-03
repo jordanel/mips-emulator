@@ -58,7 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accelerometer.cs" />
+    <Compile Include="AccelerometerX.cs" />
+    <Compile Include="AccelerometerY.cs" />
     <Compile Include="BitmapMemory.cs" />
     <Compile Include="DataMemory.cs" />
     <Compile Include="InstructionFactory.cs" />
