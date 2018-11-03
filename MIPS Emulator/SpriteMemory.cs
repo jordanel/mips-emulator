@@ -3,16 +3,16 @@ namespace MIPS_Emulator {
 		public uint SpriteX { get; private set; }
 		public uint SpriteY { get; private set; }
 
-		public uint Size => 4;
+		public uint Size => 8;
 		public uint WordSize => 4;
 
 		public uint this[uint index] {
-			get => (index & 0xF) == 0x8 ? SpriteX : SpriteY;
+			get => index == 0 ? SpriteY : SpriteX;
 			set {
-				if ((index & 0xF) == 0x8) {
-					SpriteX = value;
-				} else {
+				if (index == 0) {
 					SpriteY = value;
+				} else {
+					SpriteX = value;
 				}
 			}
 		}

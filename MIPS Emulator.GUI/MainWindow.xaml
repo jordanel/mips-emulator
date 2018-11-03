@@ -36,15 +36,12 @@
                 <MenuItem Header="_Step Forward" Command="local:Commands.StepForward"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Sound" Name="SoundMenu" IsEnabled="False">
-                <MenuItem Header="_Volume"></MenuItem>
                 <MenuItem Header="_Shape">
                     <MenuItem Header="S_quare" IsCheckable="True" IsChecked="True" Command="local:Commands.SetSoundShape" CommandParameter="SQUARE"></MenuItem>
                     <MenuItem Header="_Sine" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SINE"></MenuItem>
                     <MenuItem Header="Sa_wtooth" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="SAWTOOTH"></MenuItem>
                     <MenuItem Header="_Triangle" IsCheckable="True" Command="local:Commands.SetSoundShape" CommandParameter="TRIANGLE"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Buffer Size"></MenuItem>
-                <MenuItem Header="Sample _Rate"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Config">
                 <MenuItem Header="_Clock Speed" Command="local:Commands.SetClockSpeed">
