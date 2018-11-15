@@ -13,7 +13,7 @@
 		},
 		{
 			"type": "DataMemory",
-			"startAddr": 268500992,
+			"startAddr": "0x10010000",
 			"initFile": {
 				"filepath": "dmem.mem",
 				"format": "hex"
@@ -28,7 +28,7 @@
 		},
 		{
 			"type": "ScreenMemory",
-			"startAddr": 268566528,
+			"startAddr": "0x10020000",
 			"initFile": {
 				"filepath": "smem.mem",
 				"format": "hex"
@@ -36,7 +36,7 @@
 		},
 		{
 			"type": "Keyboard",
-			"startAddr": 268632064,
+			"startAddr": "0x10030000",
 			"initFile": {
 				"filepath": "smem.mem",
 				"format": "hex"
@@ -44,17 +44,17 @@
 		},
 		{
 			"type": "Accelerometer",
-			"startAddr": 268632068
+			"startAddr": "0x10030004"
 		},
 		{
 			"type": "Sound",
-			"startAddr": 268632072
+			"startAddr": "0x10030008"
 		},
 		{
 			"type": "DataMemory",
 			"name": "LED",
-			"startAddr": 268632076,
-			"length": "0x1"
+			"startAddr": "0x1003000c",
+			"length": 1
 		}
 	]
 }

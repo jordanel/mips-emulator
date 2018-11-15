@@ -48,7 +48,7 @@
 		},
 		{
 			"type": "DataMemory",
-			"startAddr": "0xDEADBEEF",
+			"startAddr": "0xDEADbeef",
 			"length": "0b100",
 			"initFile": {
 				"filepath": "dmem.mem",
