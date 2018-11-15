@@ -19,6 +19,8 @@ namespace MIPS_Emulator {
 			}
 		}
 
+		public Sound() : this(4) { }
+		
 		public Sound(uint size, uint wordSize = 4) {
 			SoundModule.generator.Amplitude = 0;
 			SoundModule.waveOut.Play();
