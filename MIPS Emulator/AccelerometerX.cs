@@ -4,10 +4,10 @@ namespace MIPS_Emulator {
 	public class AccelerometerX : MemoryUnit {
 		public uint Size => WordSize;
 		public uint WordSize { get; }
-		public uint xValue { get; set; }
+		public uint XValue { get; set; } = 255;
 		
 		public uint this[uint index] {
-			get { return xValue; }
+			get { return XValue; }
 			set { }
 		}
 		
