@@ -1,10 +1,10 @@
 # MIPS Emulator #
 
-MIPS Emulator is an emulator designed to support customized MIPS processors using memory-mapped I/O based on designs from UNC Chapel Hill’s Digital Logic course.
+MIPS Emulator is an emulator designed to support customized MIPS processors using memory-mapped I/O based on designs from UNC Chapel Hill’s Digital Logic course. Please add any issues found to the issues page. This emulator is more restrictive than the FPGAs used in the course, so cases in which something works on the board but not on the emulator may not be issues. On the other hand, anything that works on the emulator but not on the board is likely an issue and should be reported.
 
 ## Project Files ##
 
-A MIPS Emulator project is configured using a JSON file. This file contains project-level information as well as configuration and mapping information for any memory units needed by the project. A project can also include multiple memory initialization files, used to set the starting values of configured memories.
+A MIPS Emulator project is configured using a JSON file. This file contains project-level information as well as configuration and mapping information for any memory units needed by the project. A project can also include multiple memory initialization files, used to set the starting values of configured memories. Numeric values may also be passed as a hexadecimal or binary string prefixed with `0x` and `0b` respectively.
 
 ### Project File Elements ###
 
@@ -41,6 +41,7 @@ Any memory unit intended to be mapped and accessible to the MIPS program must ha
 - ScreenMemory - Read/write memory containing the bitmap values to be displayed on the screen
 - Keyboard - Read only memory containing the current keyboard scan code
 - Sound - Read only memory containing the period of the waveform used by the sound module
+- Accelerometer - Read only memory containing the X and Y accelerometer values in the following format: `{7'b0, accelX, 7'b0, accelY}`
 - AccelerometerX - Read only memory containing the X value of the accelerometer module
 - AccelerometerY - Read only memory containing the Y value of the accelerometer module
 
