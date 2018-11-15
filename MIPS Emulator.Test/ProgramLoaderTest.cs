@@ -85,5 +85,14 @@ namespace MIPS_Emulator.Test {
 				() => new ProgramLoader(file)
 			);
 		}
+
+		[Test]
+		public void ParsesHexAndBinValues() {
+			MappedMemoryUnit memUnit = target.Mips.Memory.MemUnits[4];
+			
+			Assert.IsInstanceOf(typeof(DataMemory), memUnit.MemUnit);
+			Assert.AreEqual(0xDEADBEEF, memUnit.StartAddr);
+			Assert.AreEqual(0b100, memUnit.Size / memUnit.WordSize);
+		}
 	}
 }

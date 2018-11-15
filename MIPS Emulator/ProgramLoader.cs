@@ -48,6 +48,14 @@ namespace MIPS_Emulator {
 		}
 
 		private uint? ParseNumber(string token) {
+			token = token.Replace("_", "");
+			if (token.StartsWith("0x")) {
+				return Convert.ToUInt32(token.Substring(2), 16);
+			}
+			if (token.StartsWith("0b")) {
+				return Convert.ToUInt32(token.Substring(2), 2);
+			}
+
 			return Convert.ToUInt32(token, 10);
 		}
 		

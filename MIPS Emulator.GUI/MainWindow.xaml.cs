@@ -17,7 +17,7 @@ namespace MIPS_Emulator.GUI {
 	public partial class MainWindow {
 		private Mips mips;
 		private MappedMemoryUnit keyboard;
-		private (MappedMemoryUnit x, MappedMemoryUnit y) accelerometer;
+		private (AccelerometerX x, AccelerometerY y) accelerometer;
 		private List<DebuggerView> debuggerViews = new List<DebuggerView>();
 		private Thread execution;
 		private bool isExecuting;
@@ -64,14 +64,22 @@ namespace MIPS_Emulator.GUI {
 
 				Title = $"MIPS Emulator - {mips.Name}";
 				DefaultClockSpeed.CommandParameter = mips.ClockSpeed.ToString(CultureInfo.InvariantCulture);
-				DefaultClockSpeed.Header = $"Default ({mips.ClockSpeed} MHz)";
+				string defaultSpeed = (mips.ClockSpeed != 0) ? mips.ClockSpeed.ToString(CultureInfo.InvariantCulture) : "∞";
+				DefaultClockSpeed.Header = $"Default ({defaultSpeed} MHz)";
 			}
 		}
 
-		private (MappedMemoryUnit, MappedMemoryUnit) ExtractAccelerometer() {
-			MappedMemoryUnit accelerometerX = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerX)));
-			MappedMemoryUnit accelerometerY = mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerY)));
-			return (accelerometerX, accelerometerY);
+		private (AccelerometerX, AccelerometerY) ExtractAccelerometer() {
+			Accelerometer accelerometer = (Accelerometer) mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(Accelerometer)))?.MemUnit;
+			if (accelerometer == null) {
+				AccelerometerX accelerometerX =
+					(AccelerometerX) mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerX)))?.MemUnit;
+				AccelerometerY accelerometerY =
+					(AccelerometerY) mips.Memory.MemUnits.Find(x => (x.MemUnit.GetType() == typeof(AccelerometerY)))?.MemUnit;
+				return (accelerometerX, accelerometerY);
+			}
+
+			return (accelerometer.X, accelerometer.Y);
 		}
 
 		private void RunAll_CanExecute(object sender, CanExecuteRoutedEventArgs e) {

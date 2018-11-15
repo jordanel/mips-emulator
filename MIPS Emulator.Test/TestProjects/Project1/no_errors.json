@@ -45,6 +45,15 @@
 				"filepath": "bmem.mem",
 				"format": "hex"
 			}
+		},
+		{
+			"type": "DataMemory",
+			"startAddr": "0xDEADbeef",
+			"length": "0b100",
+			"initFile": {
+				"filepath": "dmem.mem",
+				"format": "bin"
+			}
 		}
 	]
 }

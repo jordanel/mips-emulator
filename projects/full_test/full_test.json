@@ -1,0 +1,60 @@
+﻿{
+	"projectName": "Tester for MIPS + display + keyboard + accelerometer + sound + LED lights",
+	"schema": "1.0",
+	"instructionSet": "2018",
+	"programCounter": 0,
+	"memories": [
+		{
+			"type": "InstructionMemory",
+			"initFile": {
+				"filepath": "imem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "DataMemory",
+			"startAddr": "0x10010000",
+			"initFile": {
+				"filepath": "dmem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "BitmapMemory",
+			"initFile": {
+				"filepath": "bmem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "ScreenMemory",
+			"startAddr": "0x10020000",
+			"initFile": {
+				"filepath": "smem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "Keyboard",
+			"startAddr": "0x10030000",
+			"initFile": {
+				"filepath": "smem.mem",
+				"format": "hex"
+			}
+		},
+		{
+			"type": "Accelerometer",
+			"startAddr": "0x10030004"
+		},
+		{
+			"type": "Sound",
+			"startAddr": "0x10030008"
+		},
+		{
+			"type": "DataMemory",
+			"name": "LED",
+			"startAddr": "0x1003000c",
+			"length": 1
+		}
+	]
+}

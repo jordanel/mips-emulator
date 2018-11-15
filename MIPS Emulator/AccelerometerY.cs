@@ -4,10 +4,10 @@ namespace MIPS_Emulator {
 	public class AccelerometerY : MemoryUnit {
 		public uint Size => WordSize;
 		public uint WordSize { get; }
-		public uint yValue { get; set; }
+		public uint YValue { get; set; } = 255;
 		
 		public uint this[uint index] {
-			get { return yValue; }
+			get { return YValue; }
 			set { }
 		}
 		
