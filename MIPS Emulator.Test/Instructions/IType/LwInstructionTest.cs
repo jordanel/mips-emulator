@@ -25,6 +25,18 @@ namespace MIPS_Emulator.Test.Instructions.IType {
 			Assert.AreEqual(0xDEADBEEF, reg[8]);
 			Assert.AreEqual(0x00000004, pc);
 		}
+		
+		[Test]
+		public void Execute_DataLoadedToReg_SignExtendedImmediate() {
+			mem[4] = 0xDEADBEEF;
+			reg[9] = 0x00000008;
+			target = new LwInstruction(8, 9, 0xFFFC);
+			
+			target.Execute(ref pc, mem, reg);
+			
+			Assert.AreEqual(0xDEADBEEF, reg[8]);
+			Assert.AreEqual(0x00000004, pc);
+		}
 
 		[Test]
 		public void ToString_Formatted() {
