@@ -10,7 +10,7 @@ namespace MIPS_Emulator.Instructions.IType {
 		}
 		
 		public override void Execute(ref uint pc, MemoryMapper mem, Registers reg) {
-			mem[reg[S] + Immediate] = reg[T];
+			mem[reg[S] + SignExtend(Immediate)] = reg[T];
 			pc += 4;
 		}
 		
