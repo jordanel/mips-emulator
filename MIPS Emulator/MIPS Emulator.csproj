@@ -90,6 +90,8 @@
     <Compile Include="Instructions\RType\OrInstruction.cs" />
     <Compile Include="Instructions\RType\RTypeInstruction.cs" />
     <Compile Include="Instructions\RType\SllInstruction.cs" />
+    <Compile Include="Instructions\RType\SravInstruction.cs" />
+    <Compile Include="Instructions\RType\SrlvInstruction.cs" />
     <Compile Include="Instructions\RType\SllvInstruction.cs" />
     <Compile Include="Instructions\RType\SltInstruction.cs" />
     <Compile Include="Instructions\RType\SltuInstruction.cs" />

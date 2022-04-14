@@ -20,7 +20,8 @@ namespace MIPS_Emulator {
 			BEQ   = 0b000100,
 			BNE   = 0b000101,
 			J     = 0b000010,
-			JAL   = 0b000011
+			JAL   = 0b000011,
+			XORI  = 0b001110
 		}
 
 		private enum Func : uint {
@@ -35,7 +36,9 @@ namespace MIPS_Emulator {
 			SLL  = 0b000000,
 			SLLV = 0b000100,
 			SRL  = 0b000010,
+			SRLV = 0b000110,
 			SRA  = 0b000011,
+			SRAV = 0b000111,
 			JR   = 0b001000,
 			ADDU = 0b100001
 		}
@@ -80,8 +83,12 @@ namespace MIPS_Emulator {
 						return new SllvInstruction(rd, rt, rs);
 					case Func.SRL:
 						return new SrlInstruction(rd, rt, shamt);
+					case Func.SRLV:
+						return new SrlvInstruction(rd, rt, rs);
 					case Func.SRA:
 						return new SraInstruction(rd, rt, shamt);
+					case Func.SRAV:
+						return new SravInstruction(rd, rt, rs);
 					case Func.JR:
 						return new JrInstruction(rs);
 					case Func.ADDU:
@@ -115,6 +122,8 @@ namespace MIPS_Emulator {
 						return new JInstruction(address);
 					case Opcode.JAL:
 						return new JalInstruction(address);
+					case Opcode.XORI:
+						return new XoriInstruction(rt, rs, immediate);
 				}
 			}
 			throw new UnknownInstructionException(instruction);
