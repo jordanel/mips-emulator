@@ -40,7 +40,8 @@ namespace MIPS_Emulator {
 			SRA  = 0b000011,
 			SRAV = 0b000111,
 			JR   = 0b001000,
-			ADDU = 0b100001
+			ADDU = 0b100001,
+			JALR = 0b001001
 		}
 		
 		private const uint SIX_MASK = 0b111111;
@@ -93,6 +94,8 @@ namespace MIPS_Emulator {
 						return new JrInstruction(rs);
 					case Func.ADDU:
 						return new AdduInstruction(rd, rs, rt);
+					case Func.JALR:
+						return new JalrInstruction(rs);
 				}
 			} else {
 				switch ((Opcode) op) {

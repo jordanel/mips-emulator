@@ -79,6 +79,7 @@
     <Compile Include="Instructions\IType\SltiuInstruction.cs" />
     <Compile Include="Instructions\IType\SwInstruction.cs" />
     <Compile Include="Instructions\IType\XoriInstruction.cs" />
+    <Compile Include="Instructions\RType\JalrInstruction.cs" />
     <Compile Include="Instructions\JType\JalInstruction.cs" />
     <Compile Include="Instructions\JType\JInstruction.cs" />
     <Compile Include="Instructions\JType\JTypeInstruction.cs" />
